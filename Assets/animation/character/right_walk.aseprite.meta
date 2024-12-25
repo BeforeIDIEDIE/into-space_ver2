@@ -1,0 +1,363 @@
+fileFormatVersion: 2
+guid: ec6f4562e5734e448b8e82f2d929e2e7
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: right_walk_Frame_0
+    originalName: 
+    pivot: {x: 0.5813953, y: -0.16438356}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 59
+      y: 86
+      width: 43
+      height: 73
+    spriteID: 5cdbb3cda779e5f46a4645370d54b16b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 59, y: 86}
+  - name: right_walk_Frame_1
+    originalName: 
+    pivot: {x: 0.5813953, y: -0.16438356}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 59
+      y: 167
+      width: 43
+      height: 73
+    spriteID: e2cef1897dbb8c8449f71a6f67cd0336
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 59, y: 167}
+  - name: right_walk_Frame_2
+    originalName: 
+    pivot: {x: 0.4883721, y: -0.14864865}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 166
+      width: 43
+      height: 74
+    spriteID: 925fc4aaa275425479808ed0fbfb3da5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 166}
+  - name: right_walk_Frame_3
+    originalName: 
+    pivot: {x: 0.4883721, y: -0.14864865}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 59
+      y: 4
+      width: 43
+      height: 74
+    spriteID: 269266dd2a712884b9f73c65e810c451
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 59, y: 4}
+  - name: right_walk_Frame_4
+    originalName: 
+    pivot: {x: 0.4883721, y: -0.16438356}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 110
+      y: 4
+      width: 43
+      height: 73
+    spriteID: b6d2e959796e1614295203d3d101de07
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 110, y: 4}
+  - name: right_walk_Frame_5
+    originalName: 
+    pivot: {x: 0.4883721, y: -0.16438356}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 110
+      y: 85
+      width: 43
+      height: 73
+    spriteID: d86b46f079cd5724899aadf16f103b69
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 110, y: 85}
+  - name: right_walk_Frame_6
+    originalName: 
+    pivot: {x: 0.5106383, y: -0.12328768}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 47
+      height: 73
+    spriteID: 8720049c179e5e84fad141a2c0fa1aef
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: right_walk_Frame_7
+    originalName: 
+    pivot: {x: 0.5106383, y: -0.12328768}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 85
+      width: 47
+      height: 73
+    spriteID: ab7593f0a5eae35458bca53b0ef73518
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 85}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -1591841148
+    name: right_walk
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: right_walk_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 25
+        y: 12
+        width: 43
+        height: 73
+      spriteId: 5cdbb3cda779e5f46a4645370d54b16b
+    - name: right_walk_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 25
+        y: 12
+        width: 43
+        height: 73
+      spriteId: e2cef1897dbb8c8449f71a6f67cd0336
+    - name: right_walk_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 29
+        y: 11
+        width: 43
+        height: 74
+      spriteId: 925fc4aaa275425479808ed0fbfb3da5
+    - name: right_walk_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 29
+        y: 11
+        width: 43
+        height: 74
+      spriteId: 269266dd2a712884b9f73c65e810c451
+    - name: right_walk_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 29
+        y: 12
+        width: 43
+        height: 73
+      spriteId: b6d2e959796e1614295203d3d101de07
+    - name: right_walk_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 29
+        y: 12
+        width: 43
+        height: 73
+      spriteId: d86b46f079cd5724899aadf16f103b69
+    - name: right_walk_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 26
+        y: 9
+        width: 47
+        height: 73
+      spriteId: 8720049c179e5e84fad141a2c0fa1aef
+    - name: right_walk_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 26
+        y: 9
+        width: 47
+        height: 73
+      spriteId: ab7593f0a5eae35458bca53b0ef73518
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  generatePhysicsShape: 0
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 100, y: 100}
