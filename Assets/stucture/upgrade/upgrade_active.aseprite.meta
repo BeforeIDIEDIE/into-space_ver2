@@ -123,7 +123,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: upgrade_active
     originalName: 
-    pivot: {x: -1.0425532, y: -0.25161287}
+    pivot: {x: 2.1276596, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -153,8 +153,8 @@ ScriptedImporter:
     - name: upgrade_active
       frameIndex: 0
       cellRect:
-        x: 149
-        y: 39
+        x: 0
+        y: 0
         width: 47
         height: 155
       spriteId: 13655560495c257479f7edc0b3638998
