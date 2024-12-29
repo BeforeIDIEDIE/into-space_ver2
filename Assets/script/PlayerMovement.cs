@@ -10,11 +10,14 @@ public class playerMovement : MonoBehaviour
     [SerializeField] private float speed = 3f;
     [SerializeField] private float health;
 
+    private PlayerAnimation playerAnimation;
+
 
     private void Start()
     {
         player = this.gameObject;
-        player.transform.position = Vector3.zero;
+        player.transform.position = new Vector3(0,3,5);
+        playerAnimation = GetComponent<PlayerAnimation>();
     }
 
     void Update()
@@ -24,5 +27,6 @@ public class playerMovement : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         moveVelocity = new Vector3(horizontal, vertical, 0f).normalized;
         transform.position += moveVelocity * speed * Time.deltaTime;
+        playerAnimation.UpdateAnimation(horizontal, vertical);
     }
 }
