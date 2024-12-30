@@ -5,12 +5,12 @@ using UnityEngine;
 public class CircularDetector : MonoBehaviour
 {
     private StructSpriteChange parentSquare;
-    private player_action playerDoing;
+    private StructureBase playerDoing;
 
     private void Start()
     {
         parentSquare = GetComponentInParent<StructSpriteChange>();
-        playerDoing = GetComponentInParent<player_action>();
+        playerDoing = GetComponentInParent<StructureBase>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)

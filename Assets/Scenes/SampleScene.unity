@@ -613,7 +613,7 @@ GameObject:
   - component: {fileID: 316869218}
   - component: {fileID: 316869217}
   - component: {fileID: 316869216}
-  - component: {fileID: 316869219}
+  - component: {fileID: 316869220}
   m_Layer: 0
   m_Name: src_structure
   m_TagString: Untagged
@@ -708,7 +708,7 @@ Transform:
   - {fileID: 1533736132}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &316869219
+--- !u!114 &316869220
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -717,10 +717,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 316869215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5daed44057af4f48a44982c259a40f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 487c82a7a3d79e443a383af792693c8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  structure: src
 --- !u!1 &331408495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2354,6 +2353,7 @@ GameObject:
   - component: {fileID: 747596290}
   - component: {fileID: 747596289}
   - component: {fileID: 747596291}
+  - component: {fileID: 747596292}
   m_Layer: 0
   m_Name: heal_structure
   m_TagString: Untagged
@@ -2453,6 +2453,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultSprite: {fileID: -8735373841303221958, guid: 7d1cc0eea4c406340a805186edff85f1, type: 3}
   closeSprite: {fileID: -8713256019785110318, guid: 2655c5a1922f14f4db02e310cb75aef4, type: 3}
+--- !u!114 &747596292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747596288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94cace41695c6ef45a4e29c182f09c14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &770701092
 GameObject:
   m_ObjectHideFlags: 0
@@ -2867,6 +2879,7 @@ GameObject:
   - component: {fileID: 844525208}
   - component: {fileID: 844525207}
   - component: {fileID: 844525209}
+  - component: {fileID: 844525210}
   m_Layer: 0
   m_Name: steer_structure
   m_TagString: Untagged
@@ -2959,6 +2972,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultSprite: {fileID: 8890517965098733971, guid: 9ca1b87dc72385a4ea346de4bd159550, type: 3}
   closeSprite: {fileID: 708754817811875869, guid: 359d1f27d6e608b47a5d8dc52bfa01ba, type: 3}
+--- !u!114 &844525210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844525206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c30dd482620bf347b7d0956641b4dd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &864628623
 GameObject:
   m_ObjectHideFlags: 0
@@ -4775,6 +4800,7 @@ GameObject:
   - component: {fileID: 1523880762}
   - component: {fileID: 1523880761}
   - component: {fileID: 1523880763}
+  - component: {fileID: 1523880764}
   m_Layer: 0
   m_Name: upgrade_structure
   m_TagString: Untagged
@@ -4868,6 +4894,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultSprite: {fileID: -8668830474414544460, guid: 6b7f8791d7e094942af94192d341b7dd, type: 3}
   closeSprite: {fileID: -633264580653563866, guid: 1f1bd5dd4c4df3b42b927cc5c394e462, type: 3}
+--- !u!114 &1523880764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523880760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5daed44057af4f48a44982c259a40f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  structure: upgrade
 --- !u!1 &1531236334
 GameObject:
   m_ObjectHideFlags: 0
@@ -5886,6 +5925,7 @@ GameObject:
   - component: {fileID: 1836316589}
   - component: {fileID: 1836316588}
   - component: {fileID: 1836316587}
+  - component: {fileID: 1836316590}
   m_Layer: 0
   m_Name: electric_structure
   m_TagString: Untagged
@@ -5980,6 +6020,18 @@ Transform:
   - {fileID: 345118775}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1836316590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836316586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba0f4ec98e66a314d9fc32c43ebda598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1862905341
 GameObject:
   m_ObjectHideFlags: 0
