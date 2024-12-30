@@ -5,10 +5,12 @@ using UnityEngine;
 public class CircularDetector : MonoBehaviour
 {
     private StructSpriteChange parentSquare;
+    private player_action playerDoing;
 
     private void Start()
     {
         parentSquare = GetComponentInParent<StructSpriteChange>();
+        playerDoing = GetComponentInParent<player_action>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -16,6 +18,7 @@ public class CircularDetector : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             parentSquare.ChangeToCloseSprite();
+            playerDoing.playerNeared();
         }
     }
 
@@ -24,6 +27,7 @@ public class CircularDetector : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             parentSquare.ChangeToDefaultSprite();
+            playerDoing.playerOut();
         }
     }
 }
