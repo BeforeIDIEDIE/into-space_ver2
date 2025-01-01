@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using Unity.Mathematics;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,16 +37,55 @@ public class GameManager : MonoBehaviour
     private float curAddSrc = 3f;
     private float maxSrc = 100f;
     private float curRemoveSrc = 2f;
+    private float previousSrc;
+    
 
     private float electric = 0f;
     private float curAddElectric = 3f;
     private float maxElectric = 100f;
-
+    private float previousElectric;
 
     private float hp = 100f;
-    private float maximunHP = 100f;
+    private float maximumHP = 100f;
     private float curAddHP = 1f;
-    
+    private float previousHP;
+
+    [SerializeField] private TextMeshProUGUI hpText;
+    [SerializeField] private TextMeshProUGUI srcText;
+    [SerializeField] private TextMeshProUGUI electricText;
+
+    private void Start()
+    {
+        // 초기 값 설정
+        previousHP = hp;
+        previousSrc = src;
+        previousElectric = electric;
+
+        // 초기 UI 업데이트
+        UpdateResourceUI();
+    }
+
+    private void Update()
+    {
+        // 자원이 변경되었을 때만 UI 업데이트
+        if (previousHP != hp || previousSrc != src || previousElectric != electric)
+        {
+            UpdateResourceUI();
+
+            // 이전 값 갱신
+            previousHP = hp;
+            previousSrc = src;
+            previousElectric = electric;
+        }
+    }
+
+    private void UpdateResourceUI()
+    {
+        hpText.text = $"HP: {hp}/{maximumHP}";
+        srcText.text = $"Src: {src}/{maxSrc}";
+        electricText.text = $"Electric: {electric}/{maxElectric}";
+    }
+
 
     public void shipMoving()
     {
@@ -59,32 +100,32 @@ public class GameManager : MonoBehaviour
     }
 
     //자원 추가
-    public void AddSrc(int amount)
+    public void AddSrc(float amount)
     {
         src += amount;
-        Debug.Log($"Src Added: {amount}, Current Src: {src}");
+        Debug.Log($"Src 추가: {amount}, 현재 Src: {src}");
     }
 
-    public void AddElectric(int amount)
+    public void AddElectric(float amount)
     {
         electric += amount;
 
-        Debug.Log($"Electric Added: {amount}, Current Electric: {electric}");
+        Debug.Log($"Electric 추가: {amount}, 현재 Electric: {electric}");
     }
 
-    public void AddHP(int amount)
+    public void AddHP(float amount)
     {
-        hp = Mathf.Min(hp + amount, maximunHP);
-        Debug.Log($"HP Added: {amount}, Current HP: {hp}");
+        hp = Mathf.Min(hp + amount, maximumHP);
+        Debug.Log($"HP 추가: {amount}, 현재 HP: {hp}");
     }
 
     // 자원 소모
-    public bool ConsumeSrc(int amount)
+    public bool ConsumeSrc(float amount)
     {
         if (src >= amount)
         {
             src -= amount;
-            Debug.Log($"Src Consumed: {amount}\nRemaining Src: {src}");
+            Debug.Log($"Src 소모: {amount}\n현재 Src: {src}");
             return true;
         }
         else
@@ -94,12 +135,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public bool ConsumeElectric(int amount)
+    public bool ConsumeElectric(float amount)
     {
         if (electric >= amount)
         {
             electric -= amount;
-            Debug.Log($"Electric Consumed: {amount}\nRemaining Electric: {electric}");
+            Debug.Log($"Electric 소모: {amount}\n현재 Electric: {electric}");
             return true;//성공적으로 소모
         }
         else
@@ -109,15 +150,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public bool ConsumeHP(int amount)
+    public bool ConsumeHP(float amount)
     {
         if (hp > 0)
         {
             hp -= amount;
-            Debug.Log($"HP Consumed: {amount}\nRemaining HP: {hp}");
+            Debug.Log($"HP 소모: {amount}\n현재 HP: {hp}");
             if (hp <= 0)
             {
-                Debug.Log("dead!");
+                Debug.Log("죽었다!!");
             }
             return true; // 성공적으로 소모
         }

@@ -34,7 +34,7 @@ public class SrcStructure : StructureBase
         }
 
         Debug.Log("작업 완료!");
-        //AddResource(); // -> 추후 추가할 것
+        GameManager.Instance.AddSrc(GameManager.Instance.GetCurAddSrc());
 
         isPerformingAction = false;
 

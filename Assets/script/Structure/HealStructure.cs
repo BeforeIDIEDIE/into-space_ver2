@@ -19,6 +19,7 @@ public class HealStructure : StructureBase
         while (isNear && Input.GetKey(KeyCode.Space))
         {
             Debug.Log("Ä¡·á Áß");
+            GameManager.Instance.AddHP(GameManager.Instance.GetCurAddHP());
             yield return new WaitForSeconds(0.5f);
         }
 

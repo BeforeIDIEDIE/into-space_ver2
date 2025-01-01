@@ -35,7 +35,8 @@ public class ElectricStructure : StructureBase
         }
 
         Debug.Log("작업 완료!");
-        //AddResource(); // -> 추후 추가할 것
+        GameManager.Instance.AddElectric(GameManager.Instance.GetCurAddElectric());
+        GameManager.Instance.ConsumeSrc(GameManager.Instance.GetCurRemoveSrc());
 
         isPerformingAction = false;
 
