@@ -16,7 +16,7 @@ public class playerMovement : MonoBehaviour
     private void Start()
     {
         player = this.gameObject;
-        player.transform.position = new Vector3(0,3,5);
+        player.transform.position = new Vector3(-6,3,5);
         playerAnimation = GetComponent<PlayerAnimation>();
     }
 

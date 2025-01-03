@@ -10,7 +10,14 @@ public class ElectricStructure : StructureBase
     {
         if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction)
         {
-            StartCoroutine(PerformAction());
+            if (GameManager.Instance.GetSrc() >= GameManager.Instance.GetCurRemoveSrc())
+            {
+                StartCoroutine(PerformAction());
+            }
+            else
+            {
+                Debug.Log("연료 부족!");
+            }
         }
     }
     public override IEnumerator PerformAction()
@@ -26,6 +33,13 @@ public class ElectricStructure : StructureBase
             if (!isNear)//플레이어가 감지 영역을 벗어난 경우
             {
                 Debug.Log("작업 중단");
+                isPerformingAction = false;
+                yield break;
+            }
+
+            if (GameManager.Instance.GetSrc() < GameManager.Instance.GetCurRemoveSrc())//플레이어 작업중 연료부족
+            {
+                Debug.Log("연료부족!");
                 isPerformingAction = false;
                 yield break;
             }

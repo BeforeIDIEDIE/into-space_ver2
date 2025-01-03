@@ -27,32 +27,38 @@ public class GameManager : MonoBehaviour
     }
 
     //목표까지의 거리
-    private float shipDist = 0f;
-    private float totalDist = 0f;
-    private float shipSpeed = 0f;
-    private float shipConsume = 0f;
+    private float Dist = 0f;
+    private float totalDist = 1260f;
+    private float shipSpeed = 2f;
+    private float shipConsume = 1f;
+    private float activeSpeedMultiplier = 1.5f; 
+    private float activeConsumeMultiplier = 2f; 
+    private float previousDist;
+    private bool isBoosted = false;
 
     //자원
     private float src = 0f;
-    private float curAddSrc = 3f;
+    private float curAddSrc = 6f;
     private float maxSrc = 100f;
     private float curRemoveSrc = 2f;
     private float previousSrc;
-    
 
     private float electric = 0f;
     private float curAddElectric = 3f;
     private float maxElectric = 100f;
     private float previousElectric;
 
-    private float hp = 100f;
+    private float hp = 50f;
     private float maximumHP = 100f;
     private float curAddHP = 1f;
     private float previousHP;
 
+
+    //UI
     [SerializeField] private TextMeshProUGUI hpText;
     [SerializeField] private TextMeshProUGUI srcText;
     [SerializeField] private TextMeshProUGUI electricText;
+    [SerializeField] private TextMeshProUGUI shipdist;
 
     private void Start()
     {
@@ -60,23 +66,56 @@ public class GameManager : MonoBehaviour
         previousHP = hp;
         previousSrc = src;
         previousElectric = electric;
-
-        // 초기 UI 업데이트
+        previousDist = Dist;
+        StartCoroutine(MoveShip());
         UpdateResourceUI();
     }
 
     private void Update()
     {
-        // 자원이 변경되었을 때만 UI 업데이트
-        if (previousHP != hp || previousSrc != src || previousElectric != electric)
+        if (previousHP != hp || previousSrc != src || previousElectric != electric || previousDist != Dist)
         {
             UpdateResourceUI();
 
-            // 이전 값 갱신
             previousHP = hp;
             previousSrc = src;
             previousElectric = electric;
+            previousDist = Dist;
         }
+    }
+
+    private IEnumerator MoveShip()
+    {
+        while (Dist < totalDist)
+        {
+            float currentSpeed = isBoosted ? shipSpeed * activeSpeedMultiplier : shipSpeed;
+            float currentConsume = isBoosted ? shipConsume * activeConsumeMultiplier : shipConsume;
+
+            if (src >= currentConsume)
+            {
+                src -= currentConsume;
+                Dist += currentSpeed;
+                Debug.Log($"현재거리 {Dist}, 연료 {src}");
+            }
+            else
+            {
+                Debug.Log("우주선이 멈춤");
+            }
+
+            yield return new WaitForSeconds(2f);
+        }
+        Debug.Log("목표 도달!");
+        //아직 엔딩 안만듦!
+    }
+
+    // 조종석 상호작용
+    public void onBoost()
+    {
+        isBoosted = true;
+    }
+    public void offBoost()
+    {
+        isBoosted = false;
     }
 
     private void UpdateResourceUI()
@@ -84,20 +123,9 @@ public class GameManager : MonoBehaviour
         hpText.text = $"HP: {hp}/{maximumHP}";
         srcText.text = $"Src: {src}/{maxSrc}";
         electricText.text = $"Electric: {electric}/{maxElectric}";
+        shipdist.text = $"Dist: {Dist}/{totalDist}"; 
     }
 
-
-    public void shipMoving()
-    {
-        if(src<shipConsume)
-        {
-            Debug.Log("fail");
-        }
-        else
-        {
-            //우주선이 src소모
-        }
-    }
 
     //자원 추가
     public void AddSrc(float amount)
