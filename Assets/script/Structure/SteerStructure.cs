@@ -18,10 +18,11 @@ public class SteerStructure : StructureBase
 
         while (isNear && Input.GetKey(KeyCode.Space))
         {
+            GameManager.Instance.onBoost();
             Debug.Log("조종 중");
             yield return new WaitForSeconds(0.5f);
         }
-
+        GameManager.Instance.offBoost();
         Debug.Log("조종 중단");
         isPerformingAction = false;
     }

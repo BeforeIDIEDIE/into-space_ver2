@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.Mathematics;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -59,16 +60,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI srcText;
     [SerializeField] private TextMeshProUGUI electricText;
     [SerializeField] private TextMeshProUGUI shipdist;
+    [SerializeField] private Slider distanceSlider;
 
     private void Start()
     {
-        // 초기 값 설정
+        //초기 값 설정
         previousHP = hp;
         previousSrc = src;
         previousElectric = electric;
         previousDist = Dist;
         StartCoroutine(MoveShip());
         UpdateResourceUI();
+
+        //슬라이더 용
+        distanceSlider.minValue = 0;
+        distanceSlider.maxValue = 1;
+        distanceSlider.value = Dist/totalDist;
     }
 
     private void Update()
@@ -120,10 +127,11 @@ public class GameManager : MonoBehaviour
 
     private void UpdateResourceUI()
     {
-        hpText.text = $"HP: {hp}/{maximumHP}";
-        srcText.text = $"Src: {src}/{maxSrc}";
-        electricText.text = $"Electric: {electric}/{maxElectric}";
-        shipdist.text = $"Dist: {Dist}/{totalDist}"; 
+        hpText.text = $"{hp}/{maximumHP}";
+        srcText.text = $"{src}/{maxSrc}";
+        electricText.text = $"{electric}/{maxElectric}";
+        shipdist.text = $"Dist: {Dist}/{totalDist}";
+        distanceSlider.value = Dist / totalDist;
     }
 
 
