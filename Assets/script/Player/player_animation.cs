@@ -12,6 +12,10 @@ public class PlayerAnimation : MonoBehaviour
 
     public void UpdateAnimation(float horizontal, float vertical)
     {
+        animator.SetBool("Src", GameManager.Instance.IsInteractionActive(InteractionType.Src));
+        animator.SetBool("Heal", GameManager.Instance.IsInteractionActive(InteractionType.Heal));
+        animator.SetBool("Steer", GameManager.Instance.IsInteractionActive(InteractionType.Steer));
+        animator.SetBool("Electric", GameManager.Instance.IsInteractionActive(InteractionType.Electric));
         //애니메이터 파라미터 업데이트
         animator.SetFloat("moveX", horizontal);
         animator.SetFloat("moveY", vertical);
@@ -20,7 +24,5 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool("isMoving", (horizontal != 0 || vertical != 0));
         animator.SetBool("moveX0", horizontal == 0);
         animator.SetBool("moveY0", vertical == 0);
-        
-
     }
 }

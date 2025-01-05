@@ -6,7 +6,16 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine.UI;
 using UnityEditor.Build;
+using System.Linq;
 
+
+public enum InteractionType
+{
+    Heal,
+    Electric,
+    Src,
+    Steer
+}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance
@@ -28,14 +37,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //상호작용을 위한 열거형
+    private Dictionary<InteractionType, bool> interactionStates;
+
     [SerializeField] public GameObject Player;
-
-    //애니메이션 작동 트리거
-    private bool isSrc;
-    private bool isElectric;
-    private bool isHeal;
-    private bool isSteer;
-
 
     //목표까지의 거리
     private float Dist = 0f;
@@ -82,11 +87,13 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //초기 값 설정
-        isBoosted = false;
-        isElectric = false;
-        isHeal = false;
-        isSrc = false;
-        isSteer = false;
+        interactionStates = new Dictionary<InteractionType, bool>
+        {
+            { InteractionType.Heal, false },
+            { InteractionType.Electric, false },
+            { InteractionType.Src, false },
+            { InteractionType.Steer, false }
+        };
         previousHP = hp;
         previousSrc = src;
         previousElectric = electric;
@@ -230,4 +237,19 @@ public class GameManager : MonoBehaviour
     public float GetCurAddHP() => curAddHP;
     public float GetCurAddElectric() => curAddElectric;
     public float GetCurRemoveSrc() => curRemoveSrc;
+
+    public void SetInteractionState(InteractionType type, bool state)
+    {
+        interactionStates[type] = state;
+    }
+
+    public bool IsInteractionActive(InteractionType type)
+    {
+        return interactionStates[type];
+    }
+
+    public bool IsPlayerInteraction()
+    {
+        return interactionStates.Values.Any(state => state);//하나라도 참이면 참
+    }
 }

@@ -14,6 +14,7 @@ public class SteerStructure : StructureBase
     public override IEnumerator PerformAction() //조종용
     {
         isPerformingAction = true;
+        GameManager.Instance.SetInteractionState(InteractionType.Steer, true);
         Debug.Log("조종 시작!");
 
         while (isNear && Input.GetKey(KeyCode.Space))
@@ -23,6 +24,7 @@ public class SteerStructure : StructureBase
             yield return new WaitForSeconds(0.5f);
         }
         GameManager.Instance.offBoost();
+        GameManager.Instance.SetInteractionState(InteractionType.Src, false);
         Debug.Log("조종 중단");
         isPerformingAction = false;
     }

@@ -123,14 +123,14 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: all_room_backup_ver3
     originalName: 
-    pivot: {x: 0.6896942, y: -0.5564263}
+    pivot: {x: 0.63612217, y: -0.5564263}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 883
+      width: 753
       height: 638
     spriteID: c29018544d4f25b4aa28e1f68bbf31f6
     spriteBone: []
@@ -153,9 +153,9 @@ ScriptedImporter:
     - name: all_room_backup_ver3
       frameIndex: 0
       cellRect:
-        x: 141
+        x: 271
         y: 355
-        width: 883
+        width: 753
         height: 638
       spriteId: c29018544d4f25b4aa28e1f68bbf31f6
     linkedCells: []

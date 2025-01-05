@@ -15,7 +15,7 @@ public class HealStructure : StructureBase
     {
         isPerformingAction = true;
         Debug.Log("치료 시작!");
-
+        GameManager.Instance.SetInteractionState(InteractionType.Heal, true);
         while (isNear && Input.GetKey(KeyCode.Space))
         {
             Debug.Log("치료 중");
@@ -24,6 +24,7 @@ public class HealStructure : StructureBase
         }
 
         Debug.Log("치료 중단");
+        GameManager.Instance.SetInteractionState(InteractionType.Heal, false);
         isPerformingAction = false;
     }
 }
