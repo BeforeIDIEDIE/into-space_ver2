@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ElectricStructure : StructureBase
 {
-    private float actionDuration = 3f;
-
+    private Vector3 playerLastPosition;
     private void Update()
     {
         if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction)
         {
             if (GameManager.Instance.GetSrc() >= GameManager.Instance.GetCurRemoveSrc())
             {
+                playerLastPosition = GameManager.Instance.Player.transform.position;
                 StartCoroutine(PerformAction());
             }
             else
@@ -28,7 +28,7 @@ public class ElectricStructure : StructureBase
         float elapsedTime = 0f;
 
 
-        while (elapsedTime < actionDuration)
+        while (elapsedTime < GameManager.Instance.GetproductElecTime())
         {
             if (!isNear)//플레이어가 감지 영역을 벗어난 경우
             {

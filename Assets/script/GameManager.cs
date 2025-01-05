@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine.UI;
+using UnityEditor.Build;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,6 +28,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [SerializeField] public GameObject Player;
+
+    //애니메이션 작동 트리거
+    private bool isSrc;
+    private bool isElectric;
+    private bool isHeal;
+    private bool isSteer;
+
+
     //목표까지의 거리
     private float Dist = 0f;
     private float totalDist = 1260f;
@@ -43,16 +53,23 @@ public class GameManager : MonoBehaviour
     private float maxSrc = 100f;
     private float curRemoveSrc = 2f;
     private float previousSrc;
+    private float productSrcTime = 3f;
 
     private float electric = 0f;
     private float curAddElectric = 3f;
     private float maxElectric = 100f;
     private float previousElectric;
+    private float productElectricTime = 3f;
 
     private float hp = 50f;
     private float maximumHP = 100f;
     private float curAddHP = 1f;
     private float previousHP;
+    private float productHealTime = 0.5f;
+
+    public float GetproductElecTime() => productElectricTime;
+    public float GetproductSrcTime() => productSrcTime;
+    public float GetproductHealTime() => productHealTime;
 
 
     //UI
@@ -65,6 +82,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //초기 값 설정
+        isBoosted = false;
+        isElectric = false;
+        isHeal = false;
+        isSrc = false;
+        isSteer = false;
         previousHP = hp;
         previousSrc = src;
         previousElectric = electric;
@@ -145,7 +167,6 @@ public class GameManager : MonoBehaviour
     public void AddElectric(float amount)
     {
         electric += amount;
-
         Debug.Log($"Electric 추가: {amount}, 현재 Electric: {electric}");
     }
 

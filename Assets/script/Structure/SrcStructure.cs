@@ -20,7 +20,7 @@ public class SrcStructure : StructureBase
         float elapsedTime = 0f;
 
 
-        while (elapsedTime < actionDuration)
+        while (elapsedTime < GameManager.Instance.GetproductSrcTime())
         {
             if (!isNear)//플레이어가 감지 영역을 벗어난 경우
             {

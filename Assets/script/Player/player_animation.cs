@@ -20,6 +20,7 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool("isMoving", (horizontal != 0 || vertical != 0));
         animator.SetBool("moveX0", horizontal == 0);
         animator.SetBool("moveY0", vertical == 0);
+        
 
     }
 }

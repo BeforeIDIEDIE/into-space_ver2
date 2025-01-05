@@ -20,7 +20,7 @@ public class HealStructure : StructureBase
         {
             Debug.Log("치료 중");
             GameManager.Instance.AddHP(GameManager.Instance.GetCurAddHP());
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(GameManager.Instance.GetproductHealTime());
         }
 
         Debug.Log("치료 중단");
