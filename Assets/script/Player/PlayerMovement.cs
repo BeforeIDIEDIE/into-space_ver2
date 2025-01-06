@@ -22,11 +22,12 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.Space)&&GameManager.Instance.IsPlayerInteraction())//이부분 수정 필요 -> 아마 is near + 스페이스바 누르면?
+        if(Input.GetKey(KeyCode.Space)&&GameManager.Instance.IsPlayerInteraction())
         {
             playerAnimation.UpdateAnimation_action();
             return;
         }
+        playerAnimation.UpdateAnimation_action();
         Vector3 moveVelocity = Vector3.zero;
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");

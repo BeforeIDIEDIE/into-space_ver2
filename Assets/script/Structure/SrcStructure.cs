@@ -18,7 +18,7 @@ public class SrcStructure : StructureBase
         Debug.Log("작업 시작!");
         GameManager.Instance.SetInteractionState(InteractionType.Src, true);
         float elapsedTime = 0f;
-        while (elapsedTime < GameManager.Instance.GetproductSrcTime())
+        while ((elapsedTime < GameManager.Instance.GetproductSrcTime())&& (Input.GetKey(KeyCode.Space)))
         {
             if (!isNear)//플레이어가 감지 영역을 벗어난 경우
             {

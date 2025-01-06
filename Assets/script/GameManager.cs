@@ -237,6 +237,8 @@ public class GameManager : MonoBehaviour
     public float GetCurAddHP() => curAddHP;
     public float GetCurAddElectric() => curAddElectric;
     public float GetCurRemoveSrc() => curRemoveSrc;
+    public float GetBoostConsumeSrc() => shipConsume* activeConsumeMultiplier;
+
 
     public void SetInteractionState(InteractionType type, bool state)
     {

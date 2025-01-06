@@ -28,7 +28,7 @@ public class ElectricStructure : StructureBase
         float elapsedTime = 0f;
 
 
-        while (elapsedTime < GameManager.Instance.GetproductElecTime())
+        while ((elapsedTime < GameManager.Instance.GetproductElecTime())&& Input.GetKey(KeyCode.Space))
         {
             if (!isNear)//플레이어가 감지 영역을 벗어난 경우
             {
