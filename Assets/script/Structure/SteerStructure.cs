@@ -38,7 +38,7 @@ public class SteerStructure : StructureBase
         {
             if (GameManager.Instance.GetSrc() < GameManager.Instance.GetCurRemoveSrc())
             {
-                Debug.Log("조종 중 연료 부족! 조종 중단.");
+                Debug.Log("조종 중단.");
                 GameManager.Instance.SetInteractionState(InteractionType.Steer, false);
                 GameManager.Instance.offBoost();
                 isPerformingAction = false;

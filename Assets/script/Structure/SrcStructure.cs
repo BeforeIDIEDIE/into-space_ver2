@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SrcStructure : StructureBase
 {
-    private float actionDuration = 3f;
     private void Update()
     {
         if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction)
