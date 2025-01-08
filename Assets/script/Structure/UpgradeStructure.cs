@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UpgradeStructure : StructureBase
 {
 
     [SerializeField] private GameObject existingUI; 
-    [SerializeField] private GameObject upgradeUI; 
+    [SerializeField] private GameObject upgradeUI;
+    [SerializeField] private List<Image> SrcUpgradeSlots;
+    [SerializeField] private List<Image> ElectricUpgradeSlots;
+    [SerializeField] private List<Image> HealUpgradeSlots;
 
     private bool isUpgradeUIOn; 
 
