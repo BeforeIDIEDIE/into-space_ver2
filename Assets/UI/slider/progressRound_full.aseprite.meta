@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 92efe40bfda3bfa4e8031946002242e1
+guid: b4785bcee65a828459bd7c4b03d3412b
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,18 +121,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: resrc
+  - name: progressRound_full
     originalName: 
-    pivot: {x: 0.5050505, y: -0.5172414}
+    pivot: {x: 0.42857146, y: -0.14285715}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 99
-      height: 58
-    spriteID: 423e161e20c1a624fbcbf65f2df1347a
+      width: 7
+      height: 7
+    spriteID: eedf3b8dad4c85641b27876850ca3716
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,24 +144,24 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1249547373
-    name: resrc
+    guid: 643760267
+    name: progressRound_full
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: resrc
+    - name: progressRound_full
       frameIndex: 0
       cellRect:
-        x: 0
-        y: 30
-        width: 99
-        height: 58
-      spriteId: 423e161e20c1a624fbcbf65f2df1347a
+        x: 2
+        y: 1
+        width: 7
+        height: 7
+      spriteId: eedf3b8dad4c85641b27876850ca3716
     linkedCells: []
     parentIndex: -1
   platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 100, y: 100}
+  canvasSize: {x: 10, y: 10}

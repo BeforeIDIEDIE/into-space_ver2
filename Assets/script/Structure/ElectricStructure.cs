@@ -1,17 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class ElectricStructure : StructureBase
 {
-    private Vector3 playerLastPosition;
+
+    [SerializeField] private Image progressImage_bottom;
+    [SerializeField] private Image progressImage_top;
+
+    private void Start()
+    {
+        progressImage_bottom.gameObject.SetActive(false);
+        progressImage_top.gameObject.SetActive(false);
+    }
     private void Update()
     {
         if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction)
         {
             if (GameManager.Instance.GetSrc() >= GameManager.Instance.GetCurRemoveSrc())
             {
-                playerLastPosition = GameManager.Instance.Player.transform.position;
                 StartCoroutine(PerformAction());
             }
             else
@@ -27,6 +34,9 @@ public class ElectricStructure : StructureBase
         GameManager.Instance.SetInteractionState(InteractionType.Electric, true);
         float elapsedTime = 0f;
 
+        progressImage_top.fillAmount = 0f;
+        progressImage_bottom.gameObject.SetActive(true);
+        progressImage_top.gameObject.SetActive(true);
 
         while ((elapsedTime < GameManager.Instance.GetproductElecTime())&& Input.GetKey(KeyCode.Space))
         {
@@ -35,6 +45,8 @@ public class ElectricStructure : StructureBase
                 Debug.Log("작업 중단");
                 GameManager.Instance.SetInteractionState(InteractionType.Electric, false);
                 isPerformingAction = false;
+                progressImage_bottom.gameObject.SetActive(false);
+                progressImage_top.gameObject.SetActive(false);
                 yield break;
             }
 
@@ -43,9 +55,11 @@ public class ElectricStructure : StructureBase
                 Debug.Log("연료부족!");
                 GameManager.Instance.SetInteractionState(InteractionType.Electric, false);
                 isPerformingAction = false;
+                progressImage_bottom.gameObject.SetActive(false);
+                progressImage_top.gameObject.SetActive(false);
                 yield break;
             }
-
+            progressImage_top.fillAmount = elapsedTime / GameManager.Instance.GetproductSrcTime();
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -56,7 +70,8 @@ public class ElectricStructure : StructureBase
         GameManager.Instance.ConsumeSrc(GameManager.Instance.GetCurRemoveSrc());
 
         isPerformingAction = false;
-
+        progressImage_bottom.gameObject.SetActive(false);
+        progressImage_top.gameObject.SetActive(false);
         if (isNear && Input.GetKey(KeyCode.Space))
         {
             StartCoroutine(PerformAction());//작업반복
