@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 67407fac98e69e941ab090e0906964db
+guid: 156ed11d79d84c846856b405981686c3
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,18 +121,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: all_room_backup_ver3
+  - name: clock_progress
     originalName: 
-    pivot: {x: 0.6302631, y: -0.5564263}
+    pivot: {x: 0.48192772, y: -3.6153846}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 760
-      height: 638
-    spriteID: c29018544d4f25b4aa28e1f68bbf31f6
+      width: 83
+      height: 13
+    spriteID: e986581e4713575498d0eaad239a6a51
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,24 +144,24 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -153093875
-    name: all_room_backup_ver3
+    guid: 637281666
+    name: clock_progress
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: all_room_backup_ver3
+    - name: clock_progress
       frameIndex: 0
       cellRect:
-        x: 271
-        y: 355
-        width: 760
-        height: 638
-      spriteId: c29018544d4f25b4aa28e1f68bbf31f6
+        x: 10
+        y: 47
+        width: 83
+        height: 13
+      spriteId: e986581e4713575498d0eaad239a6a51
     linkedCells: []
     parentIndex: -1
   platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 1500, y: 1500}
+  canvasSize: {x: 100, y: 100}
