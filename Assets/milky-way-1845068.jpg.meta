@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      milky-way-1845068_0: -2075422448499050936
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
