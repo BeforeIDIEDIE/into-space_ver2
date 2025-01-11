@@ -36,15 +36,20 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    //시계관련
+    [SerializeField] private Image dayProgressImage;//하루 경과를 표시할 이미지
+    [SerializeField] private float dayDuration = 180f;
+    private float currentTime = 0f;
+    private int day = 1;
 
     //상호작용을 위한 열거형
     private Dictionary<InteractionType, bool> interactionStates;
-
+    
     [SerializeField] public GameObject Player;
 
     //목표까지의 거리
     private float Dist = 0f;
-    private float totalDist = 1260f;
+    private float totalDist = 2520f;
     private float shipSpeed = 2f;
     private float shipConsume = 1f;
     private float activeSpeedMultiplier = 1.5f; 
@@ -83,6 +88,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI electricText;
     [SerializeField] private TextMeshProUGUI shipdist;
     [SerializeField] private Slider distanceSlider;
+    [SerializeField] private TextMeshProUGUI dayText;
 
     private void Start()
     {
@@ -105,6 +111,7 @@ public class GameManager : MonoBehaviour
         distanceSlider.minValue = 0;
         distanceSlider.maxValue = 1;
         distanceSlider.value = Dist/totalDist;
+        UpdateDayText();
     }
 
     private void Update()
@@ -118,6 +125,37 @@ public class GameManager : MonoBehaviour
             previousElectric = electric;
             previousDist = Dist;
         }
+        UpdateDayProgress();
+    }
+
+    private void UpdateDayProgress()
+    {
+        if (currentTime < dayDuration)
+        {
+            currentTime += Time.deltaTime; 
+            float progress = currentTime / dayDuration; 
+            if (dayProgressImage != null)
+            {
+                dayProgressImage.fillAmount = progress; 
+            }
+        }
+        else
+        {
+            currentTime = 0f;
+            day++;
+            UpdateDayText();
+            OnDayEnd();//하루 끝인 경우 별도의 작업 여따 적음
+        }
+    }
+    private void UpdateDayText()
+    {
+        dayText.text = $"Day {day}";
+    }
+
+    private void OnDayEnd()
+    {
+        Debug.Log("하루 끝");
+        //나중에 따로 작업!-> 전기 소모
     }
 
     private IEnumerator MoveShip()
@@ -167,13 +205,13 @@ public class GameManager : MonoBehaviour
     //자원 추가
     public void AddSrc(float amount)
     {
-        src += amount;
+        src = Mathf.Min(src + amount, maxSrc);
         Debug.Log($"Src 추가: {amount}, 현재 Src: {src}");
     }
 
     public void AddElectric(float amount)
     {
-        electric += amount;
+        electric = Mathf.Min(electric + amount, maxElectric);
         Debug.Log($"Electric 추가: {amount}, 현재 Electric: {electric}");
     }
 
@@ -237,6 +275,8 @@ public class GameManager : MonoBehaviour
     public float GetCurAddHP() => curAddHP;
     public float GetCurAddElectric() => curAddElectric;
     public float GetCurRemoveSrc() => curRemoveSrc;
+    public float GetBoostConsumeSrc() => shipConsume* activeConsumeMultiplier;
+
 
     public void SetInteractionState(InteractionType type, bool state)
     {
