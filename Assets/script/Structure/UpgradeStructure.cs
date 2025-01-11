@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class UpgradeStructure : StructureBase
 {
-
     [SerializeField] private GameObject existingUI; 
     [SerializeField] private GameObject upgradeUI;
     [SerializeField] private List<Image> SrcUpgradeSlots;
@@ -16,6 +15,11 @@ public class UpgradeStructure : StructureBase
     [SerializeField] private Button srcUpgradeButton;      
     [SerializeField] private Button electricUpgradeButton; 
     [SerializeField] private Button healUpgradeButton;
+
+    private List<float> cost = new List<float>{ 20f, 25f, 30f, 35f, 40f, 45f };
+    private List<float> src = new List<float> { 1f, 1f, 1f, 1f, 1f, 1f };
+    private List<float> elec = new List<float> { 1f, 1f, 1f, 1f, 1f, 1f, 1f };
+    private List<float> heal = new List<float> { 1f, 1f, 1f, 1f, 1f, 1f, 1f };
 
     private int maxUpgradeIdx = 5;
     private int SrcUpgradeIdx = -1;
@@ -131,34 +135,3 @@ public class UpgradeStructure : StructureBase
         }
     }
 }
-
-//public void SrcUpgrade()
-//{
-
-//    SrcUpgradeIdx++;
-//    SrcUpgradeSlots[SrcUpgradeIdx].sprite = upgradedImage;
-//    if (SrcUpgradeIdx < 5)
-//    {
-//        SrcUpgradeSlots[SrcUpgradeIdx + 1].enabled = true;
-//    }
-//}
-//public void ElectricUpgrade()
-//{
-
-//    ElectricUpgradeIdx++;
-//    ElectricUpgradeSlots[ElectricUpgradeIdx].sprite = upgradedImage;
-//    if(ElectricUpgradeIdx < 5)
-//    {
-//        ElectricUpgradeSlots[ElectricUpgradeIdx + 1].enabled = true;
-//    }
-//}
-//public void HealUpgrade()
-//{
-
-//    HealUpgradeIdx++;
-//    HealUpgradeSlots[HealUpgradeIdx].sprite = upgradedImage;
-//    if (HealUpgradeIdx < 5)
-//    {
-//        HealUpgradeSlots[HealUpgradeIdx + 1].enabled = true;
-//    }
-//}

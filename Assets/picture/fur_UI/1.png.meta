@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b1c7f70657af27941b98a2584d597201
+guid: 73c2688c31aa9bc44a50c6fdc89c9749
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2075422448499050936
-    second: milky-way-1845068_0
+      213: -855298285791758126
+    second: 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: milky-way-1845068_0
+      name: 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 4608
-        height: 3072
+        width: 1024
+        height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 846b756774e9233e0800000000000000
-      internalID: -2075422448499050936
+      spriteID: 2d8b16a9dbe5124f0800000000000000
+      internalID: -855298285791758126
       vertices: []
       indices: 
       edges: []

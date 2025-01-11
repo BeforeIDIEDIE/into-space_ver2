@@ -8,6 +8,8 @@ public class ElectricStructure : StructureBase
     [SerializeField] private Image progressImage_bottom;
     [SerializeField] private Image progressImage_top;
 
+    [SerializeField] private Image progress_all;
+
     private void Start()
     {
         progressImage_bottom.gameObject.SetActive(false);
@@ -26,6 +28,7 @@ public class ElectricStructure : StructureBase
                 Debug.Log("연료 부족!");
             }
         }
+        progress_all.fillAmount = GameManager.Instance.GetElectric()/GameManager.Instance.GetMaxElec();
     }
     public override IEnumerator PerformAction()
     {

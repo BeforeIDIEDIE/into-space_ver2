@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 67407fac98e69e941ab090e0906964db
+guid: 4e8ea2cba3111b64c933e2d0d63bb6c2
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,18 +121,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: all_room_backup_ver3
+  - name: ReSRC_filled
     originalName: 
-    pivot: {x: 0.63612217, y: -0.5564263}
+    pivot: {x: 0.5, y: -8.333333}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 753
-      height: 638
-    spriteID: c29018544d4f25b4aa28e1f68bbf31f6
+      width: 64
+      height: 9
+    spriteID: b3bc5cf363c644942a662f69fdd78b68
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,24 +144,24 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -153093875
-    name: all_room_backup_ver3
+    guid: 687174516
+    name: ReSRC_filled
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: all_room_backup_ver3
+    - name: ReSRC_filled
       frameIndex: 0
       cellRect:
-        x: 271
-        y: 355
-        width: 753
-        height: 638
-      spriteId: c29018544d4f25b4aa28e1f68bbf31f6
+        x: 18
+        y: 75
+        width: 64
+        height: 9
+      spriteId: b3bc5cf363c644942a662f69fdd78b68
     linkedCells: []
     parentIndex: -1
   platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 1500, y: 1500}
+  canvasSize: {x: 100, y: 100}

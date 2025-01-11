@@ -6,7 +6,7 @@ public class SrcStructure : StructureBase
 {
     [SerializeField] private Image progressImage_bottom;
     [SerializeField] private Image progressImage_top;
-
+    [SerializeField] private Image progress_all;
     private void Start()
     {
         progressImage_bottom.gameObject.SetActive(false);
@@ -18,6 +18,7 @@ public class SrcStructure : StructureBase
         {
             StartCoroutine(PerformAction());
         }
+        progress_all.fillAmount = GameManager.Instance.GetSrc() / GameManager.Instance.GetMaxSrc();
     }
     public override IEnumerator PerformAction()
     {
