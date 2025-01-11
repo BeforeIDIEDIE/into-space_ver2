@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      sohangsung-jidae_0: -359939224811628581
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
