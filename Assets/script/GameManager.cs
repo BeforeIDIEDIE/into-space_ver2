@@ -293,8 +293,20 @@ public class GameManager : MonoBehaviour
 
     // 자원 상태 반환 함수
     public float GetSrc() => src;
+    public void AddCurAddSrc( float amount)
+    {
+        curAddSrc += amount;
+    }
     public float GetElectric() => electric;
+    public void AddCurAddElectric(float amount)
+    {
+        curAddElectric += amount;
+    }
     public float GetHP() => hp;
+    public void AddCurAddHp(float amount)
+    {
+        curAddHP += amount;
+    }
     public float GetCurAddSrc() => curAddSrc;
     public float GetCurAddHP() => curAddHP;
     public float GetCurAddElectric() => curAddElectric;
