@@ -11,7 +11,7 @@ public class playerMovement : MonoBehaviour
     [SerializeField] private float speed = 3f;
 
     private PlayerAnimation playerAnimation;
-
+    private bool isDead = false;
 
     private void Start()
     {
@@ -22,7 +22,11 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.Space)&&GameManager.Instance.IsPlayerInteraction())
+        if (isDead)
+        {
+            return;
+        }
+        if (Input.GetKey(KeyCode.Space)&&GameManager.Instance.IsPlayerInteraction())
         {
             playerAnimation.UpdateAnimation_action();
             return;
@@ -34,5 +38,15 @@ public class playerMovement : MonoBehaviour
         moveVelocity = new Vector3(horizontal, vertical, 0f).normalized;
         transform.position += moveVelocity * speed * Time.deltaTime;
         playerAnimation.UpdateAnimation_walk(horizontal, vertical);
+    }
+
+    public void HandlePlayerDeath()
+    {
+        if (!isDead) 
+        {
+            isDead = true;
+            playerAnimation.TriggerDeathAnimation();
+            Debug.Log("플레이어가 사망했습니다.");
+        }
     }
 }

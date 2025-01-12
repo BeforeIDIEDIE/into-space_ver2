@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     private float previousDist;
     private bool isBoosted = false;
 
+
     //자원
     private float src = 0f;
     private float curAddSrc = 6f;
@@ -79,6 +80,10 @@ public class GameManager : MonoBehaviour
 
     private float reduceHpTime = 2f;
     private float reduceHpAmount = 1f;
+
+    private bool isDead = false;
+    private bool deadCoroutineStarted = false;
+
 
     public float GetproductElecTime() => productElectricTime;
     public float GetproductSrcTime() => productSrcTime;
@@ -129,26 +134,48 @@ public class GameManager : MonoBehaviour
             previousElectric = electric;
             previousDist = Dist;
         }
+        
         UpdateDayProgress();
+
+        if(isDead ==true)
+        {
+            if (!deadCoroutineStarted)
+            {
+                StartCoroutine(HandlePlayerDeath());
+            }
+        }
+    }
+
+    private IEnumerator HandlePlayerDeath()
+    {
+        deadCoroutineStarted = true;
+
+        yield return new WaitForSeconds(3f); 
+
+        Debug.Log("게임 종료");
+        //게임 오버 UI띄우기
     }
 
     private void UpdateDayProgress()
     {
-        if (currentTime < dayDuration)
+        if(!isDead)
         {
-            currentTime += Time.deltaTime; 
-            float progress = currentTime / dayDuration; 
-            if (dayProgressImage != null)
+            if (currentTime < dayDuration)
             {
-                dayProgressImage.fillAmount = progress; 
+                currentTime += Time.deltaTime;
+                float progress = currentTime / dayDuration;
+                if (dayProgressImage != null)
+                {
+                    dayProgressImage.fillAmount = progress;
+                }
             }
-        }
-        else
-        {
-            currentTime = 0f;
-            OnDayEnd();//하루 끝인 경우 별도의 작업 여따 적음
-            day++;
-            UpdateDayText();
+            else
+            {
+                currentTime = 0f;
+                OnDayEnd();//하루 끝인 경우 별도의 작업 여따 적음
+                day++;
+                UpdateDayText();
+            }
         }
     }
     private void UpdateDayText()
@@ -262,7 +289,7 @@ public class GameManager : MonoBehaviour
             return false;
         }
     }
-    public bool ConsumeHP(float amount)
+    public void ConsumeHP(float amount)
     {
         if (hp > 0)
         {
@@ -271,10 +298,9 @@ public class GameManager : MonoBehaviour
             if (hp <= 0)
             {
                 Debug.Log("죽었다!!");
+                isDead = true;
             }
-            return true; 
         }
-        return false;
     }
     public bool ConsumeElectric(float amount)
     {

@@ -5,6 +5,7 @@ public class PlayerAnimation : MonoBehaviour
 {
     private Animator animator;
 
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -24,9 +25,15 @@ public class PlayerAnimation : MonoBehaviour
 
     public void UpdateAnimation_action()//상호작용관련
     {
+
         animator.SetBool("Src", GameManager.Instance.IsInteractionActive(InteractionType.Src));
         animator.SetBool("Heal", GameManager.Instance.IsInteractionActive(InteractionType.Heal));
         animator.SetBool("Steer", GameManager.Instance.IsInteractionActive(InteractionType.Steer));
         animator.SetBool("Electric", GameManager.Instance.IsInteractionActive(InteractionType.Electric));
+    }
+
+    public void TriggerDeathAnimation()
+    {
+        animator.SetTrigger("isDead"); 
     }
 }
