@@ -17,7 +17,7 @@ public class SteerStructure : StructureBase
         //        Debug.Log("연료 부족! 조종이 불가능합니다.");
         //    }
         //}
-        if (isNear && Input.GetKey(KeyCode.Space))
+        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !GameManager.Instance.IsGameOver())
         {
             GameManager.Instance.SetInteractionState(InteractionType.Steer, true);
             GameManager.Instance.onBoost();

@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
         get;
         private set;
     }
-
     private void Awake()
     {
         if (Instance == null)
@@ -35,6 +34,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    //게임 오버관련기능
+    private bool isGameOver = false;
+    //public event Action OnGameOver;// 이벤트 필요시
+
+
     //시계관련
     [SerializeField] private Image dayProgressImage;//하루 경과를 표시할 이미지
     [SerializeField] private float dayDuration = 180f;
@@ -56,7 +60,6 @@ public class GameManager : MonoBehaviour
     private float previousDist;
     private bool isBoosted = false;
 
-
     //자원
     private float src = 0f;
     private float curAddSrc = 6f;
@@ -72,7 +75,7 @@ public class GameManager : MonoBehaviour
     private float productElectricTime = 3f;
     private float defaultConsumeElec = 20f;
 
-    private float hp = 50f;
+    private float hp = 10f;
     private float maximumHP = 100f;
     private float curAddHP = 1f;
     private float previousHP;
@@ -80,9 +83,6 @@ public class GameManager : MonoBehaviour
 
     private float reduceHpTime = 2f;
     private float reduceHpAmount = 1f;
-
-    private bool isDead = false;
-    private bool deadCoroutineStarted = false;
 
 
     public float GetproductElecTime() => productElectricTime;
@@ -136,46 +136,35 @@ public class GameManager : MonoBehaviour
         }
         
         UpdateDayProgress();
-
-        if(isDead ==true)
-        {
-            if (!deadCoroutineStarted)
-            {
-                StartCoroutine(HandlePlayerDeath());
-            }
-        }
     }
 
-    private IEnumerator HandlePlayerDeath()
+    public void TriggerGameOver()
     {
-        deadCoroutineStarted = true;
-
-        yield return new WaitForSeconds(3f); 
-
-        Debug.Log("게임 종료");
-        //게임 오버 UI띄우기
+        if (!isGameOver)
+        {
+            isGameOver = true;
+            Debug.Log("게임 오버");
+        }
     }
 
     private void UpdateDayProgress()
     {
-        if(!isDead)
+        
+        if (currentTime < dayDuration)
         {
-            if (currentTime < dayDuration)
+            currentTime += Time.deltaTime;
+            float progress = currentTime / dayDuration;
+            if (dayProgressImage != null)
             {
-                currentTime += Time.deltaTime;
-                float progress = currentTime / dayDuration;
-                if (dayProgressImage != null)
-                {
-                    dayProgressImage.fillAmount = progress;
-                }
+                dayProgressImage.fillAmount = progress;
             }
-            else
-            {
-                currentTime = 0f;
-                OnDayEnd();//하루 끝인 경우 별도의 작업 여따 적음
-                day++;
-                UpdateDayText();
-            }
+        }
+        else
+        {
+            currentTime = 0f;
+            OnDayEnd();//하루 끝인 경우 별도의 작업 여따 적음
+            day++;
+            UpdateDayText();
         }
     }
     private void UpdateDayText()
@@ -193,6 +182,10 @@ public class GameManager : MonoBehaviour
     {
         while (Dist < totalDist)
         {
+            if (GameManager.Instance.IsGameOver())
+            { 
+                yield break;
+            }
             float currentSpeed = isBoosted ? shipSpeed * activeSpeedMultiplier : shipSpeed;
             float currentConsume = isBoosted ? shipConsume * activeConsumeMultiplier : shipConsume;
 
@@ -206,7 +199,6 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("우주선이 멈춤");
             }
-
             yield return new WaitForSeconds(2f);
         }
         Debug.Log("목표 도달!");
@@ -231,8 +223,6 @@ public class GameManager : MonoBehaviour
         shipdist.text = $"Dist: {Dist}/{totalDist}";
         distanceSlider.value = Dist / totalDist;
     }
-
-
     //자원 추가
     public void AddSrc(float amount)
     {
@@ -267,6 +257,10 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
+            if (GameManager.Instance.IsGameOver())
+            {
+                yield break;
+            }
             yield return new WaitForSeconds(reduceHpTime); // 2초 대기
             if (hp > 0)
             {
@@ -298,7 +292,7 @@ public class GameManager : MonoBehaviour
             if (hp <= 0)
             {
                 Debug.Log("죽었다!!");
-                isDead = true;
+                TriggerGameOver();
             }
         }
     }
@@ -341,10 +335,15 @@ public class GameManager : MonoBehaviour
     public float GetMaxSrc() => maxSrc;
     public float GetMaxElec() => maxElectric;
     public float GetMaxHp() => maximumHP;
+    public bool IsGameOver() => isGameOver;
 
 
     public void SetInteractionState(InteractionType type, bool state)
     {
+        if (GameManager.Instance.IsGameOver())
+        {
+            return;
+        }
         interactionStates[type] = state;
     }
 
@@ -355,6 +354,6 @@ public class GameManager : MonoBehaviour
 
     public bool IsPlayerInteraction()
     {
-        return interactionStates.Values.Any(state => state);//하나라도 참이면 참
+        return interactionStates.Values.Any(state => state);
     }
 }

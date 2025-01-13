@@ -11,10 +11,9 @@ public class playerMovement : MonoBehaviour
     [SerializeField] private float speed = 3f;
 
     private PlayerAnimation playerAnimation;
-    private bool isDead = false;
 
     private void Start()
-    {
+    { 
         player = this.gameObject;
         player.transform.position = new Vector3(-6,3,5);
         playerAnimation = GetComponent<PlayerAnimation>();
@@ -22,7 +21,7 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {
-        if (isDead)
+        if(GameManager.Instance.IsGameOver())
         {
             return;
         }
@@ -40,13 +39,4 @@ public class playerMovement : MonoBehaviour
         playerAnimation.UpdateAnimation_walk(horizontal, vertical);
     }
 
-    public void HandlePlayerDeath()
-    {
-        if (!isDead) 
-        {
-            isDead = true;
-            playerAnimation.TriggerDeathAnimation();
-            Debug.Log("플레이어가 사망했습니다.");
-        }
-    }
 }
