@@ -7,10 +7,16 @@ public class GameEvent
 {
     public string description; 
     public List<EventChoice> choices;
+    public List<EventAnswer> answer;
 }
 
 [System.Serializable]
 public class EventChoice
 {
     public string choiceText;
+}
+
+public class EventAnswer
+{
+    public string answerText;
 }
