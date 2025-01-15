@@ -8,8 +8,6 @@ public class ElectricStructure : StructureBase
     [SerializeField] private Image progressImage_bottom;
     [SerializeField] private Image progressImage_top;
 
-    [SerializeField] private Image progress_all;
-
     private void Start()
     {
         progressImage_bottom.gameObject.SetActive(false);
@@ -17,7 +15,7 @@ public class ElectricStructure : StructureBase
     }
     private void Update()
     {
-        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction&&!GameManager.Instance.IsGameOver())
+        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction)
         {
             if (GameManager.Instance.GetSrc() >= GameManager.Instance.GetCurRemoveSrc())
             {
@@ -28,7 +26,6 @@ public class ElectricStructure : StructureBase
                 Debug.Log("연료 부족!");
             }
         }
-        progress_all.fillAmount = GameManager.Instance.GetElectric()/GameManager.Instance.GetMaxElec();
     }
     public override IEnumerator PerformAction()
     {
@@ -53,9 +50,9 @@ public class ElectricStructure : StructureBase
                 yield break;
             }
 
-            if (GameManager.Instance.GetSrc() < GameManager.Instance.GetCurRemoveSrc() && !GameManager.Instance.IsGameOver())//플레이어 작업중 연료부족+ 게임 오버시
+            if (GameManager.Instance.GetSrc() < GameManager.Instance.GetCurRemoveSrc())//플레이어 작업중 연료부족
             {
-                Debug.Log("연료부족!"); 
+                Debug.Log("연료부족!");
                 GameManager.Instance.SetInteractionState(InteractionType.Electric, false);
                 isPerformingAction = false;
                 progressImage_bottom.gameObject.SetActive(false);
@@ -75,7 +72,7 @@ public class ElectricStructure : StructureBase
         isPerformingAction = false;
         progressImage_bottom.gameObject.SetActive(false);
         progressImage_top.gameObject.SetActive(false);
-        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !GameManager.Instance.IsGameOver())
+        if (isNear && Input.GetKey(KeyCode.Space))
         {
             StartCoroutine(PerformAction());//작업반복
         }
