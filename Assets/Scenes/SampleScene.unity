@@ -4810,6 +4810,8 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 706999440}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
+=======
 >>>>>>> parent of 4735aff (이벤트 일부 작성)
 --- !u!1 &727375908
 GameObject:
@@ -7348,6 +7350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 <<<<<<< HEAD
 =======
+>>>>>>> parent of 4735aff (이벤트 일부 작성)
 --- !u!1 &1079732677
 GameObject:
   m_ObjectHideFlags: 0
@@ -8363,6 +8366,8 @@ RectTransform:
   m_AnchoredPosition: {x: -430.9622, y: -141.7}
   m_SizeDelta: {x: 297.8513, y: 43.2678}
   m_Pivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
+=======
 >>>>>>> parent of 4735aff (이벤트 일부 작성)
 --- !u!1 &1272118299
 GameObject:
@@ -9528,7 +9533,9 @@ CanvasRenderer:
   m_GameObject: {fileID: 1449560700}
   m_CullTransparentMesh: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+>>>>>>> parent of 4735aff (이벤트 일부 작성)
 --- !u!1 &1482065098
 GameObject:
   m_ObjectHideFlags: 0
@@ -11491,6 +11498,8 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1666554720}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
+=======
 >>>>>>> parent of 4735aff (이벤트 일부 작성)
 --- !u!1 &1715006755
 GameObject:
