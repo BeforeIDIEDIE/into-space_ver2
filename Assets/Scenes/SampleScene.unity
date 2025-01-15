@@ -4811,6 +4811,7 @@ CanvasRenderer:
   m_GameObject: {fileID: 706999440}
   m_CullTransparentMesh: 1
 <<<<<<< HEAD
+>>>>>>> parent of 4735aff (이벤트 일부 작성)
 =======
 >>>>>>> parent of 4735aff (이벤트 일부 작성)
 --- !u!1 &727375908
@@ -7348,6 +7349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a0399e0456186f4eba8a10ea808b888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> parent of 4735aff (이벤트 일부 작성)
