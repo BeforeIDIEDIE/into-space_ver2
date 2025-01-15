@@ -5,19 +5,11 @@ public class PlayerAnimation : MonoBehaviour
 {
     private Animator animator;
 
-    private bool hasPlayedDeathAnimation = false;
-
     private void Start()
     {
         animator = GetComponent<Animator>();
     }
-    private void Update()
-    {
-        if (GameManager.Instance.IsGameOver() && !hasPlayedDeathAnimation)
-        {
-            PlayDeathAnimation();
-        }
-    }
+
     public void UpdateAnimation_walk(float horizontal, float vertical)
     {
         //애니메이터 파라미터 업데이트
@@ -36,17 +28,5 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool("Heal", GameManager.Instance.IsInteractionActive(InteractionType.Heal));
         animator.SetBool("Steer", GameManager.Instance.IsInteractionActive(InteractionType.Steer));
         animator.SetBool("Electric", GameManager.Instance.IsInteractionActive(InteractionType.Electric));
-    }
-    private void PlayDeathAnimation()
-    {
-        hasPlayedDeathAnimation = true; 
-        animator.SetTrigger("Death");
-        StartCoroutine(HandleGameOver());
-    }
-    private IEnumerator HandleGameOver()
-    {
-        yield return new WaitForSeconds(3f);
-        Debug.Log("게임 종료");
-        //GameManager.Instance.TriggerGameOverUI();//게임 오버 UI -> 아직 안만듦
     }
 }

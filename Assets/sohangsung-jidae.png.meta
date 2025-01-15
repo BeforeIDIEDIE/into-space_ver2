@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d7a9c738ab194ec46b63a7129e24cd93
+guid: 2350d18f902541847ab46c39a068c20e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6470460504253458178
-    second: 3_0
+      213: -359939224811628581
+    second: sohangsung-jidae_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,12 +100,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 3_0
+      name: sohangsung-jidae_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1024
+        width: 1792
         height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ef817ce047e4436a0800000000000000
-      internalID: -6470460504253458178
+      spriteID: bd79f5c9e2d310bf0800000000000000
+      internalID: -359939224811628581
       vertices: []
       indices: 
       edges: []
@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      sohangsung-jidae_0: -359939224811628581
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

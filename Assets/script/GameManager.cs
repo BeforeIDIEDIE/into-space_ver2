@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using UnityEditor.Build;
 using System.Linq;
 
+
 public enum InteractionType
 {
     Heal,
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
         get;
         private set;
     }
+
     private void Awake()
     {
         if (Instance == null)
@@ -34,11 +36,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    //게임 오버관련기능
-    private bool isGameOver = false;
-    //public event Action OnGameOver;// 이벤트 필요시
-
-
     //시계관련
     [SerializeField] private Image dayProgressImage;//하루 경과를 표시할 이미지
     [SerializeField] private float dayDuration = 180f;
@@ -73,17 +70,12 @@ public class GameManager : MonoBehaviour
     private float maxElectric = 100f;
     private float previousElectric;
     private float productElectricTime = 3f;
-    private float defaultConsumeElec = 20f;
 
-    private float hp = 10f;
+    private float hp = 50f;
     private float maximumHP = 100f;
     private float curAddHP = 1f;
     private float previousHP;
     private float productHealTime = 0.5f;
-
-    private float reduceHpTime = 2f;
-    private float reduceHpAmount = 1f;
-
 
     public float GetproductElecTime() => productElectricTime;
     public float GetproductSrcTime() => productSrcTime;
@@ -113,7 +105,6 @@ public class GameManager : MonoBehaviour
         previousElectric = electric;
         previousDist = Dist;
         StartCoroutine(MoveShip());
-        StartCoroutine(ReduceHpOverTime());
         UpdateResourceUI();
 
         //슬라이더 용
@@ -134,37 +125,26 @@ public class GameManager : MonoBehaviour
             previousElectric = electric;
             previousDist = Dist;
         }
-        
         UpdateDayProgress();
-    }
-
-    public void TriggerGameOver()
-    {
-        if (!isGameOver)
-        {
-            isGameOver = true;
-            Debug.Log("게임 오버");
-        }
     }
 
     private void UpdateDayProgress()
     {
-        
         if (currentTime < dayDuration)
         {
-            currentTime += Time.deltaTime;
-            float progress = currentTime / dayDuration;
+            currentTime += Time.deltaTime; 
+            float progress = currentTime / dayDuration; 
             if (dayProgressImage != null)
             {
-                dayProgressImage.fillAmount = progress;
+                dayProgressImage.fillAmount = progress; 
             }
         }
         else
         {
             currentTime = 0f;
-            OnDayEnd();//하루 끝인 경우 별도의 작업 여따 적음
             day++;
             UpdateDayText();
+            OnDayEnd();//하루 끝인 경우 별도의 작업 여따 적음
         }
     }
     private void UpdateDayText()
@@ -175,17 +155,13 @@ public class GameManager : MonoBehaviour
     private void OnDayEnd()
     {
         Debug.Log("하루 끝");
-        ConsumeElectric(defaultConsumeElec+(day-1)*5);
+        //나중에 따로 작업!-> 전기 소모
     }
 
     private IEnumerator MoveShip()
     {
         while (Dist < totalDist)
         {
-            if (GameManager.Instance.IsGameOver())
-            { 
-                yield break;
-            }
             float currentSpeed = isBoosted ? shipSpeed * activeSpeedMultiplier : shipSpeed;
             float currentConsume = isBoosted ? shipConsume * activeConsumeMultiplier : shipConsume;
 
@@ -199,6 +175,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("우주선이 멈춤");
             }
+
             yield return new WaitForSeconds(2f);
         }
         Debug.Log("목표 도달!");
@@ -223,23 +200,13 @@ public class GameManager : MonoBehaviour
         shipdist.text = $"Dist: {Dist}/{totalDist}";
         distanceSlider.value = Dist / totalDist;
     }
+
+
     //자원 추가
     public void AddSrc(float amount)
     {
         src = Mathf.Min(src + amount, maxSrc);
         Debug.Log($"Src 추가: {amount}, 현재 Src: {src}");
-    }
-
-    public void AddDefaultElec(float amount)
-    {
-        if(amount>0)
-        {
-            defaultConsumeElec += amount;
-        }
-        else
-        {
-            defaultConsumeElec = Math.Max(defaultConsumeElec + amount, 0);
-        }
     }
 
     public void AddElectric(float amount)
@@ -253,21 +220,7 @@ public class GameManager : MonoBehaviour
         hp = Mathf.Min(hp + amount, maximumHP);
         Debug.Log($"HP 추가: {amount}, 현재 HP: {hp}");
     }
-    private IEnumerator ReduceHpOverTime()
-    {
-        while (true)
-        {
-            if (GameManager.Instance.IsGameOver())
-            {
-                yield break;
-            }
-            yield return new WaitForSeconds(reduceHpTime); // 2초 대기
-            if (hp > 0)
-            {
-                ConsumeHP(reduceHpAmount);
-            }
-        }
-    }
+
     // 자원 소모
     public bool ConsumeSrc(float amount)
     {
@@ -283,19 +236,7 @@ public class GameManager : MonoBehaviour
             return false;
         }
     }
-    public void ConsumeHP(float amount)
-    {
-        if (hp > 0)
-        {
-            hp -= amount;
-            Debug.Log("현재 HP: {hp}");
-            if (hp <= 0)
-            {
-                Debug.Log("죽었다!!");
-                TriggerGameOver();
-            }
-        }
-    }
+
     public bool ConsumeElectric(float amount)
     {
         if (electric >= amount)
@@ -311,39 +252,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool ConsumeHP(float amount)
+    {
+        if (hp > 0)
+        {
+            hp -= amount;
+            Debug.Log($"HP 소모: {amount}\n현재 HP: {hp}");
+            if (hp <= 0)
+            {
+                Debug.Log("죽었다!!");
+            }
+            return true; // 성공적으로 소모
+        }
+        return false; // 체력이 이미 0
+    }
+
     // 자원 상태 반환 함수
     public float GetSrc() => src;
-    public void AddCurAddSrc( float amount)
-    {
-        curAddSrc += amount;
-    }
     public float GetElectric() => electric;
-    public void AddCurAddElectric(float amount)
-    {
-        curAddElectric += amount;
-    }
     public float GetHP() => hp;
-    public void AddCurAddHp(float amount)
-    {
-        curAddHP += amount;
-    }
     public float GetCurAddSrc() => curAddSrc;
     public float GetCurAddHP() => curAddHP;
     public float GetCurAddElectric() => curAddElectric;
     public float GetCurRemoveSrc() => curRemoveSrc;
     public float GetBoostConsumeSrc() => shipConsume* activeConsumeMultiplier;
-    public float GetMaxSrc() => maxSrc;
-    public float GetMaxElec() => maxElectric;
-    public float GetMaxHp() => maximumHP;
-    public bool IsGameOver() => isGameOver;
 
 
     public void SetInteractionState(InteractionType type, bool state)
     {
-        if (GameManager.Instance.IsGameOver())
-        {
-            return;
-        }
         interactionStates[type] = state;
     }
 
@@ -354,6 +290,6 @@ public class GameManager : MonoBehaviour
 
     public bool IsPlayerInteraction()
     {
-        return interactionStates.Values.Any(state => state);
+        return interactionStates.Values.Any(state => state);//하나라도 참이면 참
     }
 }
