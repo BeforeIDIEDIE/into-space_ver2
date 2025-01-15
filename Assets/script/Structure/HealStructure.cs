@@ -6,7 +6,7 @@ public class HealStructure : StructureBase
 {
 
     [SerializeField] private Image progressImage_top;
-
+    [SerializeField] private Image progress_all;
     private void Start()
     {
         progressImage_top.gameObject.SetActive(false);
@@ -14,10 +14,11 @@ public class HealStructure : StructureBase
 
     private void Update()
     {
-        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction)
+        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !isPerformingAction && !GameManager.Instance.IsGameOver())
         {
             StartCoroutine(PerformAction());
         }
+        progress_all.fillAmount = GameManager.Instance.GetHP() / GameManager.Instance.GetMaxHp();
     }
     public override IEnumerator PerformAction() //Èú¿ë
     {

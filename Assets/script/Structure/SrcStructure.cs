@@ -6,7 +6,7 @@ public class SrcStructure : StructureBase
 {
     [SerializeField] private Image progressImage_bottom;
     [SerializeField] private Image progressImage_top;
-
+    [SerializeField] private Image progress_all;
     private void Start()
     {
         progressImage_bottom.gameObject.SetActive(false);
@@ -14,13 +14,22 @@ public class SrcStructure : StructureBase
     }
     private void Update()
     {
-        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction)
+        if(GameManager.Instance.IsGameOver())
+        {
+            return;
+        }
+        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !isPerformingAction )
         {
             StartCoroutine(PerformAction());
         }
+        progress_all.fillAmount = GameManager.Instance.GetSrc() / GameManager.Instance.GetMaxSrc();
     }
     public override IEnumerator PerformAction()
     {
+        if (GameManager.Instance.IsGameOver())
+        {
+            yield break ;
+        }
         isPerformingAction = true;
         Debug.Log("작업 시작!");
         GameManager.Instance.SetInteractionState(InteractionType.Src, true);
@@ -32,7 +41,7 @@ public class SrcStructure : StructureBase
 
         while ((elapsedTime < GameManager.Instance.GetproductSrcTime())&& (Input.GetKey(KeyCode.Space)))
         {
-            if (!isNear)//플레이어가 감지 영역을 벗어난 경우
+            if (!isNear|| GameManager.Instance.IsGameOver())//플레이어가 감지 영역을 벗어난 경우
             {
                 Debug.Log("작업 중단");
                 GameManager.Instance.SetInteractionState(InteractionType.Src, false);
@@ -54,7 +63,7 @@ public class SrcStructure : StructureBase
         progressImage_bottom.gameObject.SetActive(false);
         progressImage_top.gameObject.SetActive(false);
 
-        if (isNear && Input.GetKey(KeyCode.Space))
+        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !GameManager.Instance.IsGameOver())
         {
             StartCoroutine(PerformAction());//작업반복
         }

@@ -12,9 +12,8 @@ public class playerMovement : MonoBehaviour
 
     private PlayerAnimation playerAnimation;
 
-
     private void Start()
-    {
+    { 
         player = this.gameObject;
         player.transform.position = new Vector3(-6,3,5);
         playerAnimation = GetComponent<PlayerAnimation>();
@@ -22,7 +21,11 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.Space)&&GameManager.Instance.IsPlayerInteraction())
+        if(GameManager.Instance.IsGameOver())
+        {
+            return;
+        }
+        if (Input.GetKey(KeyCode.Space)&&GameManager.Instance.IsPlayerInteraction())
         {
             playerAnimation.UpdateAnimation_action();
             return;
@@ -35,4 +38,5 @@ public class playerMovement : MonoBehaviour
         transform.position += moveVelocity * speed * Time.deltaTime;
         playerAnimation.UpdateAnimation_walk(horizontal, vertical);
     }
+
 }
