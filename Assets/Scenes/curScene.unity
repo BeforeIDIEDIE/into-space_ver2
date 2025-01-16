@@ -620,10 +620,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab62a343d543fa4abda7f4d2ad8d832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  problem: {fileID: 0}
-  sel1: {fileID: 0}
-  sel2: {fileID: 0}
-  sel3: {fileID: 0}
+  problem: {fileID: 1190295009}
+  sel1: {fileID: 71668578}
+  sel2: {fileID: 1976811051}
+  sel3: {fileID: 2128864228}
+  textDisplaySpeed: 0.05
+  curImg: {fileID: 1919995159}
+  eventSprites:
+  - {fileID: 8863866651302885649, guid: 828f250ecce70d24da76849d3069834c, type: 3}
+  - {fileID: 8625793394153792411, guid: 95272d67de83eb94aa7f766816748ca4, type: 3}
+  - {fileID: 1936005797604267946, guid: d6aa5b6318d34374394639fd617e15ee, type: 3}
+  - {fileID: -4435379037784521200, guid: af2b0029d53639749885a8bff69571a9, type: 3}
+  - {fileID: 4869516898844453852, guid: 59053689010c8d142a1c3336a74a3095, type: 3}
+  - {fileID: 2152587359027355465, guid: b4cbd74dadf0d7a45a05cc08760266e2, type: 3}
+  - {fileID: 6306370719397192804, guid: fd1b6e8062fd774478c53eac4900d75f, type: 3}
 --- !u!4 &39414984
 Transform:
   m_ObjectHideFlags: 0
@@ -884,8 +894,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8955,7 +8965,7 @@ GameObject:
   - component: {fileID: 1190295010}
   - component: {fileID: 1190295009}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: problem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9027,8 +9037,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -10518,6 +10528,7 @@ RectTransform:
   - {fileID: 71668577}
   - {fileID: 1976811050}
   - {fileID: 2128864227}
+  - {fileID: 1919995158}
   m_Father: {fileID: 2110998256}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -13725,6 +13736,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1889631366}
   m_CullTransparentMesh: 1
+--- !u!1 &1919995157
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1919995158}
+  - component: {fileID: 1919995160}
+  - component: {fileID: 1919995159}
+  m_Layer: 5
+  m_Name: problem_scene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1919995158
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919995157}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1482065099}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 430.30716, y: 118.87463}
+  m_SizeDelta: {x: 245.4142, y: 158.2508}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1919995159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919995157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1919995160
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919995157}
+  m_CullTransparentMesh: 1
 --- !u!1 &1976811049
 GameObject:
   m_ObjectHideFlags: 0
@@ -13809,8 +13895,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -15446,8 +15532,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
