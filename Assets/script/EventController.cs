@@ -15,6 +15,11 @@ public class EventController : MonoBehaviour
     [SerializeField] private float textDisplaySpeed = 0.1f;
     [SerializeField] private Image curImg;
     [SerializeField] private List<Sprite> eventSprites;
+    [SerializeField] private Button sel1BTN;
+    [SerializeField] private Button sel2BTN;
+    [SerializeField] private Button sel3BTN;
+    [SerializeField] private Button Enter;
+
     private void Start()
     {
         InitializeEvents();
@@ -134,7 +139,7 @@ public class EventController : MonoBehaviour
                 choices = new List<EventChoice>
                 {
                     new EventChoice { choiceText = "왼쪽 진입" },//50%확률로 200거리 추가, 50%확률로 300거리 감소 
-                    new EventChoice { choiceText = "오른쪽 진입" },//50%확률로 400거리 추가, 50%확률로 600거리 감소
+                    new EventChoice { choiceText = "오른쪽 진입" },//50%확률로 200거리 추가, 50%확률로 300거리 감소
                     new EventChoice { choiceText = "진입 하지 않는다." }//가던길 간다.
                 },
                 answers = new List<EventAnswer>
@@ -149,38 +154,52 @@ public class EventController : MonoBehaviour
     }
     private void printProblem()
     {
+        sel1BTN.interactable = false;
+        sel2BTN.interactable = false;
+        sel3BTN.interactable = false;
+        Enter.interactable = false;
         StartCoroutine(DisplayEvent());
     }
 
     private IEnumerator DisplayEvent()
     {
-        // 모든 텍스트 초기화
         problem.text = "";
         sel1.text = "";
         sel2.text = "";
         sel3.text = "";
-        
-        // 랜덤 이벤트 선택
+
+        sel1BTN.interactable = false;
+        sel2BTN.interactable = false;
+        sel3BTN.interactable = false;
+        Enter.interactable = false;
+
         GameEvent randomEvent = events[Random.Range(0, events.Count)];
         curImg.sprite = randomEvent.eventSprite;
-        // 설명 출력
-        yield return StartCoroutine(DisplayText(problem, randomEvent.description));
 
-        // 선택지 출력
+        foreach (char c in randomEvent.description)
+        {
+            problem.text += c;
+            yield return new WaitForSeconds(textDisplaySpeed);
+        }
+
+        yield return new WaitForSeconds(0.3f); 
+
         List<TextMeshProUGUI> selectionTexts = new List<TextMeshProUGUI> { sel1, sel2, sel3 };
         for (int i = 0; i < randomEvent.choices.Count; i++)
         {
             string choiceTextWithNumber = $"{i + 1}. {randomEvent.choices[i].choiceText}";
-            yield return StartCoroutine(DisplayText(selectionTexts[i], choiceTextWithNumber));
+            foreach (char c in choiceTextWithNumber)
+            {
+                selectionTexts[i].text += c;
+                yield return new WaitForSeconds(textDisplaySpeed);
+            }
         }
-    }
+        yield return new WaitForSeconds(0.3f);
 
-    private IEnumerator DisplayText(TextMeshProUGUI uiElement, string text)
-    {
-        foreach (char c in text)
-        {
-            uiElement.text += c;
-            yield return new WaitForSeconds(textDisplaySpeed);
-        }
+        // 버튼 활성화
+        sel1BTN.interactable = true;
+        sel2BTN.interactable = true;
+        sel3BTN.interactable = true;
+        Enter.interactable = false;
     }
 }

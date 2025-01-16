@@ -634,6 +634,10 @@ MonoBehaviour:
   - {fileID: 4869516898844453852, guid: 59053689010c8d142a1c3336a74a3095, type: 3}
   - {fileID: 2152587359027355465, guid: b4cbd74dadf0d7a45a05cc08760266e2, type: 3}
   - {fileID: 6306370719397192804, guid: fd1b6e8062fd774478c53eac4900d75f, type: 3}
+  sel1BTN: {fileID: 1606145973}
+  sel2BTN: {fileID: 279819083}
+  sel3BTN: {fileID: 706999442}
+  Enter: {fileID: 1810454799}
 --- !u!4 &39414984
 Transform:
   m_ObjectHideFlags: 0
@@ -1889,7 +1893,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: -6053718394792686, guid: e7538be5d37dd0e448b421ddc89fd713, type: 3}
     m_PressedSprite: {fileID: 2048639533535859878, guid: 49747633ff00d084089e2b4d892624f3, type: 3}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: -290612522229341300, guid: a000900f9818cf64887f53e248cf33a7, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -5128,7 +5132,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: -6053718394792686, guid: e7538be5d37dd0e448b421ddc89fd713, type: 3}
     m_PressedSprite: {fileID: 2048639533535859878, guid: 49747633ff00d084089e2b4d892624f3, type: 3}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: -290612522229341300, guid: a000900f9818cf64887f53e248cf33a7, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -11912,7 +11916,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: -6053718394792686, guid: e7538be5d37dd0e448b421ddc89fd713, type: 3}
     m_PressedSprite: {fileID: 2048639533535859878, guid: 49747633ff00d084089e2b4d892624f3, type: 3}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: -290612522229341300, guid: a000900f9818cf64887f53e248cf33a7, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -13060,7 +13064,7 @@ GameObject:
   - component: {fileID: 1810454800}
   - component: {fileID: 1810454799}
   m_Layer: 5
-  m_Name: BTN4
+  m_Name: Enter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13118,7 +13122,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: -6053718394792686, guid: e7538be5d37dd0e448b421ddc89fd713, type: 3}
     m_PressedSprite: {fileID: 2048639533535859878, guid: 49747633ff00d084089e2b4d892624f3, type: 3}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: -290612522229341300, guid: a000900f9818cf64887f53e248cf33a7, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted

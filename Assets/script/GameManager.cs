@@ -61,21 +61,23 @@ public class GameManager : MonoBehaviour
     private bool isBoosted = false;
 
     //자원
-    private float src = 0f;
+    private bool isUpgradeAble = true;
+
+    private float src = 100f;
     private float curAddSrc = 6f;
     private float maxSrc = 100f;
     private float curRemoveSrc = 2f;
     private float previousSrc;
     private float productSrcTime = 3f;
 
-    private float electric = 0f;
+    private float electric = 100f;
     private float curAddElectric = 3f;
     private float maxElectric = 100f;
     private float previousElectric;
     private float productElectricTime = 3f;
     private float defaultConsumeElec = 20f;
 
-    private float hp = 10f;
+    private float hp = 100f;
     private float maximumHP = 100f;
     private float curAddHP = 1f;
     private float previousHP;
@@ -175,6 +177,7 @@ public class GameManager : MonoBehaviour
     private void OnDayEnd()
     {
         Debug.Log("하루 끝");
+        isUpgradeAble = true;
         ConsumeElectric(defaultConsumeElec+(day-1)*5);
     }
 
@@ -230,16 +233,9 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Src 추가: {amount}, 현재 Src: {src}");
     }
 
-    public void AddDefaultElec(float amount)
+    public void ReduceDefaultElec(float amount)
     {
-        if(amount>0)
-        {
-            defaultConsumeElec += amount;
-        }
-        else
-        {
-            defaultConsumeElec = Math.Max(defaultConsumeElec + amount, 0);
-        }
+        defaultConsumeElec = math.max(defaultConsumeElec - amount, 0);
     }
 
     public void AddElectric(float amount)
@@ -336,6 +332,12 @@ public class GameManager : MonoBehaviour
     public float GetMaxElec() => maxElectric;
     public float GetMaxHp() => maximumHP;
     public bool IsGameOver() => isGameOver;
+    public bool IsUpgradeAble() => isUpgradeAble;
+
+    public void SetshipSpeed(float amount)
+    {
+        shipSpeed *= amount;
+    }
 
 
     public void SetInteractionState(InteractionType type, bool state)
@@ -355,5 +357,22 @@ public class GameManager : MonoBehaviour
     public bool IsPlayerInteraction()
     {
         return interactionStates.Values.Any(state => state);
+    }
+    public void reduceDayDuration(float amount)
+    {
+        dayDuration = Math.Max(dayDuration - amount, 0);
+    }
+
+    public void AddCurRemovedSrc(float amount)
+    {
+        curRemoveSrc += amount;
+    }
+    public void RemoveDist(float amount)
+    {
+        Dist -= amount;
+    }
+    public void AddDist(float amount)
+    {
+        Dist += amount;
     }
 }
