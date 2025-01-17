@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class EventController : MonoBehaviour
 {
     private List<GameEvent> events; // 이벤트 데이터 저장
-    [SerializeField] private TextMeshProUGUI problem;
+    [SerializeField] private TextMeshProUGUI problemAndAnswer;
     [SerializeField] private TextMeshProUGUI sel1;
     [SerializeField] private TextMeshProUGUI sel2;
     [SerializeField] private TextMeshProUGUI sel3;
@@ -20,11 +20,29 @@ public class EventController : MonoBehaviour
     [SerializeField] private Button sel3BTN;
     [SerializeField] private Button Enter;
 
+    private List<bool> isSelected = new List<bool>();
+
+    //버튼 상태
+    private void SetButtonState(bool sel1State, bool sel2State, bool sel3State, bool enterState)
+    {
+        sel1BTN.interactable = sel1State;
+        sel2BTN.interactable = sel2State;
+        sel3BTN.interactable = sel3State;
+        Enter.interactable = enterState;
+    }
+    private void allBTNDisable() => SetButtonState(false, false, false, false);
+    private void OnlyEnterBTNAble() => SetButtonState(false, false, false, true);
+    private void selChoice() => SetButtonState(true, true, true, false);
+
+
+
     private void Start()
     {
         InitializeEvents();
+        InitializeSelectionFlags();
         printProblem();
     }
+
 
     private void InitializeEvents()
     {
@@ -67,7 +85,7 @@ public class EventController : MonoBehaviour
             },
             new GameEvent//3
             {
-                description = $"주기적 전기 사용량 중 쓸데없는 사용량을 감지했다!\n현재 보유 전기 : {GameManager.Instance.GetElectric()}",
+                description = "주기적 전기 사용량 중 쓸데없는 사용량을 감지했다!",
                 choices = new List<EventChoice>
                 {
                     new EventChoice { choiceText = "전기 20을 소모하여 고친다 " },//-> 이상 없음
@@ -152,33 +170,86 @@ public class EventController : MonoBehaviour
             }
         };
     }
-    private void printProblem()
+    private void InitializeSelectionFlags()
     {
-        sel1BTN.interactable = false;
-        sel2BTN.interactable = false;
-        sel3BTN.interactable = false;
-        Enter.interactable = false;
-        StartCoroutine(DisplayEvent());
+        isSelected = new List<bool>();
+        for (int i = 0; i < events.Count; i++)
+        {
+            isSelected.Add(false);
+        }
     }
 
-    private IEnumerator DisplayEvent()
+    private int GetRandomEventIndex()
     {
-        problem.text = "";
+        List<int> availableIndices = new List<int>();
+        for (int i = 0; i < isSelected.Count; i++)
+        {
+            if (!isSelected[i])
+            {
+                availableIndices.Add(i);
+            }
+        }
+
+        // 모든 이벤트가 선택되었으면 플래그 초기화
+        if (availableIndices.Count == 0)
+        {
+            ResetSelectionFlags();
+            for (int i = 0; i < isSelected.Count; i++)
+            {
+                availableIndices.Add(i);
+            }
+        }
+        int randomIndex = availableIndices[Random.Range(0, availableIndices.Count)];
+        isSelected[randomIndex] = true;
+        return randomIndex;
+    }
+
+    private void ResetSelectionFlags()
+    {
+        for (int i = 0; i < isSelected.Count; i++)
+        {
+            isSelected[i] = false;
+        }
+        Debug.Log("모든 이벤트 선택됨");
+    }
+    private void OnChoiceSelected(int eventIDX, int selIDX)
+    {
+        GameEvent currentEvent = events[eventIDX];
+        StartCoroutine(TypeAnswerText(currentEvent.answers[selIDX].answerText));
+    }
+
+    private void printProblem()
+    {
+        int curIdx = GetRandomEventIndex();
+        StartCoroutine(DisplayEvent(curIdx));
+        sel1BTN.onClick.RemoveAllListeners();
+        sel1BTN.onClick.AddListener(() => OnChoiceSelected(curIdx, 0));
+
+        sel2BTN.onClick.RemoveAllListeners();
+        sel2BTN.onClick.AddListener(() => OnChoiceSelected(curIdx, 1));
+
+        sel3BTN.onClick.RemoveAllListeners();
+        sel3BTN.onClick.AddListener(() => OnChoiceSelected(curIdx, 2));
+
+        //엔터 누를시 실행할 함수 : 시간을 흐르게함 -> 기능 수행; 
+    }
+
+    private IEnumerator DisplayEvent(int idxOfEvent)
+    {
+        problemAndAnswer.text = "";
         sel1.text = "";
         sel2.text = "";
         sel3.text = "";
+        curImg.sprite = null;
 
-        sel1BTN.interactable = false;
-        sel2BTN.interactable = false;
-        sel3BTN.interactable = false;
-        Enter.interactable = false;
+        allBTNDisable();
 
-        GameEvent randomEvent = events[Random.Range(0, events.Count)];
+        GameEvent randomEvent = events[idxOfEvent];
         curImg.sprite = randomEvent.eventSprite;
 
         foreach (char c in randomEvent.description)
         {
-            problem.text += c;
+            problemAndAnswer.text += c;
             yield return new WaitForSeconds(textDisplaySpeed);
         }
 
@@ -195,11 +266,20 @@ public class EventController : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(0.3f);
-
-        // 버튼 활성화
-        sel1BTN.interactable = true;
-        sel2BTN.interactable = true;
-        sel3BTN.interactable = true;
-        Enter.interactable = false;
+        selChoice();
+    }
+    private IEnumerator TypeAnswerText(string answerText)
+    {
+        allBTNDisable();
+        problemAndAnswer.text = "";
+        sel1.text = "";
+        sel2.text = "";
+        sel3.text = "";
+        foreach (char c in answerText)
+        {
+            problemAndAnswer.text += c;
+            yield return new WaitForSeconds(textDisplaySpeed); 
+        }
+        OnlyEnterBTNAble();
     }
 }

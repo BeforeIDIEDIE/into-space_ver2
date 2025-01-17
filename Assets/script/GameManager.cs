@@ -38,13 +38,16 @@ public class GameManager : MonoBehaviour
     private bool isGameOver = false;
     //public event Action OnGameOver;// 이벤트 필요시
 
+    //플레이어 이동속도
+    [SerializeField] private playerMovement furPlayerMovement;
 
     //시계관련
     [SerializeField] private Image dayProgressImage;//하루 경과를 표시할 이미지
     [SerializeField] private float dayDuration = 180f;
+    
     private float currentTime = 0f;
     private int day = 1;
-
+    
     //상호작용을 위한 열거형
     private Dictionary<InteractionType, bool> interactionStates;
     
@@ -52,7 +55,7 @@ public class GameManager : MonoBehaviour
 
     //목표까지의 거리
     private float Dist = 0f;
-    private float totalDist = 2520f;
+    private float maxDist = 2520f;
     private float shipSpeed = 2f;
     private float shipConsume = 1f;
     private float activeSpeedMultiplier = 1.5f; 
@@ -121,7 +124,7 @@ public class GameManager : MonoBehaviour
         //슬라이더 용
         distanceSlider.minValue = 0;
         distanceSlider.maxValue = 1;
-        distanceSlider.value = Dist/totalDist;
+        distanceSlider.value = Dist/maxDist;
         UpdateDayText();
     }
 
@@ -183,7 +186,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator MoveShip()
     {
-        while (Dist < totalDist)
+        while (Dist < maxDist)
         {
             if (GameManager.Instance.IsGameOver())
             { 
@@ -223,8 +226,8 @@ public class GameManager : MonoBehaviour
         hpText.text = $"{hp}/{maximumHP}";
         srcText.text = $"{src}/{maxSrc}";
         electricText.text = $"{electric}/{maxElectric}";
-        shipdist.text = $"Dist: {Dist}/{totalDist}";
-        distanceSlider.value = Dist / totalDist;
+        shipdist.text = $"Dist: {Dist}/{maxDist}";
+        distanceSlider.value = Dist / maxDist;
     }
     //자원 추가
     public void AddSrc(float amount)
@@ -314,10 +317,6 @@ public class GameManager : MonoBehaviour
         curAddSrc += amount;
     }
     public float GetElectric() => electric;
-    public void AddCurAddElectric(float amount)
-    {
-        curAddElectric += amount;
-    }
     public float GetHP() => hp;
     public void AddCurAddHp(float amount)
     {
@@ -369,10 +368,23 @@ public class GameManager : MonoBehaviour
     }
     public void RemoveDist(float amount)
     {
-        Dist -= amount;
+        Dist  = Math.Max(Dist-amount,0);
     }
     public void AddDist(float amount)
     {
-        Dist += amount;
+        Dist = Math.Min(maxDist,amount+Dist);
     }
+    public void AddReduceHPAmount(float amount)
+    {
+        reduceHpAmount += amount;
+    }
+    public void AddPlayerSpeed(float amount)
+    {
+        furPlayerMovement.SetPlayerSpeed(amount + furPlayerMovement.GetPlayerSpeed());
+    }
+    public void AddCurAddElectric(float amount)
+    {
+        curAddElectric += amount;
+    }
+    
 }

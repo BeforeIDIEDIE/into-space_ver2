@@ -620,7 +620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab62a343d543fa4abda7f4d2ad8d832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  problem: {fileID: 1190295009}
+  problemAndAnswer: {fileID: 1190295009}
   sel1: {fileID: 71668578}
   sel2: {fileID: 1976811051}
   sel3: {fileID: 2128864228}
@@ -14845,6 +14845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef09d6ebdff11fa49b26486a861cbcea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  furPlayerMovement: {fileID: 0}
   dayProgressImage: {fileID: 661342839}
   dayDuration: 180
   Player: {fileID: 1992323902}
