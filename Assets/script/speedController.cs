@@ -11,10 +11,10 @@ public class speedController : MonoBehaviour
     private bool isTwo;
     void Start()
     {
-        Time.timeScale = 1.0f;
+        //Time.timeScale = 1.0f;
         isTwo = false;
         speedToggle.onValueChanged.AddListener(OnToggleSpeed);
-        UpdateSpeedState(false);
+        //UpdateSpeedState(false);
     }
 
     private void OnToggleSpeed(bool isTwoX)

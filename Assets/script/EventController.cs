@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class EventController : MonoBehaviour
 {
+    private int selectedChoiceIndex = -1;
     private List<GameEvent> events; // 이벤트 데이터 저장
     [SerializeField] private TextMeshProUGUI problemAndAnswer;
     [SerializeField] private TextMeshProUGUI sel1;
@@ -19,6 +20,9 @@ public class EventController : MonoBehaviour
     [SerializeField] private Button sel2BTN;
     [SerializeField] private Button sel3BTN;
     [SerializeField] private Button Enter;
+    [SerializeField] private GameObject SRCUI;
+    [SerializeField] private GameObject eventUI;
+    [SerializeField] private speedController controller;
 
     private List<bool> isSelected = new List<bool>();
 
@@ -34,16 +38,12 @@ public class EventController : MonoBehaviour
     private void OnlyEnterBTNAble() => SetButtonState(false, false, false, true);
     private void selChoice() => SetButtonState(true, true, true, false);
 
-
-
     private void Start()
     {
         InitializeEvents();
         InitializeSelectionFlags();
         printProblem();
     }
-
-
     private void InitializeEvents()
     {
         // 이벤트 데이터를 직접 초기화
@@ -77,7 +77,7 @@ public class EventController : MonoBehaviour
                 },
                 answers = new List<EventAnswer>
                 {
-                    new EventAnswer { answerText = "쥐를 소각했다!" },
+                    new EventAnswer { answerText = "쥐를 소각했다!\n아무 이상 없다!" },
                     new EventAnswer { answerText = "하루동안 업그레이드 불가..." },
                     new EventAnswer { answerText = "체력 2 회복!" }
                 },
@@ -85,7 +85,7 @@ public class EventController : MonoBehaviour
             },
             new GameEvent//3
             {
-                description = "주기적 전기 사용량 중 쓸데없는 사용량을 감지했다!",
+                description = $"주기적 전기 사용량 중 쓸데없는 사용량을 감지했다!\n현재 보유 전기 : {GameManager.Instance.GetElectric()}",
                 choices = new List<EventChoice>
                 {
                     new EventChoice { choiceText = "전기 20을 소모하여 고친다 " },//-> 이상 없음
@@ -111,9 +111,9 @@ public class EventController : MonoBehaviour
                 },
                 answers = new List<EventAnswer>
                 {
-                    new EventAnswer { answerText = "전기 생산시 연료 소모량이 1감소하지만 전기 생산량도 1 감소했다...." },
+                    new EventAnswer { answerText = "전기 생산시 연료 소모량이 1감소하지만 \n전기 생산량도 1 감소했다...." },
                     new EventAnswer { answerText = "아무 이상 없다!" },
-                    new EventAnswer { answerText = "전기 생산시 연료 소모량이 2증가하지만 전기 생산량이 2증가한다!" }
+                    new EventAnswer { answerText = "전기 생산시 연료 소모량이 2증가하지만 전기 생산량이 3증가한다!" }
                 },
                 eventSprite = eventSprites[3]
             },
@@ -157,7 +157,7 @@ public class EventController : MonoBehaviour
                 choices = new List<EventChoice>
                 {
                     new EventChoice { choiceText = "왼쪽 진입" },//50%확률로 200거리 추가, 50%확률로 300거리 감소 
-                    new EventChoice { choiceText = "오른쪽 진입" },//50%확률로 200거리 추가, 50%확률로 300거리 감소
+                    new EventChoice { choiceText = "오른쪽 진입" },//50%확률로 300거리 추가, 50%확률로 350거리 감소
                     new EventChoice { choiceText = "진입 하지 않는다." }//가던길 간다.
                 },
                 answers = new List<EventAnswer>
@@ -214,12 +214,20 @@ public class EventController : MonoBehaviour
     }
     private void OnChoiceSelected(int eventIDX, int selIDX)
     {
+        selectedChoiceIndex = selIDX; 
         GameEvent currentEvent = events[eventIDX];
         StartCoroutine(TypeAnswerText(currentEvent.answers[selIDX].answerText));
     }
 
+    public void ActivePrintProblem()
+    {
+        printProblem();
+    }
     private void printProblem()
     {
+        SRCUI.SetActive(false);
+        Time.timeScale = 0f;
+        eventUI.SetActive(true);
         int curIdx = GetRandomEventIndex();
         StartCoroutine(DisplayEvent(curIdx));
         sel1BTN.onClick.RemoveAllListeners();
@@ -230,8 +238,18 @@ public class EventController : MonoBehaviour
 
         sel3BTN.onClick.RemoveAllListeners();
         sel3BTN.onClick.AddListener(() => OnChoiceSelected(curIdx, 2));
+        //Enter버튼이 눌리면 startEventAnswer함수 실행
+        Enter.onClick.RemoveAllListeners();
+        Enter.onClick.AddListener(() => OnEnterPressed(curIdx));
+    }
 
-        //엔터 누를시 실행할 함수 : 시간을 흐르게함 -> 기능 수행; 
+    private void OnEnterPressed(int eventIDX)
+    {
+        Time.timeScale = controller.GetIsTwo() ? 2.0f : 1.0f;
+        eventUI.SetActive(false);
+        SRCUI.SetActive(true);
+        startEventAnswer(eventIDX, selectedChoiceIndex);
+        selectedChoiceIndex = -1;
     }
 
     private IEnumerator DisplayEvent(int idxOfEvent)
@@ -250,10 +268,10 @@ public class EventController : MonoBehaviour
         foreach (char c in randomEvent.description)
         {
             problemAndAnswer.text += c;
-            yield return new WaitForSeconds(textDisplaySpeed);
+            yield return new WaitForSecondsRealtime(textDisplaySpeed); // 변경
         }
 
-        yield return new WaitForSeconds(0.3f); 
+        yield return new WaitForSecondsRealtime(0.3f); // 변경
 
         List<TextMeshProUGUI> selectionTexts = new List<TextMeshProUGUI> { sel1, sel2, sel3 };
         for (int i = 0; i < randomEvent.choices.Count; i++)
@@ -262,12 +280,13 @@ public class EventController : MonoBehaviour
             foreach (char c in choiceTextWithNumber)
             {
                 selectionTexts[i].text += c;
-                yield return new WaitForSeconds(textDisplaySpeed);
+                yield return new WaitForSecondsRealtime(textDisplaySpeed); // 변경
             }
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSecondsRealtime(0.3f); // 변경
         selChoice();
     }
+
     private IEnumerator TypeAnswerText(string answerText)
     {
         allBTNDisable();
@@ -278,8 +297,150 @@ public class EventController : MonoBehaviour
         foreach (char c in answerText)
         {
             problemAndAnswer.text += c;
-            yield return new WaitForSeconds(textDisplaySpeed); 
+            yield return new WaitForSecondsRealtime(textDisplaySpeed); // 변경
         }
         OnlyEnterBTNAble();
+    }
+    private void startEventAnswer(int eventIDX, int answerIDX)
+    {
+        switch (3 * eventIDX + answerIDX)
+        {
+            case 0:
+                {
+                    Debug.Log("문제없다.");
+                    break;
+                }
+            case 1:
+                {
+                    GameManager.Instance.reduceDayDuration(30f);
+                    break;
+                }
+            case 2:
+                {
+                    GameManager.Instance.reduceDayDuration(30f);
+                    break;
+                }
+            case 3:
+                {
+                    Debug.Log("문제없다.");
+                    break;
+                }
+            case 4:
+                {
+                    GameManager.Instance.OffUpgrade();
+                    break;
+                }
+            case 5:
+                {
+                    GameManager.Instance.AddHP(2);
+                    break;
+                }
+            case 6:
+                {
+                    GameManager.Instance.ConsumeElectric(20);
+                    break;
+                }
+            case 7:
+                {
+                    Debug.Log("문제없다.");
+                    break;
+                }
+            case 8:
+                {
+                    GameManager.Instance.AddDefaultConsumeElec(5);
+                    GameManager.Instance.AddshipSpeed(2);
+                    break;
+                }
+            case 9:
+                {
+                    GameManager.Instance.RemoveCurRemoveSrc(1);
+                    GameManager.Instance.RemoveCurAddElectric(1);
+                    break;
+                }
+            case 10:
+                {
+                    Debug.Log("문제없다.");
+                    break;
+                }
+            case 11:
+                {
+                    GameManager.Instance.AddCurRemovedSrc(2);
+                    GameManager.Instance.AddCurAddElectric(3);
+                    break;
+                }
+            case 12:
+                {
+                    GameManager.Instance.AddDefaultConsumeElec(10);
+                    GameManager.Instance.AddCurAddHp(2);
+                    break;
+                }
+            case 13:
+                {
+                    Debug.Log("문제없다.");
+                    break;
+                }
+            case 14:
+                {
+                    GameManager.Instance.ReduceDefaultConsumeElec(5);
+                    break;
+                }
+            case 15:
+                {
+                    Debug.Log("문제없다.");
+                    break;
+                }
+            case 16:
+                {
+                    GameManager.Instance.ConsumeElectric(10);
+                    GameManager.Instance.AddPlayerSpeed(1);
+                    break;
+                }
+            case 17:
+                {
+                    GameManager.Instance.AddReduceHPAmount(1);
+                    break;
+                }
+            case 18:
+                {
+                    float rand = Random.Range(0, 2);
+                    switch(rand)
+                    {
+                        case 0:
+                            {
+                                GameManager.Instance.AddDist(200);
+                                break;
+                            }
+                        case 1:
+                            {
+                                GameManager.Instance.AddDist(300);
+                                break;
+                            }
+                    }
+                    break;
+                }
+            case 19:
+                {
+                    float rand = Random.Range(0, 2);
+                    switch (rand)
+                    {
+                        case 0:
+                            {
+                                GameManager.Instance.AddDist(300);
+                                break;
+                            }
+                        case 1:
+                            {
+                                GameManager.Instance.AddDist(350);
+                                break;
+                            }
+                    }
+                    break;
+                }
+            case 20:
+                {
+                    Debug.Log("문제없다.");
+                    break;
+                }
+        }
     }
 }

@@ -66,14 +66,14 @@ public class GameManager : MonoBehaviour
     //자원
     private bool isUpgradeAble = true;
 
-    private float src = 100f;
+    private float src = 50f;
     private float curAddSrc = 6f;
     private float maxSrc = 100f;
     private float curRemoveSrc = 2f;
     private float previousSrc;
     private float productSrcTime = 3f;
 
-    private float electric = 100f;
+    private float electric = 50f;
     private float curAddElectric = 3f;
     private float maxElectric = 100f;
     private float previousElectric;
@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour
     {
         while (Dist < maxDist)
         {
-            if (GameManager.Instance.IsGameOver())
+            if (IsGameOver())
             { 
                 yield break;
             }
@@ -236,9 +236,13 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Src 추가: {amount}, 현재 Src: {src}");
     }
 
-    public void ReduceDefaultElec(float amount)
+    public void ReduceDefaultConsumeElec(float amount)
     {
         defaultConsumeElec = math.max(defaultConsumeElec - amount, 0);
+    }
+    public void AddDefaultConsumeElec(float amount)
+    {
+        defaultConsumeElec += amount;
     }
 
     public void AddElectric(float amount)
@@ -256,7 +260,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            if (GameManager.Instance.IsGameOver())
+            if (IsGameOver())
             {
                 yield break;
             }
@@ -333,9 +337,9 @@ public class GameManager : MonoBehaviour
     public bool IsGameOver() => isGameOver;
     public bool IsUpgradeAble() => isUpgradeAble;
 
-    public void SetshipSpeed(float amount)
+    public void AddshipSpeed(float amount)
     {
-        shipSpeed *= amount;
+        shipSpeed += amount;
     }
 
 
@@ -366,6 +370,11 @@ public class GameManager : MonoBehaviour
     {
         curRemoveSrc += amount;
     }
+    public void RemoveCurRemoveSrc(float amount)
+    {
+        curRemoveSrc = Math.Max(curRemoveSrc - amount, 0);
+    }
+
     public void RemoveDist(float amount)
     {
         Dist  = Math.Max(Dist-amount,0);
@@ -386,5 +395,12 @@ public class GameManager : MonoBehaviour
     {
         curAddElectric += amount;
     }
-    
+    public void OffUpgrade()
+    {
+        isUpgradeAble = false;
+    }
+    public void RemoveCurAddElectric(float amount)
+    {
+        curAddElectric = Math.Max(curAddElectric - amount, 0);
+    }
 }

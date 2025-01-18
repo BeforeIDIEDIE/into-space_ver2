@@ -42,7 +42,6 @@ public class UpgradeStructure : StructureBase
 
     private void Start()
     {
-        existingUI.SetActive(true);
         upgradeUI.SetActive(false);
         isUpgradeUIOn = false;
 
