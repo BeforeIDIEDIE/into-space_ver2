@@ -42,7 +42,6 @@ public class EventController : MonoBehaviour
     {
         InitializeEvents();
         InitializeSelectionFlags();
-        printProblem();
     }
     private void InitializeEvents()
     {

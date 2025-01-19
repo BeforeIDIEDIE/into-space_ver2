@@ -44,7 +44,8 @@ public class GameManager : MonoBehaviour
     //시계관련
     [SerializeField] private Image dayProgressImage;//하루 경과를 표시할 이미지
     [SerializeField] private float dayDuration = 180f;
-    
+
+    [SerializeField] private EventController eventController;
     private float currentTime = 0f;
     private int day = 1;
     
@@ -182,6 +183,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("하루 끝");
         isUpgradeAble = true;
         ConsumeElectric(defaultConsumeElec+(day-1)*5);
+        eventController.ActivePrintProblem();
     }
 
     private IEnumerator MoveShip()
