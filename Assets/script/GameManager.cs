@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
     }
     //게임 오버관련기능
     private bool isGameOver = false;
-    //public event Action OnGameOver;// 이벤트 필요시
 
     //플레이어 이동속도
     [SerializeField] private playerMovement furPlayerMovement;
@@ -140,7 +139,6 @@ public class GameManager : MonoBehaviour
             previousElectric = electric;
             previousDist = Dist;
         }
-        
         UpdateDayProgress();
     }
 
@@ -155,7 +153,10 @@ public class GameManager : MonoBehaviour
 
     private void UpdateDayProgress()
     {
-        
+        if (isGameOver)
+        {
+            return;
+        }
         if (currentTime < dayDuration)
         {
             currentTime += Time.deltaTime;
@@ -301,18 +302,19 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public bool ConsumeElectric(float amount)
+    public void ConsumeElectric(float amount)
     {
         if (electric >= amount)
         {
             electric -= amount;
             Debug.Log($"Electric 소모: {amount}\n현재 Electric: {electric}");
-            return true;//성공적으로 소모
+            return;//성공적으로 소모
         }
         else
         {
             Debug.Log("No Electric!");
-            return false;//소모 실패
+            //게임오버2실행
+            return;//소모 실패
         }
     }
 
