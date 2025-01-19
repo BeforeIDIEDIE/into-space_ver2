@@ -42,7 +42,6 @@ public class UpgradeStructure : StructureBase
 
     private void Start()
     {
-        existingUI.SetActive(true);
         upgradeUI.SetActive(false);
         isUpgradeUIOn = false;
 
@@ -62,7 +61,7 @@ public class UpgradeStructure : StructureBase
     private void Update()
     {
         //UI ÄÑ°í ²û
-        if (isNear && Input.GetKeyDown(KeyCode.Space) && !isUpgradeUIOn)
+        if (isNear && Input.GetKeyDown(KeyCode.Space) && !isUpgradeUIOn&&GameManager.Instance.IsUpgradeAble())
         {
             ActivateUpgradeUI();
         }

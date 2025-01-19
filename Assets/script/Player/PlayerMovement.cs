@@ -39,4 +39,9 @@ public class playerMovement : MonoBehaviour
         playerAnimation.UpdateAnimation_walk(horizontal, vertical);
     }
 
+    public float GetPlayerSpeed() => speed;
+    public void SetPlayerSpeed(float amount)
+    {
+        speed = amount;
+    }
 }

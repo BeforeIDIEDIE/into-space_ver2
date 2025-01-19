@@ -5,9 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class GameEvent
 {
-    public string description; 
+    public string description;
     public List<EventChoice> choices;
     public List<EventAnswer> answers;
+    public Sprite eventSprite;
 }
 
 [System.Serializable]
