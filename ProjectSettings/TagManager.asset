@@ -50,3 +50,21 @@ TagManager:
   - name: structure
     uniqueID: 4287283921
     locked: 0
+  - name: ship
+    uniqueID: 3477679805
+    locked: 0
+  - name: ship1
+    uniqueID: 3482098095
+    locked: 0
+  - name: ship2
+    uniqueID: 3608045285
+    locked: 0
+  - name: ship3
+    uniqueID: 3972538327
+    locked: 0
+  - name: ship4
+    uniqueID: 1425034669
+    locked: 0
+  - name: ship5
+    uniqueID: 859895131
+    locked: 0

@@ -19,6 +19,11 @@ public class Camera_follow : MonoBehaviour
 
     private void LateUpdate()
     {
+        //게임오버시 작동안되게
+        if(GameManager.Instance.IsGameOver())
+        {
+            return;
+        }
         Vector3 position = new Vector3(player.position.x, player.position.y, -20);
         positionHistory.Enqueue(position);
 
