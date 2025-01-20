@@ -13,21 +13,25 @@ public class Camera_follow : MonoBehaviour
 
     private void Start()
     {
-        //positionHistory = new Queue<Vector3>(); 
-        //transform.position = new Vector3(-6, 3, 5);
+        positionHistory = new Queue<Vector3>();
+        transform.position = new Vector3(-6, 3, 5);
     }
 
-    //private void LateUpdate()
-    //{
-    //    //게임오버시 작동안되게
-    //    Vector3 position = new Vector3(player.position.x, player.position.y, -20);
-    //    positionHistory.Enqueue(position);
+    private void LateUpdate()
+    {
+        //게임오버시 작동안되게
+        if(GameManager.Instance.IsGameOver())
+        {
+            return;
+        }
+        Vector3 position = new Vector3(player.position.x, player.position.y, -20);
+        positionHistory.Enqueue(position);
 
-    //    if (positionHistory.Count > Mathf.RoundToInt(delayTime / Time.deltaTime))
-    //    {
-    //        targetPosition = positionHistory.Dequeue();
-    //        Vector3 smoothedPosition = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
-    //        transform.position = smoothedPosition;
-    //    }
-    //}
+        if (positionHistory.Count > Mathf.RoundToInt(delayTime / Time.deltaTime))
+        {
+            targetPosition = positionHistory.Dequeue();
+            Vector3 smoothedPosition = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
+            transform.position = smoothedPosition;
+        }
+    }
 }

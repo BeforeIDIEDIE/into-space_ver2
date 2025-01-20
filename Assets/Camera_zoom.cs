@@ -23,7 +23,7 @@ public class Camera_zoom : MonoBehaviour
 
     private void Start()
     {
-        ship.SetActive(true);
+        
         // 스프라이트 오브젝트의 SpriteRenderer 컴포넌트를 가져오기
         foreach (GameObject spriteObject in spritesToReveal)
         {
@@ -33,7 +33,11 @@ public class Camera_zoom : MonoBehaviour
             initialColor.a = 0f;
             renderer.color = initialColor;
         }
+    }
 
+    public void GameOver2Start()
+    {
+        ship.SetActive(true);
         StartCoroutine(ZoomAndRevealObjects());
     }
 

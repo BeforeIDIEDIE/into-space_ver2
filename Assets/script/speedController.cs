@@ -5,13 +5,13 @@ using UnityEngine.UI;
 public class speedController : MonoBehaviour
 {
     [SerializeField] private Toggle speedToggle;
-    [SerializeField] private Sprite oneXSprite; 
-    [SerializeField] private Sprite twoXSprite; 
+    [SerializeField] private Sprite oneXSprite;
+    [SerializeField] private Sprite twoXSprite;
     [SerializeField] private Image toggleImage;
     private bool isTwo;
     void Start()
     {
-        //Time.timeScale = 1.0f;
+        Time.timeScale = 1.0f;
         isTwo = false;
         speedToggle.onValueChanged.AddListener(OnToggleSpeed);
         //UpdateSpeedState(false);

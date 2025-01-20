@@ -37,6 +37,9 @@ public class GameManager : MonoBehaviour
     //게임 오버관련기능
     private bool isGameOver = false;
 
+    //게임오버2
+    [SerializeField] private Camera_zoom forGameOver2Method;
+
     //플레이어 이동속도
     [SerializeField] private playerMovement furPlayerMovement;
 
@@ -73,7 +76,7 @@ public class GameManager : MonoBehaviour
     private float previousSrc;
     private float productSrcTime = 3f;
 
-    private float electric = 50f;
+    private float electric = 10f;
     private float curAddElectric = 3f;
     private float maxElectric = 100f;
     private float previousElectric;
@@ -96,6 +99,9 @@ public class GameManager : MonoBehaviour
 
 
     //UI
+    [SerializeField] private GameObject SRCUI;//자원UI
+    [SerializeField] private GameObject eventUI;//이벤트UI
+    [SerializeField] private GameObject upgradeUI;//업그레이드 UI
     [SerializeField] private TextMeshProUGUI hpText;
     [SerializeField] private TextMeshProUGUI srcText;
     [SerializeField] private TextMeshProUGUI electricText;
@@ -120,12 +126,12 @@ public class GameManager : MonoBehaviour
         StartCoroutine(MoveShip());
         StartCoroutine(ReduceHpOverTime());
         UpdateResourceUI();
-
         //슬라이더 용
         distanceSlider.minValue = 0;
         distanceSlider.maxValue = 1;
         distanceSlider.value = Dist/maxDist;
         UpdateDayText();
+        SRCUI.SetActive(true);
     }
 
     private void Update()
@@ -183,8 +189,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("하루 끝");
         isUpgradeAble = true;
-        ConsumeElectric(defaultConsumeElec+(day-1)*5);
-        eventController.ActivePrintProblem();
+        //ConsumeElectric(defaultConsumeElec+(day-1)*5);
+        if(!isGameOver)
+        { 
+            eventController.ActivePrintProblem();
+        }
     }
 
     private IEnumerator MoveShip()
@@ -313,7 +322,8 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("No Electric!");
-            //게임오버2실행
+            TriggerGameOver();
+            GameOver2Start();
             return;//소모 실패
         }
     }
@@ -406,5 +416,13 @@ public class GameManager : MonoBehaviour
     public void RemoveCurAddElectric(float amount)
     {
         curAddElectric = Math.Max(curAddElectric - amount, 0);
+    }
+    public void GameOver2Start()
+    {
+        Time.timeScale = 1.0f;
+        SRCUI.SetActive(false);
+        eventUI.SetActive(false);
+        upgradeUI.SetActive(false);
+        forGameOver2Method.GameOver2Start();
     }
 }
