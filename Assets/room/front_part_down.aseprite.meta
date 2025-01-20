@@ -123,7 +123,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: front_part_down
     originalName: 
-    pivot: {x: 0.50574714, y: -0.2021858}
+    pivot: {x: 0.50574714, y: -0.15226337}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -131,7 +131,7 @@ ScriptedImporter:
       x: 4
       y: 4
       width: 348
-      height: 183
+      height: 243
     spriteID: dc51b1c5a82ce8a419653e0ea9828c0e
     spriteBone: []
     spriteOutline: []
@@ -156,7 +156,7 @@ ScriptedImporter:
         x: 324
         y: 37
         width: 348
-        height: 183
+        height: 243
       spriteId: dc51b1c5a82ce8a419653e0ea9828c0e
     linkedCells: []
     parentIndex: -1

@@ -123,14 +123,14 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: side_down
     originalName: 
-    pivot: {x: 1.6047298, y: -0.94}
+    pivot: {x: 1.4864866, y: -0.94}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 296
+      width: 333
       height: 250
     spriteID: 6a7be3055fc2d8b469d58bd2783bb083
     spriteBone: []
@@ -153,9 +153,9 @@ ScriptedImporter:
     - name: side_down
       frameIndex: 0
       cellRect:
-        x: 25
+        x: 5
         y: 235
-        width: 296
+        width: 333
         height: 250
       spriteId: 6a7be3055fc2d8b469d58bd2783bb083
     linkedCells: []
