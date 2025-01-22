@@ -189,7 +189,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("ÇÏ·ç ³¡");
         isUpgradeAble = true;
-        //ConsumeElectric(defaultConsumeElec+(day-1)*5);
+        ConsumeElectric(defaultConsumeElec+(day-1)*5);
         if(!isGameOver)
         { 
             eventController.ActivePrintProblem();
