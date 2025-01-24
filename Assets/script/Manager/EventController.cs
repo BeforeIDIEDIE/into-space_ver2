@@ -240,6 +240,7 @@ public class EventController : MonoBehaviour
         //Enter버튼이 눌리면 startEventAnswer함수 실행
         Enter.onClick.RemoveAllListeners();
         Enter.onClick.AddListener(() => OnEnterPressed(curIdx));
+        GameManager.Instance.UpdateConsumeElectricText();
     }
 
     private void OnEnterPressed(int eventIDX)

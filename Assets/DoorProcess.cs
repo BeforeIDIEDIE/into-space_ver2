@@ -21,7 +21,6 @@ public class DoorProcess : MonoBehaviour
             SetSprite(doorPart, openSprite);
         }
         curActivedDoorPartsIDX = 36;
-        OnDoorCantOperate();
     }
     private void SetSprite(GameObject doorPart, Sprite sprite)
     {
