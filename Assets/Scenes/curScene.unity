@@ -18842,9 +18842,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9258bfe8080715d41b174cddb8da8f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SRCUI: {fileID: 0}
-  EventUI: {fileID: 0}
-  UPGRADEUI: {fileID: 0}
+  SRCUI: {fileID: 459859038}
+  EventUI: {fileID: 1482065098}
+  UPGRADEUI: {fileID: 215222523}
+  PauseUI: {fileID: 523245201}
 --- !u!1 &2067705258
 GameObject:
   m_ObjectHideFlags: 0
@@ -19318,7 +19319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2110998256
 Transform:
   m_ObjectHideFlags: 0
