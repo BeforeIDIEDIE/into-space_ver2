@@ -7,6 +7,7 @@ using Unity.Mathematics;
 using UnityEngine.UI;
 using UnityEditor.Build;
 using System.Linq;
+using Unity.VisualScripting;
 
 public enum InteractionType
 {
@@ -107,7 +108,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI electricText;
     [SerializeField] private TextMeshProUGUI shipdist;
     [SerializeField] private Slider distanceSlider;
-    [SerializeField] private TextMeshProUGUI dayText;
+    [SerializeField] private TextMeshProUGUI dayText;//소모 전기량 텍스트
 
     private void Start()
     {
@@ -132,6 +133,7 @@ public class GameManager : MonoBehaviour
         distanceSlider.value = Dist/maxDist;
         UpdateDayText();
         SRCUI.SetActive(true);
+        UpdateConsumeElectricText();
     }
 
     private void Update()
@@ -177,7 +179,6 @@ public class GameManager : MonoBehaviour
             currentTime = 0f;
             OnDayEnd();//하루 끝인 경우 별도의 작업 여따 적음
             day++;
-            UpdateDayText();
         }
     }
     private void UpdateDayText()
@@ -185,11 +186,17 @@ public class GameManager : MonoBehaviour
         dayText.text = $"Day {day}";
     }
 
+    public void UpdateConsumeElectricText()
+    {
+        dayText.text = $"전기 소모 : {CalculateConsumeElectric()}";
+    }
+    private float CalculateConsumeElectric() => defaultConsumeElec + (day - 1) * 5;
+
     private void OnDayEnd()
     {
         Debug.Log("하루 끝");
         isUpgradeAble = true;
-        //ConsumeElectric(defaultConsumeElec+(day-1)*5);
+        ConsumeElectric(CalculateConsumeElectric());
         if(!isGameOver)
         { 
             eventController.ActivePrintProblem();
