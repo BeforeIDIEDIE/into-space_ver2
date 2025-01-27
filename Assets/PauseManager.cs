@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
@@ -9,6 +11,9 @@ public class PauseManager : MonoBehaviour
     [SerializeField] GameObject UPGRADEUI;
     [SerializeField] GameObject PauseUI;
     [SerializeField] speedController speedController;
+    [SerializeField] private Button resumeBTN;
+    [SerializeField] private Button retryBTN;
+    [SerializeField] private Button endBTN;
 
     void Update()
     {
@@ -25,7 +30,7 @@ public class PauseManager : MonoBehaviour
         }
     }
 
-    private void TogglePause()
+    public void TogglePause()
     {
         if (PauseUI.activeSelf)
         {
@@ -39,5 +44,19 @@ public class PauseManager : MonoBehaviour
             PauseUI.SetActive(true);
             Time.timeScale = 0f;
         }
+    }
+    public void RestartScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+    }
+    public void ExitGame()
+    {
+        Debug.Log("게임 종료");
+        Application.Quit();
+    }
+    public void GoToMenu()
+    {
+        //여기에 메인메뉴로 가는 기능
     }
 }
