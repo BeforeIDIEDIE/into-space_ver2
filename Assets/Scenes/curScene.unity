@@ -18846,6 +18846,7 @@ MonoBehaviour:
   EventUI: {fileID: 1482065098}
   UPGRADEUI: {fileID: 215222523}
   PauseUI: {fileID: 523245201}
+  speedController: {fileID: 0}
 --- !u!1 &2067705258
 GameObject:
   m_ObjectHideFlags: 0
