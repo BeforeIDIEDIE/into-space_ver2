@@ -11,10 +11,10 @@ public class DoorProcess : MonoBehaviour
     private int curActivedDoorPartsIDX = 36;
     private Coroutine doorCoroutine;
     [SerializeField]private bool doorCantOperate = false;
+    [SerializeField] private bool isOperating = false;
 
     private void Start()
     {
-        // 모든 문 조각 활성화
         foreach (GameObject doorPart in doorParts)
         {
             doorPart.SetActive(true);
@@ -22,6 +22,7 @@ public class DoorProcess : MonoBehaviour
         }
         curActivedDoorPartsIDX = 36;
     }
+    //public void initDoorStatus()
     private void SetSprite(GameObject doorPart, Sprite sprite)
     {
         SpriteRenderer renderer = doorPart.GetComponent<SpriteRenderer>();
@@ -78,6 +79,8 @@ public class DoorProcess : MonoBehaviour
 
     private IEnumerator AdjustDoorIndex(int targetIndex)
     {
+        isOperating = true;
+        Debug.Log("문작동");
         while (curActivedDoorPartsIDX != targetIndex)
         {
             if (curActivedDoorPartsIDX > targetIndex)
@@ -93,6 +96,8 @@ public class DoorProcess : MonoBehaviour
 
             yield return new WaitForSeconds(0.02f);
         }
+        isOperating = false;
+        Debug.Log("문작동 끝");
     }
-
+    public bool GetIsOperating() => isOperating;
 }
