@@ -93,7 +93,7 @@ public class Camera_zoom : MonoBehaviour
     {
         planet.SetActive(true);
         Vector3 startPos = planet.transform.position;
-        Vector3 endPos = new Vector3(75, 0, 0);
+        Vector3 endPos = new Vector3(69, 0, 0);
         float elapsedTime = 0f;
 
         while (elapsedTime < zoomDuration)
@@ -143,6 +143,6 @@ public class Camera_zoom : MonoBehaviour
 
         explosionUI_CG.alpha = 0f;
         explosionUI_Object.SetActive(false);
-        GameOverUI.SetActive(true);
+        GameManager.Instance.TriggerGameOverUI();
     }
 }

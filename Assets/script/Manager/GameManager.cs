@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
     private float previousHP;
     private float productHealTime = 0.5f;
 
-    private float reduceHpTime = 2f;
+    private float reduceHpTime = 1.5f;
     private float reduceHpAmount = 1f;
 
 
@@ -102,12 +102,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject SRCUI;//자원UI
     [SerializeField] private GameObject eventUI;//이벤트UI
     [SerializeField] private GameObject upgradeUI;//업그레이드 UI
+    [SerializeField] private GameObject GameOverUI;//게임오버UI
     [SerializeField] private TextMeshProUGUI hpText;
     [SerializeField] private TextMeshProUGUI srcText;
     [SerializeField] private TextMeshProUGUI electricText;
     [SerializeField] private TextMeshProUGUI shipdist;
     [SerializeField] private Slider distanceSlider;
     [SerializeField] private TextMeshProUGUI dayText;//소모 전기량 텍스트
+    [SerializeField] private TextMeshProUGUI dyingMessage;//사망사유
+    
 
     private void Start()
     {
@@ -283,7 +286,7 @@ public class GameManager : MonoBehaviour
                 yield break;
             }
             yield return new WaitForSeconds(reduceHpTime); // 2초 대기
-            if (hp > 0)
+            if (hp > 0&&!IsInteractionActive(InteractionType.Heal))
             {
                 ConsumeHP(reduceHpAmount);
             }
@@ -313,6 +316,7 @@ public class GameManager : MonoBehaviour
             if (hp <= 0)
             {
                 Debug.Log("죽었다!!");
+                dyingMessage.text = "사유 : 체력 부족";
                 TriggerGameOver();
             }
         }
@@ -329,6 +333,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("No Electric!");
             TriggerGameOver();
+            dyingMessage.text = "사유 : 전기 부족";
             GameOver2Start();
             return;//소모 실패
         }
@@ -430,5 +435,9 @@ public class GameManager : MonoBehaviour
         eventUI.SetActive(false);
         upgradeUI.SetActive(false);
         forGameOver2Method.GameOver2Start();
+    }
+    public void TriggerGameOverUI()
+    {
+        GameOverUI.SetActive(true);
     }
 }
