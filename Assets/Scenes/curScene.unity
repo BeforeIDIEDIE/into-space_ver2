@@ -20529,6 +20529,7 @@ MonoBehaviour:
   distanceSlider: {fileID: 1629730118}
   dayText: {fileID: 1759032660}
   dyingMessage: {fileID: 1448681930}
+  doorControlManager: {fileID: 2059924550}
 --- !u!4 &2059924547
 Transform:
   m_ObjectHideFlags: 0
@@ -20592,7 +20593,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d06a1bc06c67eb469647f1bc176c9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorList: []
+  doorList:
+  - {fileID: 1775349610}
+  - {fileID: 1679604105}
+  - {fileID: 748802081}
+  - {fileID: 2123048872}
+  - {fileID: 1527457038}
 --- !u!1 &2067705258
 GameObject:
   m_ObjectHideFlags: 0

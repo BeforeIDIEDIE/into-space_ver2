@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DoorProcess : MonoBehaviour
 {
-
     [SerializeField] private List<GameObject> doorParts;
     [SerializeField] private Sprite openSprite; 
     [SerializeField] private Sprite closedSprite; 
@@ -13,24 +12,11 @@ public class DoorProcess : MonoBehaviour
     [SerializeField]private bool doorCantOperate = false;
     [SerializeField] private bool isOperating = false;
 
-    private void Start()
+    public void initDoorStatus()
     {
-        foreach (GameObject doorPart in doorParts)
-        {
-            doorPart.SetActive(true);
-            SetSprite(doorPart, openSprite);
-        }
-        curActivedDoorPartsIDX = 36;
+        OffDoorCantOperate();
     }
-    //public void initDoorStatus()
-    private void SetSprite(GameObject doorPart, Sprite sprite)
-    {
-        SpriteRenderer renderer = doorPart.GetComponent<SpriteRenderer>();
-        if (renderer != null)
-        {
-            renderer.sprite = sprite;
-        }
-    }
+    public bool GetIsOperating() => isOperating;
 
     public void OnDoorCantOperate()
     {
@@ -44,13 +30,23 @@ public class DoorProcess : MonoBehaviour
     public void OffDoorCantOperate()
     {
         doorCantOperate = false;
-
         foreach (GameObject doorPart in doorParts)
         {
             SetSprite(doorPart, openSprite);
             doorPart.SetActive(true);
         }
     }
+
+    private void SetSprite(GameObject doorPart, Sprite sprite)
+    {
+        SpriteRenderer renderer = doorPart.GetComponent<SpriteRenderer>();
+        if (renderer != null)
+        {
+            renderer.sprite = sprite;
+        }
+    }
+
+   
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -99,5 +95,5 @@ public class DoorProcess : MonoBehaviour
         isOperating = false;
         Debug.Log("문작동 끝");
     }
-    public bool GetIsOperating() => isOperating;
+    
 }

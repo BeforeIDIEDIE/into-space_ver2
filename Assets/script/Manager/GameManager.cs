@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using UnityEditor.Build;
 using System.Linq;
 using Unity.VisualScripting;
+using System.Runtime.ConstrainedExecution;
 
 public enum InteractionType
 {
@@ -34,6 +35,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    //게임 승리 관련기능
+    private bool isGameWin = false;
     //게임 오버관련기능
     private bool isGameOver = false;
 
@@ -57,7 +61,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject Player;
 
     //목표까지의 거리
-    private float Dist = 0f;
+    private float Dist = 2519f;
     private float maxDist = 2520f;
     private float shipSpeed = 2f;
     private float shipConsume = 1f;
@@ -110,6 +114,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Slider distanceSlider;
     [SerializeField] private TextMeshProUGUI dayText;//소모 전기량 텍스트
     [SerializeField] private TextMeshProUGUI dyingMessage;//사망사유
+
+    //문
+    [SerializeField] private DoorControlManager doorControlManager;
     
 
     private void Start()
@@ -161,9 +168,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void TriggerGameWin()
+    {
+
+    }
+
     private void UpdateDayProgress()
     {
-        if (isGameOver)
+        if (isGameOver||isGameWin)
         {
             return;
         }
@@ -203,6 +215,7 @@ public class GameManager : MonoBehaviour
         { 
             eventController.ActivePrintProblem();
         }
+        doorControlManager.DayOffFunction();
     }
 
     private IEnumerator MoveShip()
@@ -219,7 +232,7 @@ public class GameManager : MonoBehaviour
             if (src >= currentConsume)
             {
                 src -= currentConsume;
-                Dist += currentSpeed;
+                Dist = math.min(maxDist, Dist + currentSpeed);
                 Debug.Log($"현재거리 {Dist}, 연료 {src}");
             }
             else
@@ -229,7 +242,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
         Debug.Log("목표 도달!");
-        //아직 엔딩 안만듦!
+        
     }
 
     // 조종석 상호작용
@@ -360,6 +373,7 @@ public class GameManager : MonoBehaviour
     public float GetMaxElec() => maxElectric;
     public float GetMaxHp() => maximumHP;
     public bool IsGameOver() => isGameOver;
+    public bool IsGameWin() => isGameWin;
     public bool IsUpgradeAble() => isUpgradeAble;
 
     public void AddshipSpeed(float amount)
@@ -367,10 +381,9 @@ public class GameManager : MonoBehaviour
         shipSpeed += amount;
     }
 
-
     public void SetInteractionState(InteractionType type, bool state)
     {
-        if (GameManager.Instance.IsGameOver())
+        if (GameManager.Instance.IsGameOver()||isGameWin)
         {
             return;
         }
