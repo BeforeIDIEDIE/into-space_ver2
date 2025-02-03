@@ -20529,6 +20529,7 @@ MonoBehaviour:
   distanceSlider: {fileID: 1629730118}
   dayText: {fileID: 1759032660}
   dyingMessage: {fileID: 1448681930}
+  dayCNT: {fileID: 2035864440}
   doorControlManager: {fileID: 2059924550}
 --- !u!4 &2059924547
 Transform:

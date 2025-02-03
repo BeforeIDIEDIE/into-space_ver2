@@ -14,7 +14,7 @@ public class SrcStructure : StructureBase
     }
     private void Update()
     {
-        if(GameManager.Instance.IsGameOver())
+        if(GameManager.Instance.IsGameOver()||GameManager.Instance.IsGameWin())
         {
             return;
         }
@@ -26,7 +26,7 @@ public class SrcStructure : StructureBase
     }
     public override IEnumerator PerformAction()
     {
-        if (GameManager.Instance.IsGameOver())
+        if (GameManager.Instance.IsGameOver()||GameManager.Instance.IsGameWin())
         {
             yield break ;
         }
@@ -41,7 +41,7 @@ public class SrcStructure : StructureBase
 
         while ((elapsedTime < GameManager.Instance.GetproductSrcTime())&& (Input.GetKey(KeyCode.Space)))
         {
-            if (!isNear|| GameManager.Instance.IsGameOver())//플레이어가 감지 영역을 벗어난 경우
+            if (!isNear|| GameManager.Instance.IsGameOver()||GameManager.Instance.IsGameWin())//플레이어가 감지 영역을 벗어난 경우
             {
                 Debug.Log("작업 중단");
                 GameManager.Instance.SetInteractionState(InteractionType.Src, false);
@@ -63,7 +63,7 @@ public class SrcStructure : StructureBase
         progressImage_bottom.gameObject.SetActive(false);
         progressImage_top.gameObject.SetActive(false);
 
-        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !GameManager.Instance.IsGameOver())
+        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !GameManager.Instance.IsGameOver() && !GameManager.Instance.IsGameWin())
         {
             StartCoroutine(PerformAction());//작업반복
         }

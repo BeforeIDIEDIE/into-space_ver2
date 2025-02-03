@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject Player;
 
     //목표까지의 거리
-    private float Dist = 2519f;
+    private float Dist = 2516f;
     private float maxDist = 2520f;
     private float shipSpeed = 2f;
     private float shipConsume = 1f;
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
     private float productElectricTime = 3f;
     private float defaultConsumeElec = 20f;
 
-    private float hp = 100f;
+    private float hp = 50f;
     private float maximumHP = 100f;
     private float curAddHP = 1f;
     private float previousHP;
@@ -114,10 +114,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Slider distanceSlider;
     [SerializeField] private TextMeshProUGUI dayText;//소모 전기량 텍스트
     [SerializeField] private TextMeshProUGUI dyingMessage;//사망사유
-
+    [SerializeField] private TextMeshProUGUI dayCNT;//승리시 날짜 출력
     //문
     [SerializeField] private DoorControlManager doorControlManager;
-    
 
     private void Start()
     {
@@ -163,6 +162,7 @@ public class GameManager : MonoBehaviour
     {
         if (!isGameOver)
         {
+            SRCUI.SetActive(false);
             isGameOver = true;
             Debug.Log("게임 오버");
         }
@@ -170,7 +170,10 @@ public class GameManager : MonoBehaviour
 
     public void TriggerGameWin()
     {
-
+        SRCUI.SetActive(false);
+        dayCNT.text = $"{day}일에 걸쳐 성공";
+        isGameWin = true;
+        forGameOver2Method.WinStart();
     }
 
     private void UpdateDayProgress()
@@ -216,6 +219,7 @@ public class GameManager : MonoBehaviour
             eventController.ActivePrintProblem();
         }
         doorControlManager.DayOffFunction();
+        UpdateConsumeElectricText();
     }
 
     private IEnumerator MoveShip()
@@ -242,7 +246,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
         Debug.Log("목표 도달!");
-        
+        TriggerGameWin();
     }
 
     // 조종석 상호작용
@@ -294,7 +298,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            if (IsGameOver())
+            if (IsGameOver()||IsGameWin())
             {
                 yield break;
             }

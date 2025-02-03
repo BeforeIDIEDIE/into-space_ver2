@@ -14,7 +14,7 @@ public class HealStructure : StructureBase
 
     private void Update()
     {
-        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !isPerformingAction && !GameManager.Instance.IsGameOver())
+        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !isPerformingAction && !GameManager.Instance.IsGameOver() && !GameManager.Instance.IsGameWin())
         {
             StartCoroutine(PerformAction());
         }

@@ -21,7 +21,7 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {
-        if(GameManager.Instance.IsGameOver())
+        if(GameManager.Instance.IsGameOver() || GameManager.Instance.IsGameWin())
         {
             return;
         }

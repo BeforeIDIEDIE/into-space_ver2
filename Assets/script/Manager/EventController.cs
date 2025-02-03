@@ -224,6 +224,7 @@ public class EventController : MonoBehaviour
     }
     private void printProblem()
     {
+        InitializeEvents();
         SRCUI.SetActive(false);
         Time.timeScale = 0f;
         eventUI.SetActive(true);
