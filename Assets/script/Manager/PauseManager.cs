@@ -15,6 +15,8 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private Button retryBTN;
     [SerializeField] private Button endBTN;
 
+    [SerializeField] private AudioSource BTNSound;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)&&!GameManager.Instance.IsGameOver())
@@ -30,6 +32,7 @@ public class PauseManager : MonoBehaviour
             else if(PauseUI.activeSelf)
             {
                 TogglePause();
+                BTNSound.Play();
             }
         }
     }

@@ -9,7 +9,7 @@ public class ElectricStructure : StructureBase
     [SerializeField] private Image progressImage_top;
 
     [SerializeField] private Image progress_all;
-
+    [SerializeField] private AudioSource addElec;
     private void Start()
     {
         progressImage_bottom.gameObject.SetActive(false);
@@ -70,6 +70,7 @@ public class ElectricStructure : StructureBase
         Debug.Log("작업 완료!");
         GameManager.Instance.SetInteractionState(InteractionType.Electric, false);
         GameManager.Instance.AddElectric(GameManager.Instance.GetCurAddElectric());
+        addElec.Play();
         GameManager.Instance.ConsumeSrc(GameManager.Instance.GetCurRemoveSrc());
 
         isPerformingAction = false;

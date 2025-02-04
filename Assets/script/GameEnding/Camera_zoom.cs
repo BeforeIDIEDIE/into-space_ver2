@@ -19,6 +19,9 @@ public class Camera_zoom : MonoBehaviour
     [SerializeField] private List<ShipMoving_GameOver> shipParts;
     [SerializeField] private GameObject GameOverUI;
     [SerializeField] private GameObject WinUI;
+    [SerializeField] private AudioSource ZoomoutSound;
+    [SerializeField] private AudioSource GameOverSound;
+    [SerializeField] private AudioSource GameWinSound;
 
     private float uiFadeDuration = 3f;
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
@@ -39,7 +42,6 @@ public class Camera_zoom : MonoBehaviour
 
     public void GameOver2Start()
     {
-        
         StartCoroutine(ZoomAndRevealObjects(FadeUIEffect()));
     }
     public void WinStart()
@@ -49,6 +51,7 @@ public class Camera_zoom : MonoBehaviour
 
     private IEnumerator ZoomAndRevealObjects(IEnumerator Coroutine)
     {
+        ZoomoutSound.Play();
         ship.SetActive(true);
         pixelPerfectCamera.enabled = false;
         Debug.Log("픽퍼 해제");
@@ -104,6 +107,7 @@ public class Camera_zoom : MonoBehaviour
         }
         planet.transform.position = endPos;
         Time.timeScale = 0f;
+        GameWinSound.Play();
         WinUI.SetActive(true);
     }
 
@@ -143,6 +147,7 @@ public class Camera_zoom : MonoBehaviour
 
         explosionUI_CG.alpha = 0f;
         explosionUI_Object.SetActive(false);
+        GameOverSound.Play();
         GameManager.Instance.TriggerGameOverUI();
     }
 }

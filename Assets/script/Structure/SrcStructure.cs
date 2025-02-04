@@ -7,6 +7,7 @@ public class SrcStructure : StructureBase
     [SerializeField] private Image progressImage_bottom;
     [SerializeField] private Image progressImage_top;
     [SerializeField] private Image progress_all;
+    [SerializeField] private AudioSource addSRC;
     private void Start()
     {
         progressImage_bottom.gameObject.SetActive(false);
@@ -58,6 +59,7 @@ public class SrcStructure : StructureBase
 
         Debug.Log("작업 완료!");
         GameManager.Instance.AddSrc(GameManager.Instance.GetCurAddSrc());
+        addSRC.Play();
         GameManager.Instance.SetInteractionState(InteractionType.Src, false);
         isPerformingAction = false;
         progressImage_bottom.gameObject.SetActive(false);

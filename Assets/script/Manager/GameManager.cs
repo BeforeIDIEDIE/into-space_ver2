@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject Player;
 
     //목표까지의 거리
-    private float Dist = 2516f;
+    private float Dist = 0f;
     private float maxDist = 2520f;
     private float shipSpeed = 2f;
     private float shipConsume = 1f;
@@ -118,6 +118,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private DoorControlManager doorControlManager;
     [SerializeField] private Image startIMG;
     [SerializeField] private GameObject startIMG_GameOBJ;
+
+    [SerializeField] private AudioSource gameOverSound;
     private float changeColorTransparents = 0.5f;
     private void Start()
     {
@@ -354,6 +356,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("죽었다!!");
                 dyingMessage.text = "사유 : 체력 부족";
+                gameOverSound.Play();
                 TriggerGameOver();
             }
         }

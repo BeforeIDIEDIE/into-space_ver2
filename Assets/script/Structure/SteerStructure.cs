@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SteerStructure : StructureBase
 {
+    [SerializeField] private AudioSource typingSound;
     private void Update()
     {
         //if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction)
@@ -36,6 +37,10 @@ public class SteerStructure : StructureBase
 
         while (isNear && Input.GetKey(KeyCode.Space))
         {
+            if (!typingSound.isPlaying)
+            {
+                typingSound.Play();
+            }
             if (GameManager.Instance.GetSrc() < GameManager.Instance.GetCurRemoveSrc())
             {
                 Debug.Log("조종 중단.");
@@ -49,7 +54,10 @@ public class SteerStructure : StructureBase
             Debug.Log("조종 중");
             yield return new WaitForSeconds(0.5f);
         }
-
+        if(typingSound.isPlaying)
+        {
+            typingSound.Stop();
+        }
         GameManager.Instance.offBoost();
         GameManager.Instance.SetInteractionState(InteractionType.Steer, false);
         Debug.Log("조종 중단");
