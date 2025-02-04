@@ -72,7 +72,6 @@ public class GameManager : MonoBehaviour
 
     //자원
     private bool isUpgradeAble = true;
-
     private float src = 50f;
     private float curAddSrc = 6f;
     private float maxSrc = 100f;
@@ -117,7 +116,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dayCNT;//승리시 날짜 출력
     //문
     [SerializeField] private DoorControlManager doorControlManager;
-
+    [SerializeField] private Image startIMG;
+    [SerializeField] private GameObject startIMG_GameOBJ;
+    private float changeColorTransparents = 0.5f;
     private void Start()
     {
         //초기 값 설정
@@ -139,11 +140,30 @@ public class GameManager : MonoBehaviour
         distanceSlider.minValue = 0;
         distanceSlider.maxValue = 1;
         distanceSlider.value = Dist/maxDist;
+        
         UpdateDayText();
         SRCUI.SetActive(true);
         UpdateConsumeElectricText();
-    }
 
+        startIMG.color = Color.gray;
+        startIMG_GameOBJ.SetActive(true);
+        StartCoroutine(TransitionColor());
+    }
+    private IEnumerator TransitionColor()
+    {
+        float elapsedTime = 0f;
+        Color startColor = startIMG.color;
+        Color targetColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
+        while (elapsedTime < changeColorTransparents)
+        {
+            elapsedTime += Time.deltaTime;
+            startIMG.color = Color.Lerp(startColor, targetColor, elapsedTime / changeColorTransparents);
+            //imageComponent.color = Color.Lerp(startColor, transformColor, elapsedTime / transitionDuration);
+            yield return null;
+        }
+        startIMG.color = targetColor;
+        startIMG_GameOBJ.SetActive(false);
+    }
     private void Update()
     {
         if (previousHP != hp || previousSrc != src || previousElectric != electric || previousDist != Dist)
