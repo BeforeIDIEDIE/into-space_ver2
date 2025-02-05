@@ -3738,7 +3738,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7152088694390578198, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.518545
+      value: 14.46
       objectReference: {fileID: 0}
     - target: {fileID: 7152088694390578198, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4975,7 +4975,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1992323905}
   smoothSpeed: 10
-  delayTime: 0.2
+  delayTime: 0.05
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11105,7 +11105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7152088694390578198, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.53727984
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 7152088694390578198, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
       propertyPath: m_LocalPosition.z
@@ -14748,7 +14748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7152088694390578198, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.8085456
+      value: 1.91
       objectReference: {fileID: 0}
     - target: {fileID: 7152088694390578198, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18054,11 +18054,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7152088694390578198, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.6485453
+      value: 7.57
       objectReference: {fileID: 0}
     - target: {fileID: 7152088694390578198, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10.58272
+      value: -10.52
       objectReference: {fileID: 0}
     - target: {fileID: 7152088694390578198, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18402,7 +18402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7152088694390578198, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.518545
+      value: 14.48
       objectReference: {fileID: 0}
     - target: {fileID: 7152088694390578198, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21932,6 +21932,7 @@ MonoBehaviour:
   doorControlManager: {fileID: 2059924550}
   startIMG: {fileID: 640912805}
   startIMG_GameOBJ: {fileID: 640912803}
+  gameOverSound: {fileID: 839723136}
 --- !u!4 &2059924547
 Transform:
   m_ObjectHideFlags: 0

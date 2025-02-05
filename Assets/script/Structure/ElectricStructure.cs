@@ -36,6 +36,7 @@ public class ElectricStructure : StructureBase
         Debug.Log("작업 시작!");
         GameManager.Instance.SetInteractionState(InteractionType.Electric, true);
         float elapsedTime = 0f;
+        float workTime = GameManager.Instance.GetproductElecTime();
 
         progressImage_top.fillAmount = 0f;
         progressImage_bottom.gameObject.SetActive(true);
@@ -62,16 +63,20 @@ public class ElectricStructure : StructureBase
                 progressImage_top.gameObject.SetActive(false);
                 yield break;
             }
+
             progressImage_top.fillAmount = elapsedTime / GameManager.Instance.GetproductSrcTime();
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        if (elapsedTime >= workTime)
+        {
+            Debug.Log("작업 완료!");
+            GameManager.Instance.AddElectric(GameManager.Instance.GetCurAddElectric());
+            addElec.Play();
+            GameManager.Instance.ConsumeSrc(GameManager.Instance.GetCurRemoveSrc());
+        }
 
-        Debug.Log("작업 완료!");
         GameManager.Instance.SetInteractionState(InteractionType.Electric, false);
-        GameManager.Instance.AddElectric(GameManager.Instance.GetCurAddElectric());
-        addElec.Play();
-        GameManager.Instance.ConsumeSrc(GameManager.Instance.GetCurRemoveSrc());
 
         isPerformingAction = false;
         progressImage_bottom.gameObject.SetActive(false);

@@ -19,12 +19,12 @@ public class PauseManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)&&!GameManager.Instance.IsGameOver())
+        if (UPGRADEUI.activeSelf)
         {
-            if(UPGRADEUI.activeSelf)
-            {
-                return;
-            }
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)&&!GameManager.Instance.IsGameOver())
+        {   
             if(SRCUI.activeSelf)
             {
                 TogglePause();

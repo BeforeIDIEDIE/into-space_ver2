@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal.Execution;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,6 +36,7 @@ public class SrcStructure : StructureBase
         Debug.Log("작업 시작!");
         GameManager.Instance.SetInteractionState(InteractionType.Src, true);
         float elapsedTime = 0f;
+        float workTime = GameManager.Instance.GetproductSrcTime();
 
         progressImage_top.fillAmount = 0f;
         progressImage_bottom.gameObject.SetActive(true);
@@ -56,10 +58,14 @@ public class SrcStructure : StructureBase
             progressImage_top.fillAmount = elapsedTime / GameManager.Instance.GetproductSrcTime();
             yield return null;
         }
+        //예를들어 if elapsedTime==GameManager.Instance.GetproductSrcTime() 인경우 자원을 추가하고 그렇지 않으면 코루틴을 나가도록 할 수 있지 않을까?
+        if (elapsedTime >= workTime)
+        {
+            Debug.Log("작업 완료!");
+            GameManager.Instance.AddSrc(GameManager.Instance.GetCurAddSrc());
+            addSRC.Play();
+        }
 
-        Debug.Log("작업 완료!");
-        GameManager.Instance.AddSrc(GameManager.Instance.GetCurAddSrc());
-        addSRC.Play();
         GameManager.Instance.SetInteractionState(InteractionType.Src, false);
         isPerformingAction = false;
         progressImage_bottom.gameObject.SetActive(false);

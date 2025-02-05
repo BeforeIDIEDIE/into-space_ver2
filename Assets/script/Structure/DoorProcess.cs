@@ -7,7 +7,7 @@ public class DoorProcess : MonoBehaviour
     [SerializeField] private List<GameObject> doorParts;
     [SerializeField] private Sprite openSprite; 
     [SerializeField] private Sprite closedSprite; 
-    private int curActivedDoorPartsIDX = 36;
+    private int curActivedDoorPartsIDX = 37;
     private Coroutine doorCoroutine;
     [SerializeField]private bool doorCantOperate = false;
     [SerializeField] private bool isOperating = false;
