@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     //시계관련
     [SerializeField] private Image dayProgressImage;//하루 경과를 표시할 이미지
-    [SerializeField] private float dayDuration = 180f;
+    private float dayDuration = 180f;
 
     [SerializeField] private EventController eventController;
     private float currentTime = 0f;
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     //목표까지의 거리
     private float Dist = 0f;
-    private float maxDist = 2520f;
+    private float maxDist = 1260f;
     private float shipSpeed = 2f;
     private float shipConsume = 1f;
     private float activeSpeedMultiplier = 1.5f; 
@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     private float previousSrc;
     private float productSrcTime = 3f;
 
-    private float electric = 10f;
+    private float electric = 0f;
     private float curAddElectric = 3f;
     private float maxElectric = 100f;
     private float previousElectric;
@@ -217,7 +217,6 @@ public class GameManager : MonoBehaviour
         {
             currentTime = 0f;
             OnDayEnd();//하루 끝인 경우 별도의 작업 여따 적음
-            day++;
         }
     }
     private void UpdateDayText()
@@ -241,6 +240,7 @@ public class GameManager : MonoBehaviour
             eventController.ActivePrintProblem();
         }
         doorControlManager.DayOffFunction();
+        day++;
         UpdateConsumeElectricText();
     }
 

@@ -26,7 +26,7 @@ public class speedController : MonoBehaviour
     {
         if (isTwoX)
         {
-            Time.timeScale = 2f; // 2배속
+            Time.timeScale = 3f; // 2배속
             isTwo = true;
             toggleImage.sprite = twoXSprite;
         }

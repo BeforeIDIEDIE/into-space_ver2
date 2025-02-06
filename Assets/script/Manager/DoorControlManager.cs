@@ -33,7 +33,7 @@ public class DoorControlManager : MonoBehaviour
         {
             curCantUsedDoor.OffDoorCantOperate();
         }
-        DoorProcess randDoor = null;
+        DoorProcess randDoor;
         do
         {
             randDoor = doorList[Random.Range(0, doorList.Count)];

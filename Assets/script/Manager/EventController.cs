@@ -246,7 +246,7 @@ public class EventController : MonoBehaviour
 
     private void OnEnterPressed(int eventIDX)
     {
-        Time.timeScale = controller.GetIsTwo() ? 2.0f : 1.0f;
+        Time.timeScale = controller.GetIsTwo() ? 3.0f : 1.0f;
         eventUI.SetActive(false);
         SRCUI.SetActive(true);
         startEventAnswer(eventIDX, selectedChoiceIndex);

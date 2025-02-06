@@ -54,7 +54,6 @@ public class DoorProcess : MonoBehaviour
         {
             return;
         }
-
         doorCoroutine = StartCoroutine(AdjustDoorIndex(1));
     }
 
@@ -70,7 +69,7 @@ public class DoorProcess : MonoBehaviour
             StopCoroutine(doorCoroutine);
         }
 
-        doorCoroutine = StartCoroutine(AdjustDoorIndex(36));
+        doorCoroutine = StartCoroutine(AdjustDoorIndex(37));
     }
 
     private IEnumerator AdjustDoorIndex(int targetIndex)
@@ -95,5 +94,4 @@ public class DoorProcess : MonoBehaviour
         isOperating = false;
         Debug.Log("문작동 끝");
     }
-    
 }
