@@ -4,32 +4,19 @@ using UnityEngine;
 
 public class DoorProcess : MonoBehaviour
 {
-
     [SerializeField] private List<GameObject> doorParts;
     [SerializeField] private Sprite openSprite; 
     [SerializeField] private Sprite closedSprite; 
-    private int curActivedDoorPartsIDX = 36;
+    private int curActivedDoorPartsIDX = 37;
     private Coroutine doorCoroutine;
     [SerializeField]private bool doorCantOperate = false;
+    [SerializeField] private bool isOperating = false;
 
-    private void Start()
+    public void initDoorStatus()
     {
-        // 모든 문 조각 활성화
-        foreach (GameObject doorPart in doorParts)
-        {
-            doorPart.SetActive(true);
-            SetSprite(doorPart, openSprite);
-        }
-        curActivedDoorPartsIDX = 36;
+        OffDoorCantOperate();
     }
-    private void SetSprite(GameObject doorPart, Sprite sprite)
-    {
-        SpriteRenderer renderer = doorPart.GetComponent<SpriteRenderer>();
-        if (renderer != null)
-        {
-            renderer.sprite = sprite;
-        }
-    }
+    public bool GetIsOperating() => isOperating;
 
     public void OnDoorCantOperate()
     {
@@ -43,7 +30,6 @@ public class DoorProcess : MonoBehaviour
     public void OffDoorCantOperate()
     {
         doorCantOperate = false;
-
         foreach (GameObject doorPart in doorParts)
         {
             SetSprite(doorPart, openSprite);
@@ -51,13 +37,23 @@ public class DoorProcess : MonoBehaviour
         }
     }
 
+    private void SetSprite(GameObject doorPart, Sprite sprite)
+    {
+        SpriteRenderer renderer = doorPart.GetComponent<SpriteRenderer>();
+        if (renderer != null)
+        {
+            renderer.sprite = sprite;
+        }
+    }
+
+   
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(doorCantOperate)
         {
             return;
         }
-
         doorCoroutine = StartCoroutine(AdjustDoorIndex(1));
     }
 
@@ -73,11 +69,13 @@ public class DoorProcess : MonoBehaviour
             StopCoroutine(doorCoroutine);
         }
 
-        doorCoroutine = StartCoroutine(AdjustDoorIndex(36));
+        doorCoroutine = StartCoroutine(AdjustDoorIndex(37));
     }
 
     private IEnumerator AdjustDoorIndex(int targetIndex)
     {
+        isOperating = true;
+        Debug.Log("문작동");
         while (curActivedDoorPartsIDX != targetIndex)
         {
             if (curActivedDoorPartsIDX > targetIndex)
@@ -93,6 +91,7 @@ public class DoorProcess : MonoBehaviour
 
             yield return new WaitForSeconds(0.02f);
         }
+        isOperating = false;
+        Debug.Log("문작동 끝");
     }
-
 }

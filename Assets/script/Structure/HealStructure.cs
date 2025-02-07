@@ -7,6 +7,7 @@ public class HealStructure : StructureBase
 
     [SerializeField] private Image progressImage_top;
     [SerializeField] private Image progress_all;
+    [SerializeField] private AudioSource addHEAL;
     private void Start()
     {
         progressImage_top.gameObject.SetActive(false);
@@ -14,7 +15,7 @@ public class HealStructure : StructureBase
 
     private void Update()
     {
-        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !isPerformingAction && !GameManager.Instance.IsGameOver())
+        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !isPerformingAction && !GameManager.Instance.IsGameOver() && !GameManager.Instance.IsGameWin())
         {
             StartCoroutine(PerformAction());
         }
@@ -31,7 +32,16 @@ public class HealStructure : StructureBase
         {
             Debug.Log("치료 중");
             GameManager.Instance.AddHP(GameManager.Instance.GetCurAddHP());
+            if (!addHEAL.isPlaying)
+            {
+                addHEAL.Play();
+            }
             yield return new WaitForSeconds(GameManager.Instance.GetproductHealTime());
+        }
+
+        if(addHEAL.isPlaying)
+        {
+            addHEAL.Stop();
         }
 
         Debug.Log("치료 중단");

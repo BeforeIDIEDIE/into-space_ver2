@@ -9,7 +9,7 @@ public class ElectricStructure : StructureBase
     [SerializeField] private Image progressImage_top;
 
     [SerializeField] private Image progress_all;
-
+    [SerializeField] private AudioSource addElec;
     private void Start()
     {
         progressImage_bottom.gameObject.SetActive(false);
@@ -17,7 +17,7 @@ public class ElectricStructure : StructureBase
     }
     private void Update()
     {
-        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction&&!GameManager.Instance.IsGameOver())
+        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !GameManager.Instance.IsGameOver() && !GameManager.Instance.IsGameWin())
         {
             if (GameManager.Instance.GetSrc() >= GameManager.Instance.GetCurRemoveSrc())
             {
@@ -36,6 +36,7 @@ public class ElectricStructure : StructureBase
         Debug.Log("작업 시작!");
         GameManager.Instance.SetInteractionState(InteractionType.Electric, true);
         float elapsedTime = 0f;
+        float workTime = GameManager.Instance.GetproductElecTime();
 
         progressImage_top.fillAmount = 0f;
         progressImage_bottom.gameObject.SetActive(true);
@@ -53,7 +54,7 @@ public class ElectricStructure : StructureBase
                 yield break;
             }
 
-            if (GameManager.Instance.GetSrc() < GameManager.Instance.GetCurRemoveSrc() && !GameManager.Instance.IsGameOver())//플레이어 작업중 연료부족+ 게임 오버시
+            if (GameManager.Instance.GetSrc() < GameManager.Instance.GetCurRemoveSrc() && !GameManager.Instance.IsGameOver()&&!GameManager.Instance.IsGameWin())//플레이어 작업중 연료부족+ 게임 오버시
             {
                 Debug.Log("연료부족!"); 
                 GameManager.Instance.SetInteractionState(InteractionType.Electric, false);
@@ -62,20 +63,25 @@ public class ElectricStructure : StructureBase
                 progressImage_top.gameObject.SetActive(false);
                 yield break;
             }
+
             progressImage_top.fillAmount = elapsedTime / GameManager.Instance.GetproductSrcTime();
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        if (elapsedTime >= workTime)
+        {
+            Debug.Log("작업 완료!");
+            GameManager.Instance.AddElectric(GameManager.Instance.GetCurAddElectric());
+            addElec.Play();
+            GameManager.Instance.ConsumeSrc(GameManager.Instance.GetCurRemoveSrc());
+        }
 
-        Debug.Log("작업 완료!");
         GameManager.Instance.SetInteractionState(InteractionType.Electric, false);
-        GameManager.Instance.AddElectric(GameManager.Instance.GetCurAddElectric());
-        GameManager.Instance.ConsumeSrc(GameManager.Instance.GetCurRemoveSrc());
 
         isPerformingAction = false;
         progressImage_bottom.gameObject.SetActive(false);
         progressImage_top.gameObject.SetActive(false);
-        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !GameManager.Instance.IsGameOver())
+        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !GameManager.Instance.IsGameOver()&&!GameManager.Instance.IsGameWin())
         {
             StartCoroutine(PerformAction());//작업반복
         }

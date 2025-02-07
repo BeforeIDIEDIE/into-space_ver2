@@ -13,10 +13,15 @@ public class Camera_zoom : MonoBehaviour
     [SerializeField] private List<GameObject> spritesToReveal; // 드러낼 스프라이트 오브젝트 리스트
     [SerializeField] private GameObject ship;
     [SerializeField] private GameObject exceptShip;
+    [SerializeField] private GameObject planet;
     [SerializeField] private CanvasGroup explosionUI_CG;
     [SerializeField] private GameObject explosionUI_Object;
-
     [SerializeField] private List<ShipMoving_GameOver> shipParts;
+    [SerializeField] private GameObject GameOverUI;
+    [SerializeField] private GameObject WinUI;
+    [SerializeField] private AudioSource ZoomoutSound;
+    [SerializeField] private AudioSource GameOverSound;
+    [SerializeField] private AudioSource GameWinSound;
 
     private float uiFadeDuration = 3f;
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
@@ -37,12 +42,17 @@ public class Camera_zoom : MonoBehaviour
 
     public void GameOver2Start()
     {
-        ship.SetActive(true);
-        StartCoroutine(ZoomAndRevealObjects());
+        StartCoroutine(ZoomAndRevealObjects(FadeUIEffect()));
+    }
+    public void WinStart()
+    {
+        StartCoroutine(ZoomAndRevealObjects(TargetClose()));
     }
 
-    private IEnumerator ZoomAndRevealObjects()
+    private IEnumerator ZoomAndRevealObjects(IEnumerator Coroutine)
     {
+        ZoomoutSound.Play();
+        ship.SetActive(true);
         pixelPerfectCamera.enabled = false;
         Debug.Log("픽퍼 해제");
 
@@ -78,9 +88,27 @@ public class Camera_zoom : MonoBehaviour
             renderer.color = finalColor;
         }
         exceptShip.SetActive(false);
-        StartCoroutine(FadeUIEffect());
-        Debug.Log("픽퍼 해제 + 목표 이동 + 스프라이트 드러냄");
+        StartCoroutine(Coroutine);
 
+    }
+
+    private IEnumerator TargetClose()
+    {
+        planet.SetActive(true);
+        Vector3 startPos = planet.transform.position;
+        Vector3 endPos = new Vector3(69, 0, 0);
+        float elapsedTime = 0f;
+
+        while (elapsedTime < zoomDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            planet.transform.position = Vector3.Lerp(startPos, endPos, elapsedTime / zoomDuration);
+            yield return null;
+        }
+        planet.transform.position = endPos;
+        Time.timeScale = 0f;
+        GameWinSound.Play();
+        WinUI.SetActive(true);
     }
 
     private IEnumerator FadeUIEffect()
@@ -119,5 +147,7 @@ public class Camera_zoom : MonoBehaviour
 
         explosionUI_CG.alpha = 0f;
         explosionUI_Object.SetActive(false);
+        GameOverSound.Play();
+        GameManager.Instance.TriggerGameOverUI();
     }
 }

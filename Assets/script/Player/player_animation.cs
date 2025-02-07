@@ -47,6 +47,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         Debug.Log("게임 종료");
-        //GameManager.Instance.TriggerGameOverUI();//게임 오버 UI -> 아직 안만듦
+        GameManager.Instance.TriggerGameOverUI();
     }
 }

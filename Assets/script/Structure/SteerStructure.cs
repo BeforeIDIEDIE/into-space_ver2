@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SteerStructure : StructureBase
 {
+    [SerializeField] private AudioSource typingSound;
     private void Update()
     {
         //if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction)
@@ -17,13 +18,22 @@ public class SteerStructure : StructureBase
         //        Debug.Log("연료 부족! 조종이 불가능합니다.");
         //    }
         //}
-        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !GameManager.Instance.IsGameOver())
+        if (isNear && Input.GetKey(KeyCode.Space) && !isPerformingAction && !GameManager.Instance.IsGameOver() && !GameManager.Instance.IsGameWin())
         {
             GameManager.Instance.SetInteractionState(InteractionType.Steer, true);
+            if (!typingSound.isPlaying)
+            {
+                Debug.Log("타이핑");
+                typingSound.Play();
+            }
             GameManager.Instance.onBoost();
         }
         else
         {
+            if (typingSound.isPlaying)
+            {
+                typingSound.Stop();
+            }
             GameManager.Instance.offBoost();
             GameManager.Instance.SetInteractionState(InteractionType.Steer, false);
         }
@@ -36,6 +46,7 @@ public class SteerStructure : StructureBase
 
         while (isNear && Input.GetKey(KeyCode.Space))
         {
+            
             if (GameManager.Instance.GetSrc() < GameManager.Instance.GetCurRemoveSrc())
             {
                 Debug.Log("조종 중단.");
@@ -44,12 +55,20 @@ public class SteerStructure : StructureBase
                 isPerformingAction = false;
                 yield break;
             }
-
+            if (!typingSound.isPlaying)
+            {
+                Debug.Log("타이핑");
+                typingSound.Play();
+            }
             GameManager.Instance.onBoost();
             Debug.Log("조종 중");
             yield return new WaitForSeconds(0.5f);
         }
 
+        if (typingSound.isPlaying)
+        {
+            typingSound.Stop();
+        }
         GameManager.Instance.offBoost();
         GameManager.Instance.SetInteractionState(InteractionType.Steer, false);
         Debug.Log("조종 중단");

@@ -28,6 +28,8 @@ public class UpgradeStructure : StructureBase
     [SerializeField] private TextMeshProUGUI costSrc;
     [SerializeField] private TextMeshProUGUI costElec;
 
+    [SerializeField] private AudioSource BTNSound;
+
     private List<float> cost = new List<float>{ 20f, 25f, 30f, 35f, 40f, 45f };
     private List<float> src = new List<float> { 0.5f, 0.5f, 1f, 1f, 2f, 2f };
     private List<float> elec = new List<float> { 0.5f, 0.5f, 1f, 1f, 2f, 2f };
@@ -63,10 +65,12 @@ public class UpgradeStructure : StructureBase
         //UI ÄÑ°í ²û
         if (isNear && Input.GetKeyDown(KeyCode.Space) && !isUpgradeUIOn&&GameManager.Instance.IsUpgradeAble())
         {
+            BTNSound.Play();
             ActivateUpgradeUI();
         }
         if (isUpgradeUIOn && Input.GetKeyDown(KeyCode.Escape))
         {
+            BTNSound.Play();
             DeactivateUpgradeUI();
         }
 
@@ -168,7 +172,7 @@ public class UpgradeStructure : StructureBase
 
     public void DeactivateUpgradeUI()
     {
-        Time.timeScale = controller.GetIsTwo() ? 2.0f:1.0f; 
+        Time.timeScale = controller.GetIsTwo() ? 3.0f:1.0f; 
         if (upgradeUI != null)
         {
             upgradeUI.SetActive(false);

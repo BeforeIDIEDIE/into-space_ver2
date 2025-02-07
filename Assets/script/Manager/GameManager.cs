@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using UnityEditor.Build;
 using System.Linq;
 using Unity.VisualScripting;
+using System.Runtime.ConstrainedExecution;
 
 public enum InteractionType
 {
@@ -28,13 +29,15 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
     }
+
+    //게임 승리 관련기능
+    private bool isGameWin = false;
     //게임 오버관련기능
     private bool isGameOver = false;
 
@@ -46,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     //시계관련
     [SerializeField] private Image dayProgressImage;//하루 경과를 표시할 이미지
-    [SerializeField] private float dayDuration = 180f;
+    private float dayDuration = 180f;
 
     [SerializeField] private EventController eventController;
     private float currentTime = 0f;
@@ -59,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     //목표까지의 거리
     private float Dist = 0f;
-    private float maxDist = 2520f;
+    private float maxDist = 1260f;
     private float shipSpeed = 2f;
     private float shipConsume = 1f;
     private float activeSpeedMultiplier = 1.5f; 
@@ -69,7 +72,6 @@ public class GameManager : MonoBehaviour
 
     //자원
     private bool isUpgradeAble = true;
-
     private float src = 50f;
     private float curAddSrc = 6f;
     private float maxSrc = 100f;
@@ -77,20 +79,20 @@ public class GameManager : MonoBehaviour
     private float previousSrc;
     private float productSrcTime = 3f;
 
-    private float electric = 10f;
+    private float electric = 0f;
     private float curAddElectric = 3f;
     private float maxElectric = 100f;
     private float previousElectric;
     private float productElectricTime = 3f;
-    private float defaultConsumeElec = 20f;
+    private float defaultConsumeElec = 25f;
 
-    private float hp = 100f;
+    private float hp = 50f;
     private float maximumHP = 100f;
     private float curAddHP = 1f;
     private float previousHP;
     private float productHealTime = 0.5f;
 
-    private float reduceHpTime = 2f;
+    private float reduceHpTime = 1.5f;
     private float reduceHpAmount = 1f;
 
 
@@ -103,13 +105,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject SRCUI;//자원UI
     [SerializeField] private GameObject eventUI;//이벤트UI
     [SerializeField] private GameObject upgradeUI;//업그레이드 UI
+    [SerializeField] private GameObject GameOverUI;//게임오버UI
     [SerializeField] private TextMeshProUGUI hpText;
     [SerializeField] private TextMeshProUGUI srcText;
     [SerializeField] private TextMeshProUGUI electricText;
     [SerializeField] private TextMeshProUGUI shipdist;
     [SerializeField] private Slider distanceSlider;
     [SerializeField] private TextMeshProUGUI dayText;//소모 전기량 텍스트
+    [SerializeField] private TextMeshProUGUI dyingMessage;//사망사유
+    [SerializeField] private TextMeshProUGUI dayCNT;//승리시 날짜 출력
+    //문
+    [SerializeField] private DoorControlManager doorControlManager;
+    [SerializeField] private Image startIMG;
+    [SerializeField] private GameObject startIMG_GameOBJ;
 
+    [SerializeField] private AudioSource gameOverSound;
+    private float changeColorTransparents = 0.5f;
     private void Start()
     {
         //초기 값 설정
@@ -131,11 +142,30 @@ public class GameManager : MonoBehaviour
         distanceSlider.minValue = 0;
         distanceSlider.maxValue = 1;
         distanceSlider.value = Dist/maxDist;
+        
         UpdateDayText();
         SRCUI.SetActive(true);
         UpdateConsumeElectricText();
-    }
 
+        startIMG.color = Color.gray;
+        startIMG_GameOBJ.SetActive(true);
+        StartCoroutine(TransitionColor());
+    }
+    private IEnumerator TransitionColor()
+    {
+        float elapsedTime = 0f;
+        Color startColor = startIMG.color;
+        Color targetColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
+        while (elapsedTime < changeColorTransparents)
+        {
+            elapsedTime += Time.deltaTime;
+            startIMG.color = Color.Lerp(startColor, targetColor, elapsedTime / changeColorTransparents);
+            //imageComponent.color = Color.Lerp(startColor, transformColor, elapsedTime / transitionDuration);
+            yield return null;
+        }
+        startIMG.color = targetColor;
+        startIMG_GameOBJ.SetActive(false);
+    }
     private void Update()
     {
         if (previousHP != hp || previousSrc != src || previousElectric != electric || previousDist != Dist)
@@ -154,14 +184,23 @@ public class GameManager : MonoBehaviour
     {
         if (!isGameOver)
         {
+            SRCUI.SetActive(false);
             isGameOver = true;
             Debug.Log("게임 오버");
         }
     }
 
+    public void TriggerGameWin()
+    {
+        SRCUI.SetActive(false);
+        dayCNT.text = $"{day}광년에 걸쳐 성공";
+        isGameWin = true;
+        forGameOver2Method.WinStart();
+    }
+
     private void UpdateDayProgress()
     {
-        if (isGameOver)
+        if (isGameOver||isGameWin)
         {
             return;
         }
@@ -178,7 +217,6 @@ public class GameManager : MonoBehaviour
         {
             currentTime = 0f;
             OnDayEnd();//하루 끝인 경우 별도의 작업 여따 적음
-            day++;
         }
     }
     private void UpdateDayText()
@@ -201,6 +239,9 @@ public class GameManager : MonoBehaviour
         { 
             eventController.ActivePrintProblem();
         }
+        doorControlManager.DayOffFunction();
+        day++;
+        UpdateConsumeElectricText();
     }
 
     private IEnumerator MoveShip()
@@ -217,7 +258,7 @@ public class GameManager : MonoBehaviour
             if (src >= currentConsume)
             {
                 src -= currentConsume;
-                Dist += currentSpeed;
+                Dist = math.min(maxDist, Dist + currentSpeed);
                 Debug.Log($"현재거리 {Dist}, 연료 {src}");
             }
             else
@@ -227,7 +268,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
         Debug.Log("목표 도달!");
-        //아직 엔딩 안만듦!
+        TriggerGameWin();
     }
 
     // 조종석 상호작용
@@ -279,12 +320,12 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            if (IsGameOver())
+            if (IsGameOver()||IsGameWin())
             {
                 yield break;
             }
             yield return new WaitForSeconds(reduceHpTime); // 2초 대기
-            if (hp > 0)
+            if (hp > 0&&!IsInteractionActive(InteractionType.Heal))
             {
                 ConsumeHP(reduceHpAmount);
             }
@@ -314,6 +355,8 @@ public class GameManager : MonoBehaviour
             if (hp <= 0)
             {
                 Debug.Log("죽었다!!");
+                dyingMessage.text = "사유 : 체력 부족";
+                gameOverSound.Play();
                 TriggerGameOver();
             }
         }
@@ -330,6 +373,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("No Electric!");
             TriggerGameOver();
+            dyingMessage.text = "사유 : 전기 부족";
             GameOver2Start();
             return;//소모 실패
         }
@@ -356,6 +400,7 @@ public class GameManager : MonoBehaviour
     public float GetMaxElec() => maxElectric;
     public float GetMaxHp() => maximumHP;
     public bool IsGameOver() => isGameOver;
+    public bool IsGameWin() => isGameWin;
     public bool IsUpgradeAble() => isUpgradeAble;
 
     public void AddshipSpeed(float amount)
@@ -363,10 +408,9 @@ public class GameManager : MonoBehaviour
         shipSpeed += amount;
     }
 
-
     public void SetInteractionState(InteractionType type, bool state)
     {
-        if (GameManager.Instance.IsGameOver())
+        if (GameManager.Instance.IsGameOver()||isGameWin)
         {
             return;
         }
@@ -431,5 +475,9 @@ public class GameManager : MonoBehaviour
         eventUI.SetActive(false);
         upgradeUI.SetActive(false);
         forGameOver2Method.GameOver2Start();
+    }
+    public void TriggerGameOverUI()
+    {
+        GameOverUI.SetActive(true);
     }
 }
