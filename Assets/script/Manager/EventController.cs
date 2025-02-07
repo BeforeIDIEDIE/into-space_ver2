@@ -112,7 +112,7 @@ public class EventController : MonoBehaviour
                 {
                     new EventAnswer { answerText = "전기 생산시 연료 소모량이 1감소하지만 \n전기 생산량도 1 감소했다...." },
                     new EventAnswer { answerText = "아무 이상 없다!" },
-                    new EventAnswer { answerText = "전기 생산시 연료 소모량이 2증가하지만 전기 생산량이 3증가한다!" }
+                    new EventAnswer { answerText = "전기 생산시 연료 소모량이 2증가하지만 전기 생산량이 1증가한다!" }
                 },
                 eventSprite = eventSprites[3]
             },
@@ -241,7 +241,7 @@ public class EventController : MonoBehaviour
         //Enter버튼이 눌리면 startEventAnswer함수 실행
         Enter.onClick.RemoveAllListeners();
         Enter.onClick.AddListener(() => OnEnterPressed(curIdx));
-        GameManager.Instance.UpdateConsumeElectricText();
+        
     }
 
     private void OnEnterPressed(int eventIDX)
@@ -251,6 +251,7 @@ public class EventController : MonoBehaviour
         SRCUI.SetActive(true);
         startEventAnswer(eventIDX, selectedChoiceIndex);
         selectedChoiceIndex = -1;
+        GameManager.Instance.UpdateConsumeElectricText();
     }
 
     private IEnumerator DisplayEvent(int idxOfEvent)
@@ -366,7 +367,7 @@ public class EventController : MonoBehaviour
             case 11:
                 {
                     GameManager.Instance.AddCurRemovedSrc(2);
-                    GameManager.Instance.AddCurAddElectric(3);
+                    GameManager.Instance.AddCurAddElectric(1);
                     break;
                 }
             case 12:

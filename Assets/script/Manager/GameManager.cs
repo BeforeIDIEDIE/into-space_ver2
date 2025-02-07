@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
     private float maxElectric = 100f;
     private float previousElectric;
     private float productElectricTime = 3f;
-    private float defaultConsumeElec = 20f;
+    private float defaultConsumeElec = 25f;
 
     private float hp = 50f;
     private float maximumHP = 100f;
@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviour
     public void TriggerGameWin()
     {
         SRCUI.SetActive(false);
-        dayCNT.text = $"{day}일에 걸쳐 성공";
+        dayCNT.text = $"{day}광년에 걸쳐 성공";
         isGameWin = true;
         forGameOver2Method.WinStart();
     }

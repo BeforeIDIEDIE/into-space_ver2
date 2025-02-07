@@ -172,7 +172,7 @@ public class UpgradeStructure : StructureBase
 
     public void DeactivateUpgradeUI()
     {
-        Time.timeScale = controller.GetIsTwo() ? 2.0f:1.0f; 
+        Time.timeScale = controller.GetIsTwo() ? 3.0f:1.0f; 
         if (upgradeUI != null)
         {
             upgradeUI.SetActive(false);
