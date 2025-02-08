@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build;
 using UnityEngine;
 
 public class StructSpriteChange : MonoBehaviour
 {
-     [SerializeField] private Sprite defaultSprite; // 기본 스프라이트
-    [SerializeField] private Sprite closeSprite; // 가까울 때 스프라이트
+     [SerializeField] private Sprite defaultSprite;
+    [SerializeField] private Sprite closeSprite; 
     
 
 

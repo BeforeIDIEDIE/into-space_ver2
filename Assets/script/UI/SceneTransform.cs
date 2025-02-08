@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using NUnit.Framework.Internal.Commands;
+using UnityEngine.SceneManagement;
 public class SceneTransform : MonoBehaviour
 {
     [SerializeField] private Color original = Color.black;
@@ -26,7 +27,7 @@ public class SceneTransform : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(TransitionColor());
-        skipButton.enabled = false;
+        skipButton.enabled = true;
     }
 
     private void OnDisable()
@@ -81,8 +82,7 @@ public class SceneTransform : MonoBehaviour
 
     private IEnumerator TypeText(string textToType)
     {
-        targetText.text = ""; 
-
+        targetText.text = "";
         foreach (char letter in textToType)
         {
             targetText.text += letter;
@@ -90,5 +90,14 @@ public class SceneTransform : MonoBehaviour
             yield return new WaitForSeconds(typeSpeed); 
         }
         typingCoroutine = null;
+    }
+
+    public void GoToNormal()
+    {
+        SceneManager.LoadScene("NormalGame");
+    }
+    public void GoToChallenge()
+    {
+        SceneManager.LoadScene("ChallangeGame");
     }
 }

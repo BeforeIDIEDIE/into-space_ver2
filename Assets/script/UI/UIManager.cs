@@ -9,13 +9,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private List<GameObject> howTo;
     [SerializeField] GameObject option;
     [SerializeField] private GameObject transformUI;
+    [SerializeField] private TypingLikeMan startScene;
     private int curHowtoIDX;
 
     private void Start()
     {
         //스타트 제외 모든 캔버스 안띄움
         OpenStart();
-
+        //startScene.StartScene();
     }
 
     private void Update()

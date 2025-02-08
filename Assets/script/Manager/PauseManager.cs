@@ -64,6 +64,6 @@ public class PauseManager : MonoBehaviour
     }
     public void GoToMenu()
     {
-        //여기에 메인메뉴로 가는 기능
+        SceneManager.LoadScene("MainMenu");
     }
 }
