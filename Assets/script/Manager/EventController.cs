@@ -23,6 +23,8 @@ public class EventController : MonoBehaviour
     [SerializeField] private GameObject SRCUI;
     [SerializeField] private GameObject eventUI;
     [SerializeField] private speedController controller;
+    [SerializeField] private AudioSource dingdongSound;
+
 
     private List<bool> isSelected = new List<bool>();
 
@@ -224,6 +226,7 @@ public class EventController : MonoBehaviour
     }
     private void printProblem()
     {
+        dingdongSound.Play();
         InitializeEvents();
         SRCUI.SetActive(false);
         Time.timeScale = 0f;
@@ -409,7 +412,7 @@ public class EventController : MonoBehaviour
                     {
                         case 0:
                             {
-                                GameManager.Instance.AddDist(200);
+                                GameManager.Instance.RemoveDist(200);
                                 break;
                             }
                         case 1:
@@ -427,7 +430,7 @@ public class EventController : MonoBehaviour
                     {
                         case 0:
                             {
-                                GameManager.Instance.AddDist(300);
+                                GameManager.Instance.RemoveDist(300);
                                 break;
                             }
                         case 1:
