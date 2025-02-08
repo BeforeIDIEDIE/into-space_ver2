@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     //시계관련
     [SerializeField] private Image dayProgressImage;//하루 경과를 표시할 이미지
-    private float dayDuration = 180f;
+    private float dayDuration = 165f;
 
     [SerializeField] private EventController eventController;
     private float currentTime = 0f;
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     private float maxDist = 1260f;
     private float shipSpeed = 2f;
     private float shipConsume = 1f;
-    private float activeSpeedMultiplier = 1.5f; 
+    private float activeSpeedMultiplier = 2f; 
     private float activeConsumeMultiplier = 2f; 
     private float previousDist;
     private bool isBoosted = false;
@@ -109,7 +109,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hpText;
     [SerializeField] private TextMeshProUGUI srcText;
     [SerializeField] private TextMeshProUGUI electricText;
-    [SerializeField] private TextMeshProUGUI shipdist;
     [SerializeField] private Slider distanceSlider;
     [SerializeField] private TextMeshProUGUI dayText;//소모 전기량 텍스트
     [SerializeField] private TextMeshProUGUI dyingMessage;//사망사유
@@ -118,8 +117,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private DoorControlManager doorControlManager;
     [SerializeField] private Image startIMG;
     [SerializeField] private GameObject startIMG_GameOBJ;
-
+    //Sounds~~
     [SerializeField] private AudioSource gameOverSound;
+    //mode
+    [SerializeField] private int mode;
+    [SerializeField] private CrackManager crackManager;
+
+
+
     private float changeColorTransparents = 0.5f;
     private void Start()
     {
@@ -150,6 +155,11 @@ public class GameManager : MonoBehaviour
         startIMG.color = Color.gray;
         startIMG_GameOBJ.SetActive(true);
         StartCoroutine(TransitionColor());
+
+        if (mode == 1) 
+        {
+            crackManager.StartCrackCycle();
+        }
     }
     private IEnumerator TransitionColor()
     {
@@ -193,7 +203,7 @@ public class GameManager : MonoBehaviour
     public void TriggerGameWin()
     {
         SRCUI.SetActive(false);
-        dayCNT.text = $"{day}광년에 걸쳐 성공";
+        dayCNT.text = $"{day}년에 걸쳐 도착";
         isGameWin = true;
         forGameOver2Method.WinStart();
     }
@@ -242,6 +252,10 @@ public class GameManager : MonoBehaviour
         doorControlManager.DayOffFunction();
         day++;
         UpdateConsumeElectricText();
+        if (mode == 1) 
+        {
+            crackManager.StartCrackCycle();
+        }
     }
 
     private IEnumerator MoveShip()
@@ -286,7 +300,6 @@ public class GameManager : MonoBehaviour
         hpText.text = $"{hp}/{maximumHP}";
         srcText.text = $"{src}/{maxSrc}";
         electricText.text = $"{electric}/{maxElectric}";
-        shipdist.text = $"Dist: {Dist}/{maxDist}";
         distanceSlider.value = Dist / maxDist;
     }
     //자원 추가
@@ -421,7 +434,6 @@ public class GameManager : MonoBehaviour
     {
         return interactionStates[type];
     }
-
     public bool IsPlayerInteraction()
     {
         return interactionStates.Values.Any(state => state);
@@ -480,4 +492,9 @@ public class GameManager : MonoBehaviour
     {
         GameOverUI.SetActive(true);
     }
+    public void TypingDyingMessage(String ImDying)
+    {
+        dyingMessage.text = ImDying;
+    }
+    public float GetDayDuration() => dayDuration;
 }
