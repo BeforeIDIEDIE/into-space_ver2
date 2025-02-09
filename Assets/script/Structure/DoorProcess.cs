@@ -46,8 +46,6 @@ public class DoorProcess : MonoBehaviour
         }
     }
 
-   
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(doorCantOperate)
@@ -75,6 +73,7 @@ public class DoorProcess : MonoBehaviour
     private IEnumerator AdjustDoorIndex(int targetIndex)
     {
         isOperating = true;
+        float doorSpeed = 0.02f;
         Debug.Log("문작동");
         while (curActivedDoorPartsIDX != targetIndex)
         {
@@ -89,7 +88,12 @@ public class DoorProcess : MonoBehaviour
                 curActivedDoorPartsIDX++;
             }
 
-            yield return new WaitForSeconds(0.001f/Time.timeScale);
+            float elapsedTime = 0f;
+            while (elapsedTime < doorSpeed)
+            {
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
         }
         isOperating = false;
         Debug.Log("문작동 끝");

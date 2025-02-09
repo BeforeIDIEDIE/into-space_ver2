@@ -5,8 +5,12 @@ using UnityEngine.UI;
 using TMPro;
 using NUnit.Framework.Internal.Commands;
 using UnityEngine.SceneManagement;
+
+
 public class SceneTransform : MonoBehaviour
 {
+    //기타 기능
+
     [SerializeField] private Color original = Color.black;
     [SerializeField] private Color transformColor = Color.gray;
     [SerializeField] private float transitionDuration = 0.5f;
@@ -23,11 +27,11 @@ public class SceneTransform : MonoBehaviour
         "\n또는 거주지로 적합하지 않은 환경인지는 알 수 없다." +
         "\n\n플레이어는 이 위태로운 상황에서 미완성된 우주선을 타고 떠나며, 선택과 생존의 여정에 나서게 된다.";
     private Coroutine typingCoroutine;
-    
-    private void OnEnable()
+
+    public void StartUI()
     {
+        Debug.Log("testing~");
         StartCoroutine(TransitionColor());
-        skipButton.enabled = true;
     }
 
     private void OnDisable()
@@ -76,7 +80,6 @@ public class SceneTransform : MonoBehaviour
         else
         {
             typingCoroutine = StartCoroutine(TypeText(allText));
-            skipButton.enabled = true;
         }
     }
 

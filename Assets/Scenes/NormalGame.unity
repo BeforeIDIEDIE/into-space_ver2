@@ -22821,10 +22821,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef09d6ebdff11fa49b26486a861cbcea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serialNum: 1
   forGameOver2Method: {fileID: 519420035}
   furPlayerMovement: {fileID: 1992323903}
   dayProgressImage: {fileID: 661342839}
-  dayDuration: 145
+  dayDuration: 155
   eventController: {fileID: 39414983}
   Player: {fileID: 1992323902}
   SRCUI: {fileID: 459859038}
