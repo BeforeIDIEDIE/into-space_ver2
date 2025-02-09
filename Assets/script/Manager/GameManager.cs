@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     //시계관련
     [SerializeField] private Image dayProgressImage;//하루 경과를 표시할 이미지
-    private float dayDuration = 165f;
+    [SerializeField] private float dayDuration = 145f;
 
     [SerializeField] private EventController eventController;
     private float currentTime = 0f;

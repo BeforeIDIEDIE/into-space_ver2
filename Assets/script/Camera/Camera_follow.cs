@@ -6,11 +6,11 @@ public class Camera_follow : MonoBehaviour
 {
     [SerializeField] private Transform player; 
     [SerializeField] private float smoothSpeed; 
-    [SerializeField] private float delayTime; 
-
+    [SerializeField] private float delayTime;
+    
     private Vector3 targetPosition; 
     private Queue<Vector3> positionHistory;
-
+    [SerializeField] private Rigidbody2D playerRb;
     private void Start()
     {
         positionHistory = new Queue<Vector3>();

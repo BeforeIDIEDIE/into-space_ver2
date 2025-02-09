@@ -62,7 +62,7 @@ public class CrackManager : MonoBehaviour
 
     private IEnumerator CrackCountdown()
     {
-        float timer = 20f;
+        float timer = 25f;
         crackTimer.gameObject.SetActive(true);
         blackBoard.gameObject.SetActive(true);
         siren.gameObject.SetActive(true);

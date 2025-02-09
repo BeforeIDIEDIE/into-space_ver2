@@ -98,6 +98,10 @@ public class SceneTransform : MonoBehaviour
     }
     public void GoToChallenge()
     {
-        SceneManager.LoadScene("ChallangeGame");
+        SceneManager.LoadScene("ChallengeGame");
+    }
+    public void GoToEasy()
+    {
+        SceneManager.LoadScene("EasyGame");
     }
 }

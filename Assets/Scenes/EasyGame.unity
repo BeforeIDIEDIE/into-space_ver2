@@ -11478,14 +11478,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: door1
       objectReference: {fileID: 0}
-    - target: {fileID: 750301936920100124, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
-      propertyPath: m_Size.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 750301936920100124, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
-      propertyPath: m_EdgeRadius
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7152088694390578198, guid: edc40f8511b17f24cbc03cdc20abf756, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.6285453
@@ -22824,7 +22816,7 @@ MonoBehaviour:
   forGameOver2Method: {fileID: 519420035}
   furPlayerMovement: {fileID: 1992323903}
   dayProgressImage: {fileID: 661342839}
-  dayDuration: 145
+  dayDuration: 180
   eventController: {fileID: 39414983}
   Player: {fileID: 1992323902}
   SRCUI: {fileID: 459859038}

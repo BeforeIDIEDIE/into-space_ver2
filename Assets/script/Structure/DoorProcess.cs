@@ -89,7 +89,7 @@ public class DoorProcess : MonoBehaviour
                 curActivedDoorPartsIDX++;
             }
 
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSeconds(0.001f/Time.timeScale);
         }
         isOperating = false;
         Debug.Log("문작동 끝");
