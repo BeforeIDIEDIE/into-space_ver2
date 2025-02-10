@@ -11,7 +11,7 @@ public class DoorProcess : MonoBehaviour
     private Coroutine doorCoroutine;
     [SerializeField]private bool doorCantOperate = false;
     [SerializeField] private bool isOperating = false;
-
+    private bool isPlayerInside = false;
     public void initDoorStatus()
     {
         OffDoorCantOperate();
@@ -52,6 +52,12 @@ public class DoorProcess : MonoBehaviour
         {
             return;
         }
+        isPlayerInside = true;
+
+        if (doorCoroutine != null)
+        {
+            StopCoroutine(doorCoroutine);
+        }
         doorCoroutine = StartCoroutine(AdjustDoorIndex(1));
     }
 
@@ -61,7 +67,7 @@ public class DoorProcess : MonoBehaviour
         {
             return;
         }
-
+        isPlayerInside = false;
         if (doorCoroutine != null)
         { 
             StopCoroutine(doorCoroutine);

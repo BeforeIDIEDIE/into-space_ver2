@@ -16,7 +16,6 @@ public enum InteractionType
     Src,
     Steer
 }
-
 [System.Serializable]
 public class GameData
 {
@@ -212,9 +211,8 @@ public class GameManager : MonoBehaviour
     //mode
     [SerializeField] private int mode;
     [SerializeField] private CrackManager crackManager;
-
-   
-
+    //ÀÌº¥Æ®~
+    private bool inEvent = false;
 
 
     private float changeColorTransparents = 0.5f;
@@ -345,6 +343,7 @@ public class GameManager : MonoBehaviour
         ConsumeElectric(CalculateConsumeElectric());
         if(!isGameOver)
         { 
+            inEvent = true;
             eventController.ActivePrintProblem();
         }
         doorControlManager.DayOffFunction();
@@ -595,4 +594,13 @@ public class GameManager : MonoBehaviour
         dyingMessage.text = ImDying;
     }
     public float GetDayDuration() => dayDuration;
+    public bool GetInEvent()=> inEvent;
+    public void OnInEvent()
+    {
+        inEvent = true;
+    }
+    public void OffInEvent()
+    {
+        inEvent= false;
+    }
 }

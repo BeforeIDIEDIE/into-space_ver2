@@ -23,7 +23,7 @@ public class PauseManager : MonoBehaviour
         {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Escape)&&!GameManager.Instance.IsGameOver())
+        if (Input.GetKeyDown(KeyCode.Escape)&&!GameManager.Instance.IsGameOver()&&!GameManager.Instance.GetInEvent())
         {   
             if(SRCUI.activeSelf)
             {
@@ -43,7 +43,7 @@ public class PauseManager : MonoBehaviour
         {
             PauseUI.SetActive(false);
             SRCUI.SetActive(true);
-            Time.timeScale = speedController.GetIsTwo() ? 2.0f : 1.0f;
+            Time.timeScale = speedController.GetIsTwo() ? 3.0f : 1.0f;
         }
         else
         {
