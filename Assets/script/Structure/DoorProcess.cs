@@ -11,7 +11,7 @@ public class DoorProcess : MonoBehaviour
     private Coroutine doorCoroutine;
     [SerializeField]private bool doorCantOperate = false;
     [SerializeField] private bool isOperating = false;
-
+    private bool isPlayerInside = false;
     public void initDoorStatus()
     {
         OffDoorCantOperate();
@@ -46,13 +46,17 @@ public class DoorProcess : MonoBehaviour
         }
     }
 
-   
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(doorCantOperate)
         {
             return;
+        }
+        isPlayerInside = true;
+
+        if (doorCoroutine != null)
+        {
+            StopCoroutine(doorCoroutine);
         }
         doorCoroutine = StartCoroutine(AdjustDoorIndex(1));
     }
@@ -63,7 +67,7 @@ public class DoorProcess : MonoBehaviour
         {
             return;
         }
-
+        isPlayerInside = false;
         if (doorCoroutine != null)
         { 
             StopCoroutine(doorCoroutine);
@@ -75,6 +79,7 @@ public class DoorProcess : MonoBehaviour
     private IEnumerator AdjustDoorIndex(int targetIndex)
     {
         isOperating = true;
+        float doorSpeed = Time.timeScale==1f?(0.03f):0.01f;
         Debug.Log("문작동");
         while (curActivedDoorPartsIDX != targetIndex)
         {
@@ -89,7 +94,12 @@ public class DoorProcess : MonoBehaviour
                 curActivedDoorPartsIDX++;
             }
 
-            yield return new WaitForSeconds(0.02f);
+            float elapsedTime = 0f;
+            while (elapsedTime < doorSpeed) 
+            {
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
         }
         isOperating = false;
         Debug.Log("문작동 끝");

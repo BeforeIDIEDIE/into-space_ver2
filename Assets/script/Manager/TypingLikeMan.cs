@@ -9,18 +9,9 @@ public class TypingLikeMan : MonoBehaviour
     [SerializeField] private float typeSpeed = 0.2f;
     private Coroutine typingCoroutine;
     private string fullText = "Into EDEN";
-    private bool isCompleted = false; // 텍스트 출력 완료 여부
-
-    private void OnEnable()
+    public void StartScene()
     {
-        if (isCompleted)
-        {
-            displayText.text = fullText;
-        }
-        else
-        {
-            StartTyping();
-        }
+        StartTyping();
     }
 
     private void OnDisable()
@@ -29,6 +20,7 @@ public class TypingLikeMan : MonoBehaviour
         {
             StopCoroutine(typingCoroutine);
             typingCoroutine = null;
+            displayText.text = fullText;
         }
     }
 
@@ -41,15 +33,12 @@ public class TypingLikeMan : MonoBehaviour
     private IEnumerator TypeText(string textToType)
     {
         displayText.text = "";
-        
+
         foreach (char letter in textToType)
         {
             displayText.text += letter;
-            isCompleted = true;
             yield return new WaitForSeconds(typeSpeed);
         }
-
-        
-        typingCoroutine = null; 
+        typingCoroutine = null;
     }
 }

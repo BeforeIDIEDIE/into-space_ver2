@@ -39,6 +39,7 @@ public class EventController : MonoBehaviour
     private void allBTNDisable() => SetButtonState(false, false, false, false);
     private void OnlyEnterBTNAble() => SetButtonState(false, false, false, true);
     private void selChoice() => SetButtonState(true, true, true, false);
+    private void selChoiceWithElec()=>SetButtonState(false, true, true, true);
 
     private void Start()
     {
@@ -140,14 +141,14 @@ public class EventController : MonoBehaviour
                 description = $"이런! 몸속에서 돌연변이 인자를 발견했다.\n현재 보유 전기 : {GameManager.Instance.GetElectric()}",
                 choices = new List<EventChoice>
                 {
-                    new EventChoice { choiceText = "없앤다 " },//-> 이상 없음
                     new EventChoice { choiceText = "전기 10을 소모하여 연구해 볼까?" },//-> 전기 10 감소, 속도 1증가.
+                    new EventChoice { choiceText = "없앤다 " },//-> 이상 없음
                     new EventChoice { choiceText = "내비둔다 " }//체력 피해량이 1 증가한다.
                 },
                 answers = new List<EventAnswer>
                 {
-                    new EventAnswer { answerText = "아무 이상 없다!" },
                     new EventAnswer { answerText = "전기가 10 감소되었으나... 속도가 1 증가되었다!" },
+                    new EventAnswer { answerText = "아무 이상 없다!" },
                     new EventAnswer { answerText = "체력 피해량이 증가한다...." }
                 },
                 eventSprite = eventSprites[5]
@@ -255,6 +256,7 @@ public class EventController : MonoBehaviour
         startEventAnswer(eventIDX, selectedChoiceIndex);
         selectedChoiceIndex = -1;
         GameManager.Instance.UpdateConsumeElectricText();
+        GameManager.Instance.OffInEvent();
     }
 
     private IEnumerator DisplayEvent(int idxOfEvent)
@@ -289,7 +291,18 @@ public class EventController : MonoBehaviour
             }
         }
         yield return new WaitForSecondsRealtime(0.3f); // 변경
-        selChoice();
+        if(idxOfEvent==2&&((20)>GameManager.Instance.GetElectric()))
+        {
+            selChoiceWithElec();
+        }
+        else if(idxOfEvent==5&&((10)>GameManager.Instance.GetElectric()))
+        {
+            selChoiceWithElec();
+        }
+        else
+        {
+            selChoice();
+        }
     }
 
     private IEnumerator TypeAnswerText(string answerText)
@@ -391,13 +404,14 @@ public class EventController : MonoBehaviour
                 }
             case 15:
                 {
-                    Debug.Log("문제없다.");
+                    GameManager.Instance.ConsumeElectric(10);
+                    GameManager.Instance.AddPlayerSpeed(1);
                     break;
+                    
                 }
             case 16:
                 {
-                    GameManager.Instance.ConsumeElectric(10);
-                    GameManager.Instance.AddPlayerSpeed(1);
+                    Debug.Log("문제없다.");
                     break;
                 }
             case 17:

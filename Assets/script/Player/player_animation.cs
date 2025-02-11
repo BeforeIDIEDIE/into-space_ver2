@@ -15,6 +15,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         if (GameManager.Instance.IsGameOver() && !hasPlayedDeathAnimation)
         {
+            Time.timeScale = 1.0f;
             PlayDeathAnimation();
         }
     }

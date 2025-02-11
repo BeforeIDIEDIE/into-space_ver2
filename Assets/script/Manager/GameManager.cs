@@ -5,11 +5,10 @@ using UnityEngine;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine.UI;
-using UnityEditor.Build;
 using System.Linq;
 using Unity.VisualScripting;
 using System.Runtime.ConstrainedExecution;
-
+using System.IO;
 public enum InteractionType
 {
     Heal,
@@ -17,8 +16,67 @@ public enum InteractionType
     Src,
     Steer
 }
+[System.Serializable]
+public class GameData
+{
+    public bool isClearedEasy;
+    public bool isClearedMedium;
+    public bool isClearedHard;
+}
+
 public class GameManager : MonoBehaviour
 {
+    //세이브 
+    private string savePath;
+    private GameData gameData;
+    [SerializeField] private int serialNum;//게임 클리어시 난이도 
+
+    private void SaveGameData()
+    {
+        if (gameData == null)
+        {
+            gameData = new GameData(); // 데이터가 없으면 새로운 객체 생성
+        }
+
+        string json = JsonUtility.ToJson(gameData);
+        File.WriteAllText(savePath, json);
+    }
+    private void LoadGameData()
+    {
+        if (File.Exists(savePath))
+        {
+            string json = File.ReadAllText(savePath);
+            gameData = JsonUtility.FromJson<GameData>(json);
+        }
+    }
+    public void CompleteGame()
+    {
+        if (gameData == null)
+        {
+            gameData = new GameData();
+        }
+        switch (serialNum)
+        {
+            case 0:
+                {
+                    gameData.isClearedEasy = true;
+                    break;
+                }
+            case 1:
+                {
+                    gameData.isClearedMedium = true;
+                    break;
+                }
+            case 2:
+                {
+                    gameData.isClearedHard = true;
+                    break;
+                }
+        }
+
+        SaveGameData();
+    }
+
     public static GameManager Instance
     {
         get;
@@ -29,12 +87,43 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            savePath = Application.persistentDataPath + "/gameData.json";
+            LoadGameData();
+
+            if (gameData == null)
+            {
+                gameData = new GameData
+                {
+                    isClearedEasy = false,
+                    isClearedMedium = false,
+                    isClearedHard = false
+                };
+                SaveGameData();
+            }
         }
         else
         {
             Destroy(gameObject);
         }
-    }
+        switch (serialNum)
+        {
+            case 0:
+                {
+                    dayDuration = 180f;
+                    break;
+                }
+            case 1:
+                {
+                    dayDuration = 155f;
+                    break;
+                }
+            case 2:
+                {
+                    dayDuration = 165f;
+                    break;
+                }
+        }
+        }
 
     //게임 승리 관련기능
     private bool isGameWin = false;
@@ -49,7 +138,7 @@ public class GameManager : MonoBehaviour
 
     //시계관련
     [SerializeField] private Image dayProgressImage;//하루 경과를 표시할 이미지
-    private float dayDuration = 165f;
+    private float dayDuration;
 
     [SerializeField] private EventController eventController;
     private float currentTime = 0f;
@@ -122,7 +211,8 @@ public class GameManager : MonoBehaviour
     //mode
     [SerializeField] private int mode;
     [SerializeField] private CrackManager crackManager;
-
+    //이벤트~
+    private bool inEvent = false;
 
 
     private float changeColorTransparents = 0.5f;
@@ -160,7 +250,10 @@ public class GameManager : MonoBehaviour
         {
             crackManager.StartCrackCycle();
         }
+        savePath = Application.persistentDataPath + "/gameData.json";
+        LoadGameData();
     }
+
     private IEnumerator TransitionColor()
     {
         float elapsedTime = 0f;
@@ -202,6 +295,9 @@ public class GameManager : MonoBehaviour
 
     public void TriggerGameWin()
     {
+        CompleteGame();
+        SaveGameData();
+
         SRCUI.SetActive(false);
         dayCNT.text = $"{day}년에 걸쳐 도착";
         isGameWin = true;
@@ -247,6 +343,7 @@ public class GameManager : MonoBehaviour
         ConsumeElectric(CalculateConsumeElectric());
         if(!isGameOver)
         { 
+            inEvent = true;
             eventController.ActivePrintProblem();
         }
         doorControlManager.DayOffFunction();
@@ -497,4 +594,13 @@ public class GameManager : MonoBehaviour
         dyingMessage.text = ImDying;
     }
     public float GetDayDuration() => dayDuration;
+    public bool GetInEvent()=> inEvent;
+    public void OnInEvent()
+    {
+        inEvent = true;
+    }
+    public void OffInEvent()
+    {
+        inEvent= false;
+    }
 }

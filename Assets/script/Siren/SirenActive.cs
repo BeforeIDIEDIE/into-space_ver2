@@ -9,16 +9,33 @@ public class SirenActive : MonoBehaviour
     [SerializeField] private float spriteChangeInterval = 0.02f; 
     private int currentSpriteIndex = 0;
 
-    private void Start()
+    private Coroutine spriteCoroutine;
+
+    private void OnEnable()
     {
-        StartCoroutine(AnimateSprite());
+        if (spriteCoroutine != null)
+        {
+            StopCoroutine(spriteCoroutine);
+        }
+        spriteCoroutine = StartCoroutine(AnimateSprite());
     }
-    public IEnumerator AnimateSprite()
+
+    private void OnDisable()
+    {
+        if (spriteCoroutine != null)
+        {
+            StopCoroutine(spriteCoroutine);
+            spriteCoroutine = null; 
+            currentSpriteIndex = 0;
+        }
+    }
+
+    private IEnumerator AnimateSprite()
     {
         while (true)
         {
             targetImage.sprite = sprites[currentSpriteIndex];
-            currentSpriteIndex = (currentSpriteIndex + 1) % sprites.Count; 
+            currentSpriteIndex = (currentSpriteIndex + 1) % sprites.Count;
             yield return new WaitForSeconds(spriteChangeInterval);
         }
     }
