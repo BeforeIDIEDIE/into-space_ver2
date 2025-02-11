@@ -79,7 +79,7 @@ public class DoorProcess : MonoBehaviour
     private IEnumerator AdjustDoorIndex(int targetIndex)
     {
         isOperating = true;
-        float doorSpeed = 0.02f;
+        float doorSpeed = Time.timeScale==1f?(0.03f):0.01f;
         Debug.Log("πÆ¿€µø");
         while (curActivedDoorPartsIDX != targetIndex)
         {
@@ -95,7 +95,7 @@ public class DoorProcess : MonoBehaviour
             }
 
             float elapsedTime = 0f;
-            while (elapsedTime < doorSpeed)
+            while (elapsedTime < doorSpeed) 
             {
                 elapsedTime += Time.deltaTime;
                 yield return null;
